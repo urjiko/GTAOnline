@@ -57,25 +57,55 @@
             background-color: #f59e0b;
         }
 
-        /* Buttons */
-        .btn-primary {
-            background-color: #f59e0b; /* amber-500 */
-            color: #18181b; /* zinc-900 */
+        /* --- NEW BUTTON STYLES (MATCHING SCREENSHOT) --- */
+
+        /* Main Sort Buttons (Garage, Type, Website) */
+        .btn-sort {
+            background-color: #18181b; /* zinc-900 */
+            color: #a1a1aa; /* zinc-400 */
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+            border: 1px solid #3f3f46; /* zinc-700 */
         }
-        .btn-primary:hover {
-            background-color: #d97706; /* amber-600 */
+        .btn-sort:hover {
+            color: #ffffff;
+            background-color: #27272a; /* zinc-800 */
         }
-        .btn-secondary {
+        .btn-sort.active {
+            color: #ffffff;
             background-color: #3f3f46; /* zinc-700 */
-            color: #f4f4f5; /* zinc-100 */
+            border-color: #52525b; /* zinc-600 */
         }
-        .btn-secondary:hover {
-            background-color: #52525b; /* zinc-600 */
+        .btn-sort:first-child {
+            border-top-left-radius: 0.375rem;
+            border-bottom-left-radius: 0.375rem;
         }
-        .btn-secondary.active {
-            background-color: #a1a1aa; /* zinc-400 */
-            color: #18181b; /* zinc-900 */
+        .btn-sort:last-child {
+            border-top-right-radius: 0.375rem;
+            border-bottom-right-radius: 0.375rem;
         }
+
+        /* Sub-Filter Buttons (All, Penthouse, Super, etc.) */
+        .btn-filter {
+            color: #a1a1aa; /* zinc-400 */
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 0.5rem 0.25rem;
+            margin: 0 0.5rem;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .btn-filter:hover {
+            color: #ffffff;
+        }
+        .btn-filter.active {
+            color: #ffffff;
+            border-bottom-color: #f59e0b; /* amber-500 */
+        }
+        /* --- END NEW BUTTON STYLES --- */
         
         /* NEW: Style for the asset list progress bar */
         .asset-progress-bar {
@@ -87,7 +117,7 @@
         .asset-progress-fill {
             height: 100%;
             background-color: #f59e0b; /* amber-500 */
-            width: 100%; /* All are 100% since you own them */
+            transition: width 0.3s ease-out; /* Added transition */
         }
     </style>
 </head>
@@ -187,31 +217,32 @@
             
             <!-- Title and Filtering -->
             <div class="flex flex-col md:flex-row items-center justify-between mb-6">
-                <!-- NEW GARAGES TITLE -->
-                <h1 class="text-4xl font-extrabold text-white uppercase tracking-wide mb-4 md:mb-0">
+                <!-- NEW DYNAMIC TITLE (Garages, Types, Websites) -->
+                <h1 id="dynamic-gallery-title" class="text-4xl font-extrabold text-white uppercase tracking-wide mb-4 md:mb-0">
                     Garages
                 </h1>
                 
                 <!-- MOVED SORT BY TO THE RIGHT -->
                 <div class="flex items-center space-x-4">
-                    <span class="text-zinc-400 font-medium">Sort By:</span>
-                    <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 rounded-lg p-1 bg-zinc-800">
-                        <button id="sort-by-garage" class="btn-secondary active px-4 py-2 text-sm font-medium rounded-md transition-all">
+                    <span class="text-zinc-400 font-medium hidden sm:block">Sort By:</span>
+                    <!-- NEW SORT BUTTONS STYLE -->
+                    <div class="flex" role="group">
+                        <button id="sort-by-garage" class="btn-sort active">
                             Garage
                         </button>
-                        <button id="sort-by-type" class="btn-secondary px-4 py-2 text-sm font-medium rounded-md transition-all">
+                        <button id="sort-by-type" class="btn-sort">
                             Type
                         </button>
-                        <button id="sort-by-website" class="btn-secondary px-4 py-2 text-sm font-medium rounded-md transition-all">
+                        <button id="sort-by-website" class="btn-sort">
                             Website
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Filter Buttons Area -->
-            <div id="filter-buttons-container" class="mb-6 flex flex-wrap gap-2">
-                <!-- JavaScript will populate this -->
+            <!-- Filter Buttons Area (NEW STYLE) -->
+            <div id="filter-buttons-container" class="mb-4 flex flex-wrap items-center -mx-2">
+                <!-- JavaScript will populate this with .btn-filter -->
             </div>
 
             <!-- Separator -->
@@ -219,7 +250,8 @@
 
             <!-- Displayed Vehicle Info -->
             <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-                <h2 id="gallery-title" class="text-2xl font-semibold text-white mb-2 md:mb-0">All Garages</h2>
+                <!-- NEW STYLE FOR GALLERY TITLE -->
+                <h2 id="gallery-title" class="text-3xl font-bold text-white mb-2 md:mb-0">All Garages</h2>
                 <div class="flex items-center space-x-4">
                     <span class="text-zinc-400">
                         <span id="filtered-count" class="font-bold text-white">0</span> Vehicles
@@ -334,7 +366,7 @@
                 {
                     name: 'Streiter', type: 'Sports', garageId: 'penthouse', websiteId: 'ssas', update: 'Doomsday Heist',
                     image: 'images/vehicle/streiter.jpg',
-                    basePrice: 500000, upgradePrice: 450000 // Imani Tech + Weapons
+                    basePrice: 500000, upgradePrice: 850000 // Imani Tech + Weapons
                 },
                 {
                     name: 'Schwartzer GT', type: 'Sports', garageId: 'penthouse', websiteId: 'legendary', update: 'After Hours',
@@ -411,7 +443,7 @@
                 {
                     name: 'Insurgent Pick-Up Custom', type: 'Weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Gunrunning',
                     image: 'images/vehicle/ins_pick-up.jpg',
-                    basePrice: 202500, upgradePrice: 1000000 // MOC upgrade + Armor + Weapons (Base vehicle 1.8M)
+                    basePrice: 1795000, upgradePrice: 1202500 // Base Pegasus Cost + MOC Conversion + Weapons/Armor
                 },
                 {
                     name: 'Half-track', type: 'Weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Gunrunning',
@@ -535,14 +567,14 @@
                 {
                     name: 'Revolter', type: 'Sports', garageId: 'apartment', websiteId: 'legendary', update: 'Doomsday',
                     image: 'images/vehicle/revolter.jpg',
-                    basePrice: 1610000, upgradePrice: 500000 // Imani Tech + Weapons
+                    basePrice: 1610000, upgradePrice: 850000 // Imani Tech + Weapons
                 },
 
                 // 3655 WILD (2 VEHICLES)
                 {
                     name: 'V-STR', type: 'Sports', garageId: 'wild', websiteId: 'legendary', update: 'Diamond Casino Heist',
                     image: 'images/vehicle/vstr.jpg',
-                    basePrice: 1285000, upgradePrice: 500000 // Imani Tech + Weapons
+                    basePrice: 1285000, upgradePrice: 850000 // Imani Tech + Weapons
                 },
                 {
                     name: 'Taipan', type: 'Super', garageId: 'wild', websiteId: 'legendary', update: 'Gunrunning',
@@ -663,7 +695,7 @@
                 {
                     name: 'Stafford', type: 'Classic', garageId: 'office1', websiteId: 'legendary', update: 'After Hours',
                     image: 'images/vehicle/stafford.jpg',
-                    basePrice: 1280000, upgradePrice: 500000 // Imani Tech
+                    basePrice: 1280000, upgradePrice: 850000 // Imani Tech
                 },
                 {
                     name: 'Swinger', type: 'Classic', garageId: 'office1', websiteId: 'legendary', update: 'After Hours',
@@ -1275,7 +1307,7 @@
                 {
                     name: 'Deluxo', type: 'Weaponized', garageId: 'arcade', websiteId: 'warstock', update: 'Doomsday Heist',
                     image: 'images/vehicle/deluxo.jpg',
-                    basePrice: 5750000, upgradePrice: 500000 // Weapons
+                    basePrice: 5750000, upgradePrice: 750000 // Weapons + Performance
                 },
                 {
                     name: 'Paragon R (Armored)', type: 'Armored', garageId: 'arcade', websiteId: 'legendary', update: 'Diamond Casino',
@@ -1285,7 +1317,7 @@
                 {
                     name: 'Vigilante', type: 'Weaponized', garageId: 'arcade', websiteId: 'warstock', update: 'Smuggler\'s Run',
                     image: 'images/vehicle/vigilante.jpg',
-                    basePrice: 3750000, upgradePrice: 400000 // Weapons
+                    basePrice: 3750000, upgradePrice: 750000 // Weapons + Performance
                 },
                 {
                     name: 'Future Shock Issi', type: 'Arena', garageId: 'arcade', websiteId: 'arena', update: 'Arena War',
@@ -1720,7 +1752,7 @@
                 return { count, value };
             };
             
-            // Define all categories to display, matching screenshot
+            // Define all categories to display
             const categories = [
                 { name: 'Super Cars', fn: v => v.type === 'super' },
                 { name: 'Sports Cars', fn: v => v.type === 'sports' },
@@ -1738,46 +1770,59 @@
                 { name: 'Other', fn: v => ['sedan', 'suv', 'coupe', 'utility', 'service', 'rc'].includes(v.type) },
             ];
 
-            const half = Math.ceil(categories.length / 2);
+            // --- NEW LOGIC (FIX FOR PROGRESS BAR AND COUNT) ---
+            // 1. Calculate all values first
+            const calculatedCategories = categories.map(cat => ({
+                name: cat.name,
+                ...calculateCategory(cat.fn)
+            })).filter(c => c.count > 0); // Filter out empty categories
 
-            // Function to create and append HTML for a category
-            const createCategoryHTML = (category) => {
-                const { count, value } = calculateCategory(category.fn);
-                if (count === 0) return ''; // Don't show empty categories
+            // 2. Find the max value for the progress bar scaling
+            const maxValue = Math.max(...calculatedCategories.map(c => c.value));
+            
+            // 3. Create HTML
+            const half = Math.ceil(calculatedCategories.length / 2);
+
+            const createCategoryHTML = (category, maxVal) => {
+                // Calculate proportional width, prevent divide by zero
+                const barWidth = maxVal > 0 ? (category.value / maxVal) * 100 : 0;
                 
                 return `
                     <div class="flex flex-col space-y-1">
                         <div class="flex justify-between items-center">
                             <span class="text-sm font-semibold text-zinc-300 uppercase">${category.name}</span>
-                            <span class="text-sm font-bold text-white">${count}/${count}</span>
+                            <!-- FIXED: Show count as "X Vehicles" not "X/X" -->
+                            <span class="text-sm font-bold text-white">${category.count} Vehicles</span>
                         </div>
                         <div class="asset-progress-bar">
-                            <div class="asset-progress-fill" style="width: 100%;"></div>
+                            <!-- FIXED: Set width dynamically -->
+                            <div class="asset-progress-fill" style="width: ${barWidth}%;"></div>
                         </div>
                         <div class="text-right text-sm font-semibold text-green-400">
-                            ${formatCurrency(value)}
+                            ${formatCurrency(category.value)}
                         </div>
                     </div>
                 `;
             };
 
             // Populate columns
-            categories.forEach((cat, index) => {
-                const html = createCategoryHTML(cat);
+            calculatedCategories.forEach((cat, index) => {
+                const html = createCategoryHTML(cat, maxValue);
                 if (index < half) {
                     listCol1.innerHTML += html;
                 } else {
                     listCol2.innerHTML += html;
                 }
             });
+            // --- END NEW LOGIC ---
 
-            // 1. Total Properties
+            // 1. Total Properties (This part is fine)
             const properties = garages.filter(g => g.basePrice > 0);
             const propertyValue = properties.reduce((sum, g) => sum + (g.basePrice || 0) + (g.upgradePrice || 0), 0);
             $('#total-properties-count').textContent = properties.length + ' Properties';
             $('#total-properties-value').textContent = formatCurrency(propertyValue);
             
-            // 2. Total Asset Value
+            // 2. Total Asset Value (This part is fine)
             const allVehicleValue = vehicles.reduce((sum, v) => sum + (v.basePrice || 0) + (v.upgradePrice || 0), 0);
             $('#total-value').textContent = formatCurrency(propertyValue + allVehicleValue);
         }
@@ -1786,9 +1831,12 @@
          * Sets up the main sorting buttons (Garage / Type / Website)
          */
         function setupFilterButtons() {
+            const dynamicTitle = $('#dynamic-gallery-title');
+
             $('#sort-by-garage').addEventListener('click', () => {
                 currentFilterType = 'garage';
                 currentFilterId = 'all';
+                dynamicTitle.textContent = 'Garages'; // NEW: Update title
                 updateFilterButtonsUI();
                 filterAndDisplayVehicles();
             });
@@ -1796,6 +1844,7 @@
             $('#sort-by-type').addEventListener('click', () => {
                 currentFilterType = 'type';
                 currentFilterId = 'all';
+                dynamicTitle.textContent = 'Types'; // NEW: Update title
                 updateFilterButtonsUI();
                 filterAndDisplayVehicles();
             });
@@ -1803,6 +1852,7 @@
             $('#sort-by-website').addEventListener('click', () => {
                 currentFilterType = 'website';
                 currentFilterId = 'all';
+                dynamicTitle.textContent = 'Websites'; // NEW: Update title
                 updateFilterButtonsUI();
                 filterAndDisplayVehicles();
             });
@@ -1820,10 +1870,6 @@
             $('#sort-by-type').classList.toggle('active', currentFilterType === 'type');
             $('#sort-by-website').classList.toggle('active', currentFilterType === 'website');
 
-            $('#sort-by-garage').classList.toggle('btn-secondary', currentFilterType !== 'garage');
-            $('#sort-by-type').classList.toggle('btn-secondary', currentFilterType !== 'type');
-            $('#sort-by-website').classList.toggle('btn-secondary', currentFilterType !== 'website');
-
             // Get the list to filter by (Garages, Types, or Websites)
             const filterMap = {
                 garage: mockData.garages,
@@ -1835,7 +1881,7 @@
             // "All" button
             const allButton = document.createElement('button');
             allButton.textContent = 'All';
-            allButton.className = 'btn-secondary px-3 py-1.5 text-sm font-medium rounded-md transition-all';
+            allButton.className = 'btn-filter'; // NEW STYLE
             allButton.classList.toggle('active', currentFilterId === 'all');
             allButton.addEventListener('click', () => {
                 currentFilterId = 'all';
@@ -1847,7 +1893,7 @@
             filterList.forEach(filter => {
                 const button = document.createElement('button');
                 button.textContent = filter.name;
-                button.className = 'btn-secondary px-3 py-1.5 text-sm font-medium rounded-md transition-all';
+                button.className = 'btn-filter'; // NEW STYLE
                 button.classList.toggle('active', currentFilterId === filter.id);
                 button.addEventListener('click', () => {
                     currentFilterId = filter.id;
@@ -1910,7 +1956,12 @@
                 if (currentFilterType === 'garage') {
                     filteredVehicles = vehicles.filter(v => v.garageId === currentFilterId);
                 } else if (currentFilterType === 'type') {
-                    filteredVehicles = vehicles.filter(v => v.type === currentFilterId);
+                    // SPECIAL CASE: Combine 'weaponized' and 'armored'
+                    if (currentFilterId === 'weaponized') {
+                        filteredVehicles = vehicles.filter(v => v.type === 'weaponized' || v.type === 'armored');
+                    } else {
+                        filteredVehicles = vehicles.filter(v => v.type === currentFilterId);
+                    }
                 } else if (currentFilterType === 'website') {
                     filteredVehicles = vehicles.filter(v => v.websiteId === currentFilterId);
                 }
