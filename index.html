@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GTA Garaj Arayüzü</title>
+    <title>GTA My Assets</title>
     <!-- Harici Font (Inter) ve İkonlar (Lucide) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,7 +87,7 @@
                 <!-- Sol Taraf: Logo / Başlık -->
                 <div class="flex items-center space-x-2">
                     <i data-lucide="user-round" class="text-amber-500"></i>
-                    <span class="text-xl font-bold text-white">GTA ONLINE KARİYERİ</span>
+                    <span class="text-xl font-bold text-white uppercase">GTA My Assets</span>
                 </div>
 
                 <!-- Sağ Taraf: Ana Menü -->
@@ -122,41 +122,90 @@
     <!-- 2. ANA İÇERİK BÖLÜMÜ -->
     <main class="container mx-auto p-4 md:p-6">
         
-        <!-- GENEL İSTATİSTİK KUTULARI -->
+        <!-- YENİ DETAYLI İSTATİSTİK KUTULARI -->
         <section id="stats-boxes" class="mb-6">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                <div class="glass-effect p-4 rounded-lg shadow-md flex items-center space-x-3">
-                    <i data-lucide="warehouse" class="text-amber-500 w-8 h-8"></i>
-                    <div>
-                        <span class="text-xs text-zinc-400 uppercase">Toplam Mülk</span>
-                        <span id="total-garages" class="text-2xl font-bold text-white block">0</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+                
+                <!-- Toplam Mülkler -->
+                <div class="glass-effect p-4 rounded-lg shadow-md">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="warehouse" class="text-amber-500 w-8 h-8"></i>
+                        <div>
+                            <span class="text-xs text-zinc-400 uppercase">Mülkler</span>
+                            <span id="total-properties-count" class="text-xl font-bold text-white block">0 Mülk</span>
+                        </div>
+                    </div>
+                    <div class="text-right text-green-400 font-semibold mt-2">
+                        <span id="total-properties-value">$0</span>
                     </div>
                 </div>
-                <div class="glass-effect p-4 rounded-lg shadow-md flex items-center space-x-3">
-                    <i data-lucide="car" class="text-amber-500 w-8 h-8"></i>
-                    <div>
-                        <span class="text-xs text-zinc-400 uppercase">Toplam Araç</span>
-                        <span id="total-vehicles" class="text-2xl font-bold text-white block">0</span>
+
+                <!-- Motosikletler -->
+                <div class="glass-effect p-4 rounded-lg shadow-md">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="bike" class="text-amber-500 w-8 h-8"></i>
+                        <div>
+                            <span class="text-xs text-zinc-400 uppercase">Motosikletler</span>
+                            <span id="total-motorcycles-count" class="text-xl font-bold text-white block">0 Araç</span>
+                        </div>
+                    </div>
+                    <div class="text-right text-green-400 font-semibold mt-2">
+                        <span id="total-motorcycles-value">$0</span>
                     </div>
                 </div>
-                <div class="glass-effect p-4 rounded-lg shadow-md flex items-center space-x-3">
-                    <i data-lucide="plane" class="text-amber-500 w-8 h-8"></i>
-                    <div>
-                        <span class="text-xs text-zinc-400 uppercase">Hava Aracı</span>
-                        <span id="total-aircraft" class="text-2xl font-bold text-white block">0</span>
+
+                <!-- Hava Araçları (Uçak + Helikopter) -->
+                <div class="glass-effect p-4 rounded-lg shadow-md">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="plane" class="text-amber-500 w-8 h-8"></i>
+                        <div>
+                            <span class="text-xs text-zinc-400 uppercase">Hava Araçları</span>
+                            <span id="total-aircraft-count" class="text-xl font-bold text-white block">0 Araç</span>
+                        </div>
+                    </div>
+                    <div class="text-right text-green-400 font-semibold mt-2">
+                        <span id="total-aircraft-value">$0</span>
                     </div>
                 </div>
-                <div class="glass-effect p-4 rounded-lg shadow-md flex items-center space-x-3">
-                    <i data-lucide="anchor" class="text-amber-500 w-8 h-8"></i>
-                    <div>
-                        <span class="text-xs text-zinc-400 uppercase">Özel / Servis</span>
-                        <span id="total-special" class="text-2xl font-bold text-white block">0</span>
+
+                <!-- Deniz Araçları -->
+                <div class="glass-effect p-4 rounded-lg shadow-md">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="anchor" class="text-amber-500 w-8 h-8"></i>
+                        <div>
+                            <span class="text-xs text-zinc-400 uppercase">Deniz Araçları</span>
+                            <span id="total-sea-count" class="text-xl font-bold text-white block">0 Araç</span>
+                        </div>
+                    </div>
+                    <div class="text-right text-green-400 font-semibold mt-2">
+                        <span id="total-sea-value">$0</span>
                     </div>
                 </div>
-                <div class="glass-effect p-4 rounded-lg shadow-md flex items-center space-x-3 bg-amber-500/10 border border-amber-500/50">
-                    <i data-lucide="dollar-sign" class="text-amber-400 w-8 h-8"></i>
-                    <div>
-                        <span class="text-xs text-amber-300 uppercase">Toplam Varlık Değeri</span>
+
+                <!-- Formula Araçları -->
+                <div class="glass-effect p-4 rounded-lg shadow-md">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="flag-checkered" class="text-amber-500 w-8 h-8"></i>
+                        <div>
+                            <span class="text-xs text-zinc-400 uppercase">Formula</span>
+                            <span id="total-openwheel-count" class="text-xl font-bold text-white block">0 Araç</span>
+                        </div>
+                    </div>
+                    <div class="text-right text-green-400 font-semibold mt-2">
+                        <span id="total-openwheel-value">$0</span>
+                    </div>
+                </div>
+                
+                <!-- Toplam Varlık Değeri -->
+                <div class="glass-effect p-4 rounded-lg shadow-md flex flex-col justify-between bg-amber-500/10 border border-amber-500/50">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="dollar-sign" class="text-amber-400 w-8 h-8"></i>
+                        <div>
+                            <span class="text-xs text-amber-300 uppercase">Toplam Varlık</span>
+                            <span class="text-xs text-zinc-400">(Mülk + Araç)</span>
+                        </div>
+                    </div>
+                    <div class="text-right mt-2">
                         <span id="total-value" class="text-2xl font-bold text-white block">$0</span>
                     </div>
                 </div>
@@ -200,7 +249,7 @@
                     <span class="text-zinc-400">
                         <span id="filtered-count" class="font-bold text-white">0</span> Araç
                     </span>
-                    <!-- YENİ: Mülk Değeri Göstergesi -->
+                    <!-- Mülk Değeri Göstergesi -->
                     <div id="property-cost-display" class="glass-effect p-2 px-3 rounded-lg flex-col items-center hidden border border-blue-500/50 bg-blue-500/10">
                         <span class="text-xs text-blue-300 uppercase">Mülk Değeri</span>
                         <span id="property-cost-value" class="text-lg font-bold text-white">$0</span>
@@ -289,8 +338,10 @@
                 { id: 'special', name: 'Special' },
                 { id: 'open_wheel', name: 'Open Wheel' },
                 { id: 'arena', name: 'Arena War' },
-                { id: 'utility', name: 'Utility' }
-                // YENİ: Mülk tipi eklenebilir, ancak mülkleri zaten garajlara bağladık.
+                { id: 'utility', name: 'Utility' },
+                // YENİ EKLENEN TİPLER
+                { id: 'sea_vehicle', name: 'Sea Vehicle' },
+                { id: 'bicycle', name: 'Bicycle' }
             ],
             websites: [
                 { id: 'legendary', name: 'Legendary Motorsport' },
@@ -1029,37 +1080,50 @@
         });
 
         /**
-         * İstatistik kutularını (Toplam Garaj, Araç, Değer vb.) günceller
+         * YENİ: İstatistik kutularını detaylı olarak günceller
          */
         function updateStatsBoxes() {
-            const { vehicles, garages, types } = mockData;
-            
-            // Mülk sayısı (Fiyatı olan mülkleri say)
-            const propertyCount = garages.filter(g => g.basePrice > 0).length;
-            $('#total-garages').textContent = propertyCount;
-            
-            // Toplam araç (aircraft hariç)
-            const landVehicles = vehicles.filter(v => v.type !== 'aircraft' && v.type !== 'helicopter' && v.type !== 'service');
-            $('#total-vehicles').textContent = landVehicles.length;
+            const { vehicles, garages } = mockData;
 
-            // Toplam hava aracı
-            const aircraft = vehicles.filter(v => v.type === 'aircraft' || v.type === 'helicopter');
-            $('#total-aircraft').textContent = aircraft.length;
+            // Fiyata göre filtreleme ve toplama için yardımcı fonksiyon
+            const calculateCategory = (filterFn) => {
+                const filtered = vehicles.filter(filterFn);
+                const count = filtered.length;
+                const value = filtered.reduce((sum, v) => sum + (v.basePrice || 0) + (v.upgradePrice || 0), 0);
+                return { count, value };
+            };
 
-            // Toplam özel/servis aracı (Yacht, MOC, Kosatka vb.)
-            const special = vehicles.filter(v => v.type === 'service' || v.type === 'special');
-            $('#total-special').textContent = special.length;
+            // 1. Mülkler
+            const properties = garages.filter(g => g.basePrice > 0);
+            const propertyValue = properties.reduce((sum, g) => sum + (g.basePrice || 0) + (g.upgradePrice || 0), 0);
+            $('#total-properties-count').textContent = properties.length + ' Mülk';
+            $('#total-properties-value').textContent = formatCurrency(propertyValue);
 
-            // Toplam Varlık Değeri (Araçlar + Mülkler)
-            const totalVehicleValue = vehicles.reduce((sum, vehicle) => {
-                return sum + (vehicle.basePrice || 0) + (vehicle.upgradePrice || 0);
-            }, 0);
-            
-            const totalGarageValue = garages.reduce((sum, garage) => {
-                return sum + (garage.basePrice || 0) + (garage.upgradePrice || 0);
-            }, 0);
-            
-            $('#total-value').textContent = formatCurrency(totalVehicleValue + totalGarageValue);
+            // 2. Motosikletler
+            const motorcycles = calculateCategory(v => v.type === 'motorcycle');
+            $('#total-motorcycles-count').textContent = motorcycles.count + ' Araç';
+            $('#total-motorcycles-value').textContent = formatCurrency(motorcycles.value);
+
+            // 3. Hava Araçları (Uçak + Helikopter)
+            const aircraft = calculateCategory(v => v.type === 'aircraft' || v.type === 'helicopter');
+            $('#total-aircraft-count').textContent = aircraft.count + ' Araç';
+            $('#total-aircraft-value').textContent = formatCurrency(aircraft.value);
+
+            // 4. Deniz Araçları (Yacht'ı 'service' olarak bıraktık, burası botlar/sub'lar için)
+            // Kosatka 'service' olduğu için, Yacht da 'service' olduğu için bu kategori şimdilik boş olabilir.
+            // 'sea_vehicle' tipinde araç eklenirse (örn. Seashark, Speeder) burası dolar.
+            const sea = calculateCategory(v => v.type === 'sea_vehicle' || v.garageId === 'pegasus_boat'); // Pegasus botlarını da ekleyebiliriz
+            $('#total-sea-count').textContent = sea.count + ' Araç';
+            $('#total-sea-value').textContent = formatCurrency(sea.value);
+
+            // 5. Formula (Open Wheel)
+            const openwheel = calculateCategory(v => v.type === 'open_wheel');
+            $('#total-openwheel-count').textContent = openwheel.count + ' Araç';
+            $('#total-openwheel-value').textContent = formatCurrency(openwheel.value);
+
+            // 6. Toplam Varlık Değeri
+            const allVehicleValue = vehicles.reduce((sum, v) => sum + (v.basePrice || 0) + (v.upgradePrice || 0), 0);
+            $('#total-value').textContent = formatCurrency(propertyValue + allVehicleValue);
         }
 
         /**
@@ -1231,7 +1295,8 @@
             const noResults = $('#no-results');
             grid.innerHTML = ''; // Temizle
 
-            if (vehiclesToShow.length === 0) {
+            if (vehiclesToShow.length === 0 && propertyCost === 0) {
+                 // Eğer hem araç yoksa hem de gösterilecek mülk maliyeti yoksa "Bulunamadı" de
                 noResults.classList.remove('hidden');
             } else {
                 noResults.classList.add('hidden');
