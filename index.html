@@ -561,6 +561,58 @@
                     basePrice: 1995000, upgradePrice: 300000
                 },
 
+                // UNIT 2 (10 ARAÇ)
+                {
+                    name: 'Everon', type: 'Offroad', garageId: 'unit2', websiteId: 'ssas', update: 'Diamond Casino Heist',
+                    image: 'images/vehicle/everon.jpg',
+                    basePrice: 1475000, upgradePrice: 700000 // Imani Tech
+                },
+                {
+                    name: 'Toreador', type: 'Weaponized', garageId: 'unit2', websiteId: 'warstock', update: 'Cayo Perico',
+                    image: 'images/vehicle/toreador.jpg',
+                    basePrice: 4250000, upgradePrice: 100000 // Silahlar dahil
+                },
+                {
+                    name: 'Imorgon', type: 'Sports', garageId: 'unit2', websiteId: 'legendary', update: 'Diamond Casino Heist',
+                    image: 'images/vehicle/imorgon.jpg',
+                    basePrice: 2165000, upgradePrice: 400000
+                },
+                {
+                    name: 'Itali GTO', type: 'Sports', garageId: 'unit2', websiteId: 'legendary', update: 'Arena War',
+                    image: 'images/vehicle/itali_gto.jpg',
+                    basePrice: 1965000, upgradePrice: 400000
+                },
+                {
+                    name: 'Raptor', type: 'Sports', garageId: 'unit2', websiteId: 'legendary', update: 'Bikers',
+                    image: 'images/vehicle/raptor.jpg',
+                    basePrice: 648000, upgradePrice: 350000
+                },
+                {
+                    name: 'Toros', type: 'SUV', garageId: 'unit2', websiteId: 'legendary', update: 'Arena War',
+                    image: 'images/vehicle/toros.jpg',
+                    basePrice: 498000, upgradePrice: 350000
+                },
+                {
+                    name: 'Flash GT', type: 'Sports', garageId: 'unit2', websiteId: 'legendary', update: 'SA Super Sport',
+                    image: 'images/vehicle/flash_gt.jpg',
+                    basePrice: 1675000, upgradePrice: 400000
+                },
+                {
+                    name: 'Lynx', type: 'Sports', garageId: 'unit2', websiteId: 'legendary', update: 'Cunning Stunts',
+                    image: 'images/vehicle/lynx.jpg',
+                    basePrice: 1735000, upgradePrice: 400000
+                },
+                {
+                    name: 'Locust', type: 'Sports', garageId: 'unit2', websiteId: 'legendary', update: 'Diamond Casino',
+                    image: 'images/vehicle/locust.jpg',
+                    basePrice: 1625000, upgradePrice: 400000
+                },
+                {
+                    name: 'Schlagen GT', type: 'Sports', garageId: 'unit2', websiteId: 'legendary', update: 'Arena War',
+                    image: 'images/vehicle/schlagen_gt.jpg',
+                    basePrice: 1300000, upgradePrice: 400000
+                },
+
 
                 // SERVICES (ÖRNEK - Listenin sonundan)
                 {
@@ -734,7 +786,7 @@
                 button.classList.toggle('active', currentFilterId === filter.id);
                 button.addEventListener('click', () => {
                     currentFilterId = filter.id;
-                    filterAndDisplayVehicles(); // <<< HATA BURADAYDI, DÜZELTİLDİ
+                    filterAndDisplayVehicles(); // <<< HATA DÜZELTİLDİ (Vehilcles -> Vehicles)
                 });
                 container.appendChild(button);
             });
