@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GTA Online Garage</title>
+    <title>GTA Garaj Arayüzü</title>
     <!-- Harici Font (Inter) ve İkonlar (Lucide) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -128,7 +128,7 @@
                 <div class="glass-effect p-4 rounded-lg shadow-md flex items-center space-x-3">
                     <i data-lucide="warehouse" class="text-amber-500 w-8 h-8"></i>
                     <div>
-                        <span class="text-xs text-zinc-400 uppercase">Toplam Garaj</span>
+                        <span class="text-xs text-zinc-400 uppercase">Toplam Mülk</span>
                         <span id="total-garages" class="text-2xl font-bold text-white block">0</span>
                     </div>
                 </div>
@@ -194,14 +194,20 @@
             <hr class="border-zinc-700 mb-6">
 
             <!-- Gösterilen Araç Bilgisi -->
-            <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                 <h2 id="gallery-title" class="text-2xl font-semibold text-white mb-2 md:mb-0">Tüm Garajlar</h2>
                 <div class="flex items-center space-x-4">
                     <span class="text-zinc-400">
-                        <span id="filtered-count" class="font-bold text-white">0</span> Araç Gösteriliyor
+                        <span id="filtered-count" class="font-bold text-white">0</span> Araç
                     </span>
-                    <div class="glass-effect p-2 px-3 rounded-lg flex items-center space-x-2 border border-green-500/50 bg-green-500/10">
-                        <i data-lucide="dollar-sign" class="w-5 h-5 text-green-400"></i>
+                    <!-- YENİ: Mülk Değeri Göstergesi -->
+                    <div id="property-cost-display" class="glass-effect p-2 px-3 rounded-lg flex-col items-center hidden border border-blue-500/50 bg-blue-500/10">
+                        <span class="text-xs text-blue-300 uppercase">Mülk Değeri</span>
+                        <span id="property-cost-value" class="text-lg font-bold text-white">$0</span>
+                    </div>
+                    <!-- Gösterilen Toplam Değer -->
+                    <div class="glass-effect p-2 px-3 rounded-lg flex-col items-center border border-green-500/50 bg-green-500/10">
+                         <span class="text-xs text-green-300 uppercase">Gösterilen Değer</span>
                         <span id="filtered-value" class="text-lg font-bold text-white">$0</span>
                     </div>
                 </div>
@@ -235,30 +241,35 @@
         // NOT: basePrice = Temel Fiyat, upgradePrice = Tahmini "Gırtlak" Yükseltme Maliyeti
         const mockData = {
             garages: [
-                { id: 'penthouse', name: 'Penthouse' },
-                { id: 'exceptionalists', name: 'Exceptionalists' },
-                { id: 'supply', name: '331 Supply' },
-                { id: 'apartment', name: 'Apartment' },
-                { id: 'wild', name: '3655 Wild' },
-                { id: 'clubhouse', name: 'Clubhouse' },
-                { id: 'unit2', name: 'Unit 2' },
-                { id: 'office1', name: 'Office 1' },
-                { id: 'office2', name: 'Office 2' },
-                { id: 'office3', name: 'Office 3' },
-                { id: 'facility', name: 'Facility' },
-                { id: 'nightclub_service', name: 'Nightclub Service' },
-                { id: 'nightclub_b2', name: 'Nightclub B2' },
-                { id: 'nightclub_b3', name: 'Nightclub B3' },
-                { id: 'arena', name: 'Arena Workshop' },
-                { id: 'arena_b2', name: 'Arena B2' },
-                { id: 'casino', name: 'Casino' },
-                { id: 'arcade', name: 'Arcade' },
-                { id: 'terrorbyte', name: 'Terrorbyte' },
-                { id: 'special_vehicle', name: 'Special Vehicle' },
-                { id: 'aircraft', name: 'Personal Aircraft' },
-                { id: 'services', name: 'Services' },
-                { id: 'mini_vehicles', name: 'Mini Vehicles' },
-                { id: 'pegasus', name: 'Pegasus' }
+                // Mülklerin "Gırtlak" Fiyatları
+                // Not: 'id' alanı, vehicles.garageId ile eşleşmelidir.
+                { id: 'penthouse', name: 'Penthouse', basePrice: 1500000, upgradePrice: 5375000 }, // Casino Penthouse + Tüm Ekstralar
+                { id: 'exceptionalists', name: 'Exceptionalists', basePrice: 112500, upgradePrice: 0 }, // Sadece Garaj
+                { id: 'supply', name: '331 Supply', basePrice: 109000, upgradePrice: 0 }, // Sadece Garaj
+                { id: 'apartment', name: 'Apartment', basePrice: 1100000, upgradePrice: 600000 }, // Eclipse Towers Apt 31 + Tüm İç Mekanlar
+                { id: 'wild', name: '3655 Wild', basePrice: 120000, upgradePrice: 0 }, // Sadece Garaj
+                { id: 'clubhouse', name: 'Clubhouse', basePrice: 495000, upgradePrice: 1200000 }, // En pahalı MC Clubhouse + Tüm Yükseltmeler
+                { id: 'unit2', name: 'Unit 2', basePrice: 135000, upgradePrice: 0 }, // Sadece Garaj (10 Araçlık)
+                { id: 'office1', name: 'Office 1', basePrice: 4000000, upgradePrice: 4435000 }, // Maze Bank Tower + Tüm Yükseltmeler (Garaj 1,2,3 dahil)
+                { id: 'office2', name: 'Office 2', basePrice: 0, upgradePrice: 0 }, // Maliyet Office 1'e eklendi
+                { id: 'office3', name: 'Office 3', basePrice: 0, upgradePrice: 0 }, // Maliyet Office 1'e eklendi
+                { id: 'facility', name: 'Facility', basePrice: 2950000, upgradePrice: 4075000 }, // En pahalı Facility + Orbital Cannon vb.
+                { id: 'nightclub_service', name: 'Nightclub Service', basePrice: 1080000, upgradePrice: 3500000 }, // En pahalı Nightclub + Tüm Yükseltmeler
+                { id: 'nightclub_b2', name: 'Nightclub B2', basePrice: 0, upgradePrice: 0 }, // Maliyet Ana Nightclub'a eklendi
+                { id: 'nightclub_b3', name: 'Nightclub B3', basePrice: 0, upgradePrice: 0 }, // Maliyet Ana Nightclub'a eklendi
+                { id: 'arena', name: 'Arena Workshop', basePrice: 995000, upgradePrice: 3500000 }, // Arena + Tüm Yükseltmeler (Benny's vb.)
+                { id: 'arena_b2', name: 'Arena B2', basePrice: 0, upgradePrice: 0 }, // Maliyet Arena'ya eklendi
+                { id: 'casino', name: 'Casino', basePrice: 900000, upgradePrice: 0 }, // Casino Paddock Garajı
+                { id: 'arcade', name: 'Arcade', basePrice: 1875000, upgradePrice: 2200000 }, // La Mesa Arcade + Tüm Yükseltmeler (MCT vb.)
+                
+                // Bu garajlar SADECE araçları gruplamak içindir, mülk maliyeti yoktur
+                // Bu mülklerin maliyetleri zaten 'Services' altında araç olarak ekli
+                { id: 'terrorbyte', name: 'Terrorbyte', basePrice: 0, upgradePrice: 0 },
+                { id: 'special_vehicle', name: 'Special Vehicle', basePrice: 0, upgradePrice: 0 },
+                { id: 'aircraft', name: 'Personal Aircraft', basePrice: 0, upgradePrice: 0 },
+                { id: 'services', name: 'Services', basePrice: 0, upgradePrice: 0 },
+                { id: 'mini_vehicles', name: 'Mini Vehicles', basePrice: 0, upgradePrice: 0 },
+                { id: 'pegasus', name: 'Pegasus', basePrice: 0, upgradePrice: 0 }
             ],
             types: [
                 { id: 'super', name: 'Super' },
@@ -279,6 +290,7 @@
                 { id: 'open_wheel', name: 'Open Wheel' },
                 { id: 'arena', name: 'Arena War' },
                 { id: 'utility', name: 'Utility' }
+                // YENİ: Mülk tipi eklenebilir, ancak mülkleri zaten garajlara bağladık.
             ],
             websites: [
                 { id: 'legendary', name: 'Legendary Motorsport' },
@@ -288,6 +300,7 @@
                 { id: 'arena', name: 'Arena War' },
                 { id: 'elitastravel', name: 'Elitás Travel' },
                 { id: 'docktease', name: 'DockTease' },
+                { id: 'dynasty8', name: 'Dynasty 8' }, // Mülkler için
                 { id: 'other', name: 'Diğer / Sokak' }
             ],
             vehicles: [
@@ -940,8 +953,7 @@
                     basePrice: 1775000, upgradePrice: 700000 // Tam zırh + Dual Minigun
                 },
 
-
-                // SERVICES (ÖRNEK - Listenin sonundan)
+                // SERVICES (Bu mülkler araç olarak listelenir)
                 {
                     name: 'Galaxy Super Yacht', type: 'Service', garageId: 'services', websiteId: 'docktease', update: 'Galaxy',
                     image: 'images/vehicle/yacht.jpg',
@@ -1022,26 +1034,32 @@
         function updateStatsBoxes() {
             const { vehicles, garages, types } = mockData;
             
-            // Garaj sayısı
-            $('#total-garages').textContent = garages.length;
+            // Mülk sayısı (Fiyatı olan mülkleri say)
+            const propertyCount = garages.filter(g => g.basePrice > 0).length;
+            $('#total-garages').textContent = propertyCount;
             
             // Toplam araç (aircraft hariç)
-            const landVehicles = vehicles.filter(v => v.type !== 'aircraft' && v.type !== 'helicopter');
+            const landVehicles = vehicles.filter(v => v.type !== 'aircraft' && v.type !== 'helicopter' && v.type !== 'service');
             $('#total-vehicles').textContent = landVehicles.length;
 
             // Toplam hava aracı
             const aircraft = vehicles.filter(v => v.type === 'aircraft' || v.type === 'helicopter');
             $('#total-aircraft').textContent = aircraft.length;
 
-            // Toplam özel/servis aracı
+            // Toplam özel/servis aracı (Yacht, MOC, Kosatka vb.)
             const special = vehicles.filter(v => v.type === 'service' || v.type === 'special');
             $('#total-special').textContent = special.length;
 
-            // Toplam Varlık Değeri
-            const totalValue = vehicles.reduce((sum, vehicle) => {
+            // Toplam Varlık Değeri (Araçlar + Mülkler)
+            const totalVehicleValue = vehicles.reduce((sum, vehicle) => {
                 return sum + (vehicle.basePrice || 0) + (vehicle.upgradePrice || 0);
             }, 0);
-            $('#total-value').textContent = formatCurrency(totalValue);
+            
+            const totalGarageValue = garages.reduce((sum, garage) => {
+                return sum + (garage.basePrice || 0) + (garage.upgradePrice || 0);
+            }, 0);
+            
+            $('#total-value').textContent = formatCurrency(totalVehicleValue + totalGarageValue);
         }
 
         /**
@@ -1124,14 +1142,28 @@
          */
         function filterAndDisplayVehicles() {
             const { vehicles, garages, types, websites } = mockData;
+            const propertyCostDisplay = $('#property-cost-display');
+            const propertyCostValue = $('#property-cost-value');
             
-            // YENİ: Arka Planı Değiştirme Lojiği
+            let propertyCost = 0;
+            
+            // YENİ: Arka Planı ve Mülk Maliyetini Ayarlama
             const bodyEl = document.body;
             const defaultBg = "url('https://placehold.co/1920x1080/18181b/18181b?text=+')";
+            propertyCostDisplay.classList.add('hidden'); // Önce gizle
 
             if (currentFilterType === 'garage' && currentFilterId !== 'all') {
                 const newBgUrl = `url('images/background/${currentFilterId}.jpg')`;
                 bodyEl.style.backgroundImage = newBgUrl;
+                
+                // Seçili garajın maliyetini bul
+                const garage = garages.find(g => g.id === currentFilterId);
+                if (garage && (garage.basePrice > 0 || garage.upgradePrice > 0)) {
+                    propertyCost = (garage.basePrice || 0) + (garage.upgradePrice || 0);
+                    propertyCostValue.textContent = formatCurrency(propertyCost);
+                    propertyCostDisplay.classList.remove('hidden');
+                }
+                
             } else {
                 bodyEl.style.backgroundImage = defaultBg;
             }
@@ -1153,7 +1185,7 @@
             // Araçları filtrele
             let filteredVehicles = [];
             if (currentFilterId === 'all') {
-                filteredVehicles = vehicles;
+                filteredVehicles = vehicles; // "Tümü" seçiliyken mülk maliyeti gösterilmez
             } else {
                 if (currentFilterType === 'garage') {
                     filteredVehicles = vehicles.filter(v => v.garageId === currentFilterId);
@@ -1167,8 +1199,8 @@
             // Başlığı güncelle
             updateGalleryTitle();
             
-            // Araç kartlarını oluştur
-            displayVehicleCards(filteredVehicles);
+            // Araç kartlarını oluştur ve mülk maliyetini de toplama ekle
+            displayVehicleCards(filteredVehicles, propertyCost);
         }
 
         /**
@@ -1192,8 +1224,9 @@
         /**
          * Verilen araç listesini HTML kartları olarak ekranda gösterir
          * @param {Array} vehiclesToShow - Gösterilecek araç nesneleri dizisi
+         * @param {number} propertyCost - Mülkün kendi maliyeti (varsa)
          */
-        function displayVehicleCards(vehiclesToShow) {
+        function displayVehicleCards(vehiclesToShow, propertyCost = 0) {
             const grid = $('#vehicle-grid');
             const noResults = $('#no-results');
             grid.innerHTML = ''; // Temizle
@@ -1204,11 +1237,12 @@
                 noResults.classList.add('hidden');
             }
 
-            let filteredTotalValue = 0;
+            // Toplam, mülk maliyeti ile başlar
+            let filteredTotalValue = propertyCost;
 
             vehiclesToShow.forEach(vehicle => {
                 const totalValue = (vehicle.basePrice || 0) + (vehicle.upgradePrice || 0);
-                filteredTotalValue += totalValue;
+                filteredTotalValue += totalValue; // Araç maliyetlerini ekle
 
                 const typeName = mockData.types.find(t => t.id === vehicle.type)?.name || vehicle.type.toUpperCase();
                 const placeholderImage = `https://placehold.co/600x400/3f3f46/71717a?text=${encodeURIComponent(vehicle.name)}`;
