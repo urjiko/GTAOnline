@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GTA My Assets</title>
-    <!-- Harici Font (Inter) ve İkonlar (Lucide) -->
+    <!-- External Font (Inter) and Icons (Lucide) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,28 +12,28 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        /* Ana Stil */
+        /* Main Style */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #18181b; /* Tailwind 'zinc-900' */
             color: #e4e4e7; /* Tailwind 'zinc-200' */
-            background-image: url('https://placehold.co/1920x1080/18181b/18181b?text=+'); /* Arka plan deseni veya resmi için */
+            background-image: url('https://placehold.co/1920x1080/18181b/18181b?text=+'); /* Placeholder for background pattern/image */
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            /* Arka plan değişimi için yumuşak geçiş */
+            /* Smooth transition for background change */
             transition: background-image 0.5s ease-in-out;
         }
 
-        /* Rockstar Social Club benzeri karanlık ve modern tema */
+        /* Rockstar Social Club-like dark and modern theme */
         .glass-effect {
-            background-color: rgba(24, 24, 27, 0.8); /* zinc-900 %80 opaklık */
+            background-color: rgba(24, 24, 27, 0.8); /* zinc-900 80% opacity */
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(63, 63, 70, 0.5); /* zinc-700 %50 opaklık */
+            border: 1px solid rgba(63, 63, 70, 0.5); /* zinc-700 50% opacity */
         }
 
-        /* Scrollbar Stili */
+        /* Scrollbar Style */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -48,7 +48,7 @@
             background: #71717a; /* zinc-500 */
         }
 
-        /* Aktif Menü Öğesi */
+        /* Active Menu Item */
         .nav-link.active {
             color: #ffffff;
             background-color: #f59e0b; /* amber-500 */
@@ -57,7 +57,7 @@
             background-color: #f59e0b;
         }
 
-        /* Butonlar */
+        /* Buttons */
         .btn-primary {
             background-color: #f59e0b; /* amber-500 */
             color: #18181b; /* zinc-900 */
@@ -80,17 +80,17 @@
 </head>
 <body class="min-h-screen w-full">
 
-    <!-- 1. HEADER / NAVİGASYON -->
+    <!-- 1. HEADER / NAVIGATION -->
     <header class="sticky top-0 z-50 w-full glass-effect shadow-lg">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between h-16">
-                <!-- Sol Taraf: Logo / Başlık -->
+                <!-- Left Side: Logo / Title -->
                 <div class="flex items-center space-x-2">
                     <i data-lucide="user-round" class="text-amber-500"></i>
                     <span class="text-xl font-bold text-white uppercase">GTA My Assets</span>
                 </div>
 
-                <!-- Sağ Taraf: Ana Menü -->
+                <!-- Right Side: Main Menu -->
                 <nav class="hidden md:flex items-center space-x-1">
                     <a href="#" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-zinc-300 hover:bg-zinc-700 hover:text-white transition-colors">OVERVIEW</a>
                     <a href="#" class="nav-link active px-3 py-2 rounded-md text-sm font-medium text-zinc-300 hover:bg-zinc-700 hover:text-white transition-colors">VEHICLES</a>
@@ -99,7 +99,7 @@
                     <a href="#" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-zinc-300 hover:bg-zinc-700 hover:text-white transition-colors">AWARDS</a>
                 </nav>
 
-                <!-- Mobil Menü Butonu -->
+                <!-- Mobile Menu Button -->
                 <div class="md:hidden">
                     <button id="mobile-menu-btn" class="text-zinc-300 hover:text-white">
                         <i data-lucide="menu"></i>
@@ -107,7 +107,7 @@
                 </div>
             </div>
         </div>
-        <!-- Mobil Menü (Gizli) -->
+        <!-- Mobile Menu (Hidden) -->
         <div id="mobile-menu" class="md:hidden hidden glass-effect">
             <nav class="flex flex-col px-2 pt-2 pb-3 space-y-1">
                 <a href="#" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-zinc-300 hover:bg-zinc-700 hover:text-white transition-colors">OVERVIEW</a>
@@ -119,20 +119,20 @@
         </div>
     </header>
 
-    <!-- 2. ANA İÇERİK BÖLÜMÜ -->
+    <!-- 2. MAIN CONTENT SECTION -->
     <main class="container mx-auto p-4 md:p-6">
         
-        <!-- YENİ DETAYLI İSTATİSTİK KUTULARI -->
+        <!-- NEW DETAILED STATS BOXES -->
         <section id="stats-boxes" class="mb-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
                 
-                <!-- Toplam Mülkler -->
+                <!-- Total Properties -->
                 <div class="glass-effect p-4 rounded-lg shadow-md">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="warehouse" class="text-amber-500 w-8 h-8"></i>
                         <div>
-                            <span class="text-xs text-zinc-400 uppercase">Mülkler</span>
-                            <span id="total-properties-count" class="text-xl font-bold text-white block">0 Mülk</span>
+                            <span class="text-xs text-zinc-400 uppercase">Properties</span>
+                            <span id="total-properties-count" class="text-xl font-bold text-white block">0 Properties</span>
                         </div>
                     </div>
                     <div class="text-right text-green-400 font-semibold mt-2">
@@ -140,13 +140,13 @@
                     </div>
                 </div>
 
-                <!-- Motosikletler -->
+                <!-- Motorcycles -->
                 <div class="glass-effect p-4 rounded-lg shadow-md">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="bike" class="text-amber-500 w-8 h-8"></i>
                         <div>
-                            <span class="text-xs text-zinc-400 uppercase">Motosikletler</span>
-                            <span id="total-motorcycles-count" class="text-xl font-bold text-white block">0 Araç</span>
+                            <span class="text-xs text-zinc-400 uppercase">Motorcycles</span>
+                            <span id="total-motorcycles-count" class="text-xl font-bold text-white block">0 Vehicles</span>
                         </div>
                     </div>
                     <div class="text-right text-green-400 font-semibold mt-2">
@@ -154,13 +154,13 @@
                     </div>
                 </div>
 
-                <!-- Hava Araçları (Uçak + Helikopter) -->
+                <!-- Aircraft (Plane + Heli) -->
                 <div class="glass-effect p-4 rounded-lg shadow-md">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="plane" class="text-amber-500 w-8 h-8"></i>
                         <div>
-                            <span class="text-xs text-zinc-400 uppercase">Hava Araçları</span>
-                            <span id="total-aircraft-count" class="text-xl font-bold text-white block">0 Araç</span>
+                            <span class="text-xs text-zinc-400 uppercase">Aircraft</span>
+                            <span id="total-aircraft-count" class="text-xl font-bold text-white block">0 Vehicles</span>
                         </div>
                     </div>
                     <div class="text-right text-green-400 font-semibold mt-2">
@@ -168,13 +168,13 @@
                     </div>
                 </div>
 
-                <!-- Deniz Araçları -->
+                <!-- Sea Vehicles -->
                 <div class="glass-effect p-4 rounded-lg shadow-md">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="anchor" class="text-amber-500 w-8 h-8"></i>
                         <div>
-                            <span class="text-xs text-zinc-400 uppercase">Deniz Araçları</span>
-                            <span id="total-sea-count" class="text-xl font-bold text-white block">0 Araç</span>
+                            <span class="text-xs text-zinc-400 uppercase">Sea Vehicles</span>
+                            <span id="total-sea-count" class="text-xl font-bold text-white block">0 Vehicles</span>
                         </div>
                     </div>
                     <div class="text-right text-green-400 font-semibold mt-2">
@@ -182,13 +182,13 @@
                     </div>
                 </div>
 
-                <!-- Formula Araçları -->
+                <!-- Open Wheel Vehicles -->
                 <div class="glass-effect p-4 rounded-lg shadow-md">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="flag-checkered" class="text-amber-500 w-8 h-8"></i>
                         <div>
-                            <span class="text-xs text-zinc-400 uppercase">Formula</span>
-                            <span id="total-openwheel-count" class="text-xl font-bold text-white block">0 Araç</span>
+                            <span class="text-xs text-zinc-400 uppercase">Open Wheel</span>
+                            <span id="total-openwheel-count" class="text-xl font-bold text-white block">0 Vehicles</span>
                         </div>
                     </div>
                     <div class="text-right text-green-400 font-semibold mt-2">
@@ -196,13 +196,13 @@
                     </div>
                 </div>
                 
-                <!-- Toplam Varlık Değeri -->
+                <!-- Total Asset Value -->
                 <div class="glass-effect p-4 rounded-lg shadow-md flex flex-col justify-between bg-amber-500/10 border border-amber-500/50">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="dollar-sign" class="text-amber-400 w-8 h-8"></i>
                         <div>
-                            <span class="text-xs text-amber-300 uppercase">Toplam Varlık</span>
-                            <span class="text-xs text-zinc-400">(Mülk + Araç)</span>
+                            <span class="text-xs text-amber-300 uppercase">Total Assets</span>
+                            <span class="text-xs text-zinc-400">(Property + Vehicles)</span>
                         </div>
                     </div>
                     <div class="text-right mt-2">
@@ -212,66 +212,66 @@
             </div>
         </section>
 
-        <!-- ARAÇ GALERİSİ BÖLÜMÜ -->
+        <!-- VEHICLE GALLERY SECTION -->
         <section id="vehicle-gallery" class="glass-effect rounded-lg shadow-lg p-4 md:p-6">
             
-            <!-- Başlık ve Filtreleme -->
+            <!-- Title and Filtering -->
             <div class="flex flex-col md:flex-row items-center justify-between mb-6">
-                <h1 class="text-3xl font-bold text-white mb-4 md:mb-0">ARAÇ GALERİSİ</h1>
+                <h1 class="text-3xl font-bold text-white mb-4 md:mb-0">VEHICLE GALLERY</h1>
                 <div class="flex items-center space-x-4">
-                    <span class="text-zinc-400 font-medium">Sırala:</span>
+                    <span class="text-zinc-400 font-medium">Sort By:</span>
                     <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 rounded-lg p-1 bg-zinc-800">
                         <button id="sort-by-garage" class="btn-secondary active px-4 py-2 text-sm font-medium rounded-md transition-all">
-                            Garaj
+                            Garage
                         </button>
                         <button id="sort-by-type" class="btn-secondary px-4 py-2 text-sm font-medium rounded-md transition-all">
-                            Tip
+                            Type
                         </button>
                         <button id="sort-by-website" class="btn-secondary px-4 py-2 text-sm font-medium rounded-md transition-all">
-                            Web Sitesi
+                            Website
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Filtre Butonları Alanı -->
+            <!-- Filter Buttons Area -->
             <div id="filter-buttons-container" class="mb-6 flex flex-wrap gap-2">
-                <!-- JavaScript ile doldurulacak -->
+                <!-- JavaScript will populate this -->
             </div>
 
-            <!-- Ayıraç -->
+            <!-- Separator -->
             <hr class="border-zinc-700 mb-6">
 
-            <!-- Gösterilen Araç Bilgisi -->
+            <!-- Displayed Vehicle Info -->
             <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-                <h2 id="gallery-title" class="text-2xl font-semibold text-white mb-2 md:mb-0">Tüm Garajlar</h2>
+                <h2 id="gallery-title" class="text-2xl font-semibold text-white mb-2 md:mb-0">All Garages</h2>
                 <div class="flex items-center space-x-4">
                     <span class="text-zinc-400">
-                        <span id="filtered-count" class="font-bold text-white">0</span> Araç
+                        <span id="filtered-count" class="font-bold text-white">0</span> Vehicles
                     </span>
-                    <!-- Mülk Değeri Göstergesi -->
+                    <!-- Property Value Display -->
                     <div id="property-cost-display" class="glass-effect p-2 px-3 rounded-lg flex-col items-center hidden border border-blue-500/50 bg-blue-500/10">
-                        <span class="text-xs text-blue-300 uppercase">Mülk Değeri</span>
+                        <span class="text-xs text-blue-300 uppercase">Property Value</span>
                         <span id="property-cost-value" class="text-lg font-bold text-white">$0</span>
                     </div>
-                    <!-- Gösterilen Toplam Değer -->
+                    <!-- Displayed Total Value -->
                     <div class="glass-effect p-2 px-3 rounded-lg flex-col items-center border border-green-500/50 bg-green-500/10">
-                         <span class="text-xs text-green-300 uppercase">Gösterilen Değer</span>
+                         <span class="text-xs text-green-300 uppercase">Displayed Value</span>
                         <span id="filtered-value" class="text-lg font-bold text-white">$0</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Araç Kartları Alanı -->
+            <!-- Vehicle Cards Area -->
             <div id="vehicle-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- JavaScript ile doldurulacak -->
+                <!-- JavaScript will populate this -->
             </div>
             
-            <!-- Yükleniyor... (Boş Durum) -->
+            <!-- Loading... (Empty State) -->
             <div id="no-results" class="hidden text-center py-16">
                 <i data-lucide="search-x" class="w-16 h-16 text-zinc-600 mx-auto mb-4"></i>
-                <h3 class="text-xl font-semibold text-white">Araç Bulunamadı</h3>
-                <p class="text-zinc-400">Seçilen filtreye uygun araç bulunamadı.</p>
+                <h3 class="text-xl font-semibold text-white">No Vehicles Found</h3>
+                <p class="text-zinc-400">No vehicles match the selected filter.</p>
             </div>
 
         </section>
@@ -280,39 +280,39 @@
 
     <!-- 3. FOOTER -->
     <footer class="mt-12 pb-6 text-center">
-        <p class="text-sm text-zinc-500">&copy; <span id="current-year">2024</span> Kişisel Garaj Projesi. Tüm hakları saklıdır.</p>
+        <p class="text-sm text-zinc-500">&copy; <span id="current-year">2024</span> Personal Garage Project. All rights reserved.</p>
     </footer>
 
     <!-- 4. JAVASCRIPT -->
     <script>
         // --- DATA ---
-        // TÜM GARAJ ve ARAÇ VERİLERİ
-        // NOT: basePrice = Temel Fiyat, upgradePrice = Tahmini "Gırtlak" Yükseltme Maliyeti
+        // ALL GARAGE and VEHICLE DATA
+        // NOTE: basePrice = Base Price, upgradePrice = Estimated "Fully Upgraded" Cost
         const mockData = {
             garages: [
-                // Mülklerin "Gırtlak" Fiyatları
-                // Not: 'id' alanı, vehicles.garageId ile eşleşmelidir.
-                { id: 'penthouse', name: 'Penthouse', basePrice: 1500000, upgradePrice: 5375000 }, // Casino Penthouse + Tüm Ekstralar
-                { id: 'exceptionalists', name: 'Exceptionalists', basePrice: 112500, upgradePrice: 0 }, // Sadece Garaj
-                { id: 'supply', name: '331 Supply', basePrice: 109000, upgradePrice: 0 }, // Sadece Garaj
-                { id: 'apartment', name: 'Apartment', basePrice: 1100000, upgradePrice: 600000 }, // Eclipse Towers Apt 31 + Tüm İç Mekanlar
-                { id: 'wild', name: '3655 Wild', basePrice: 120000, upgradePrice: 0 }, // Sadece Garaj
-                { id: 'clubhouse', name: 'Clubhouse', basePrice: 495000, upgradePrice: 1200000 }, // En pahalı MC Clubhouse + Tüm Yükseltmeler
-                { id: 'unit2', name: 'Unit 2', basePrice: 135000, upgradePrice: 0 }, // Sadece Garaj (10 Araçlık)
-                { id: 'office1', name: 'Office 1', basePrice: 4000000, upgradePrice: 4435000 }, // Maze Bank Tower + Tüm Yükseltmeler (Garaj 1,2,3 dahil)
-                { id: 'office2', name: 'Office 2', basePrice: 0, upgradePrice: 0 }, // Maliyet Office 1'e eklendi
-                { id: 'office3', name: 'Office 3', basePrice: 0, upgradePrice: 0 }, // Maliyet Office 1'e eklendi
-                { id: 'facility', name: 'Facility', basePrice: 2950000, upgradePrice: 4075000 }, // En pahalı Facility + Orbital Cannon vb.
-                { id: 'nightclub_service', name: 'Nightclub Service', basePrice: 1080000, upgradePrice: 3500000 }, // En pahalı Nightclub + Tüm Yükseltmeler
-                { id: 'nightclub_b2', name: 'Nightclub B2', basePrice: 0, upgradePrice: 0 }, // Maliyet Ana Nightclub'a eklendi
-                { id: 'nightclub_b3', name: 'Nightclub B3', basePrice: 0, upgradePrice: 0 }, // Maliyet Ana Nightclub'a eklendi
-                { id: 'arena', name: 'Arena Workshop', basePrice: 995000, upgradePrice: 3500000 }, // Arena + Tüm Yükseltmeler (Benny's vb.)
-                { id: 'arena_b2', name: 'Arena B2', basePrice: 0, upgradePrice: 0 }, // Maliyet Arena'ya eklendi
-                { id: 'casino', name: 'Casino', basePrice: 900000, upgradePrice: 0 }, // Casino Paddock Garajı
-                { id: 'arcade', name: 'Arcade', basePrice: 1875000, upgradePrice: 2200000 }, // La Mesa Arcade + Tüm Yükseltmeler (MCT vb.)
+                // "Fully Upgraded" Prices for Properties
+                // Note: 'id' must match vehicles.garageId
+                { id: 'penthouse', name: 'Penthouse', basePrice: 1500000, upgradePrice: 5375000 }, // Casino Penthouse + All Extras
+                { id: 'exceptionalists', name: 'Exceptionalists', basePrice: 112500, upgradePrice: 0 }, // Garage Only
+                { id: 'supply', name: '331 Supply', basePrice: 109000, upgradePrice: 0 }, // Garage Only
+                { id: 'apartment', name: 'Apartment', basePrice: 1100000, upgradePrice: 600000 }, // Eclipse Towers Apt 31 + All Interiors
+                { id: 'wild', name: '3655 Wild', basePrice: 120000, upgradePrice: 0 }, // Garage Only
+                { id: 'clubhouse', name: 'Clubhouse', basePrice: 495000, upgradePrice: 1200000 }, // Most expensive MC Clubhouse + All Upgrades
+                { id: 'unit2', name: 'Unit 2', basePrice: 135000, upgradePrice: 0 }, // 10-Car Garage Only
+                { id: 'office1', name: 'Office 1', basePrice: 4000000, upgradePrice: 4435000 }, // Maze Bank Tower + All Upgrades (incl. Garage 1,2,3)
+                { id: 'office2', name: 'Office 2', basePrice: 0, upgradePrice: 0 }, // Cost included in Office 1
+                { id: 'office3', name: 'Office 3', basePrice: 0, upgradePrice: 0 }, // Cost included in Office 1
+                { id: 'facility', name: 'Facility', basePrice: 2950000, upgradePrice: 4075000 }, // Most expensive Facility + Orbital Cannon etc.
+                { id: 'nightclub_service', name: 'Nightclub Service', basePrice: 1080000, upgradePrice: 3500000 }, // Most expensive Nightclub + All Upgrades
+                { id: 'nightclub_b2', name: 'Nightclub B2', basePrice: 0, upgradePrice: 0 }, // Cost included in main Nightclub
+                { id: 'nightclub_b3', name: 'Nightclub B3', basePrice: 0, upgradePrice: 0 }, // Cost included in main Nightclub
+                { id: 'arena', name: 'Arena Workshop', basePrice: 995000, upgradePrice: 3500000 }, // Arena + All Upgrades (Benny's etc.)
+                { id: 'arena_b2', name: 'Arena B2', basePrice: 0, upgradePrice: 0 }, // Cost included in Arena
+                { id: 'casino', name: 'Casino', basePrice: 900000, upgradePrice: 0 }, // Casino Paddock Garage
+                { id: 'arcade', name: 'Arcade', basePrice: 1875000, upgradePrice: 2200000 }, // La Mesa Arcade + All Upgrades (MCT etc.)
                 
-                // Bu garajlar SADECE araçları gruplamak içindir, mülk maliyeti yoktur
-                // Bu mülklerin maliyetleri zaten 'Services' altında araç olarak ekli
+                // These are just for grouping vehicles, no property cost
+                // Their costs are already listed as vehicles under 'Services'
                 { id: 'terrorbyte', name: 'Terrorbyte', basePrice: 0, upgradePrice: 0 },
                 { id: 'special_vehicle', name: 'Special Vehicle', basePrice: 0, upgradePrice: 0 },
                 { id: 'aircraft', name: 'Personal Aircraft', basePrice: 0, upgradePrice: 0 },
@@ -339,7 +339,7 @@
                 { id: 'open_wheel', name: 'Open Wheel' },
                 { id: 'arena', name: 'Arena War' },
                 { id: 'utility', name: 'Utility' },
-                // YENİ EKLENEN TİPLER
+                // NEWLY ADDED TYPES
                 { id: 'sea_vehicle', name: 'Sea Vehicle' },
                 { id: 'bicycle', name: 'Bicycle' }
             ],
@@ -351,15 +351,15 @@
                 { id: 'arena', name: 'Arena War' },
                 { id: 'elitastravel', name: 'Elitás Travel' },
                 { id: 'docktease', name: 'DockTease' },
-                { id: 'dynasty8', name: 'Dynasty 8' }, // Mülkler için
-                { id: 'other', name: 'Diğer / Sokak' }
+                { id: 'dynasty8', name: 'Dynasty 8' }, // For Properties
+                { id: 'other', name: 'Other / Street' }
             ],
             vehicles: [
-                // PENTHOUSE (10 ARAÇ)
+                // PENTHOUSE (10 VEHICLES)
                 {
                     name: 'Streiter', type: 'Sports', garageId: 'penthouse', websiteId: 'ssas', update: 'Doomsday Heist',
                     image: 'images/vehicle/streiter.jpg',
-                    basePrice: 500000, upgradePrice: 450000 // Imani Tech + Silahlar
+                    basePrice: 500000, upgradePrice: 450000 // Imani Tech + Weapons
                 },
                 {
                     name: 'Schwartzer GT', type: 'Sports', garageId: 'penthouse', websiteId: 'legendary', update: 'After Hours',
@@ -398,7 +398,7 @@
                 },
                 {
                     name: 'Tailgater S', type: 'Sedan', garageId: 'penthouse', websiteId: 'legendary', update: 'Tuners',
-                    image: 'images/vehicle/tailgater.jpg', // Orijinal 'Taligater' ismini 'Tailgater S' olarak düzelttim
+                    image: 'images/vehicle/tailgater.jpg', // Original 'Taligater' corrected to 'Tailgater S'
                     basePrice: 1495000, upgradePrice: 1000000 // Imani Tech
                 },
                 {
@@ -407,11 +407,11 @@
                     basePrice: 130000, upgradePrice: 300000
                 },
 
-                // EXCEPTIONALISTS (10 ARAÇ)
+                // EXCEPTIONALISTS (10 VEHICLES)
                 {
                     name: 'APC', type: 'Weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Gunrunning',
                     image: 'images/vehicle/apc.jpg',
-                    basePrice: 3092250, upgradePrice: 800000 // Füzeler + Zırh
+                    basePrice: 3092250, upgradePrice: 800000 // Missiles + Armor
                 },
                 {
                     name: 'Insurgent', type: 'Armored', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Heists',
@@ -421,31 +421,31 @@
                 {
                     name: 'Caracara', type: 'Offroad', garageId: 'exceptionalists', websiteId: 'warstock', update: 'SA Super Sport',
                     image: 'images/vehicle/caracara.jpg',
-                    basePrice: 1775000, upgradePrice: 600000 // Silahlar
+                    basePrice: 1775000, upgradePrice: 600000 // Weapons
                 },
                 {
                     name: 'Weaponized Tampa', type: 'Weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Gunrunning',
                     image: 'images/vehicle/wep_tampa.jpg',
-                    basePrice: 2108050, upgradePrice: 1200000 // Tüm silahlar (Dual minigun, füzeler, mayınlar)
+                    basePrice: 2108050, upgradePrice: 1200000 // All weapons (Dual minigun, missiles, mines)
                 },
                 {
                     name: 'Duke O\'Death', type: 'Armored', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Returning Player',
                     image: 'images/vehicle/duke.jpg',
-                    basePrice: 665000, upgradePrice: 0 // Zaten zırhlı
+                    basePrice: 665000, upgradePrice: 0 // Already armored
                 },
                 {
                     name: 'Insurgent Pick-Up Custom', type: 'Weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Gunrunning',
                     image: 'images/vehicle/ins_pick-up.jpg',
-                    basePrice: 202500, upgradePrice: 1000000 // Pegasus aracını MOC'ta yükseltme + Zırh + Silahlar (Temel araç 1.8M)
+                    basePrice: 202500, upgradePrice: 1000000 // MOC upgrade + Armor + Weapons (Base vehicle 1.8M)
                 },
                 {
                     name: 'Half-track', type: 'Weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Gunrunning',
                     image: 'images/vehicle/half-track.jpg',
-                    basePrice: 2254350, upgradePrice: 800000 // Quad Cannon + Zırh
+                    basePrice: 2254350, upgradePrice: 800000 // Quad Cannon + Armor
                 },
                 {
                     name: 'Dubsta (6x6)', type: 'Offroad', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Hipster',
-                    image: 'images/vehicle/dubsta_6x6.jpg', // Diğer Dubsta'dan farklı
+                    image: 'images/vehicle/dubsta_6x6.jpg', // Different from other Dubsta
                     basePrice: 249000, upgradePrice: 300000
                 },
                 {
@@ -456,19 +456,19 @@
                 {
                     name: 'Nightshark', type: 'Armored', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Gunrunning',
                     image: 'images/vehicle/nightshark.jpg',
-                    basePrice: 1245000, upgradePrice: 400000 // Sadece zırh ve silah (performans yok)
+                    basePrice: 1245000, upgradePrice: 400000 // Armor and weapons only (no performance)
                 },
 
-                // 331 SUPPLY (10 ARAÇ)
+                // 331 SUPPLY (10 VEHICLES)
                 {
                     name: 'Moonbeam Custom', type: 'Muscle', garageId: 'supply', websiteId: 'bennys', update: 'Lowriders',
                     image: 'images/vehicle/moonbeam.jpg',
-                    basePrice: 32500, upgradePrice: 800000 // Benny's yükseltmesi + modlar
+                    basePrice: 32500, upgradePrice: 800000 // Benny's upgrade + mods
                 },
                 {
                     name: 'Rat-Loader', type: 'Muscle', garageId: 'supply', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/rat-loader.jpg',
-                    basePrice: 6000, upgradePrice: 350000 // Kapsamlı modifikasyon
+                    basePrice: 6000, upgradePrice: 350000 // Extensive mods
                 },
                 {
                     name: 'Lurcher', type: 'Muscle', garageId: 'supply', websiteId: 'ssas', update: 'Halloween',
@@ -508,10 +508,10 @@
                 {
                     name: 'Slamvan Custom', type: 'Muscle', garageId: 'supply', websiteId: 'bennys', update: 'Lowriders',
                     image: 'images/vehicle/slamvan_c.jpg',
-                    basePrice: 49500, upgradePrice: 900000 // Benny's yükseltmesi + modlar
+                    basePrice: 49500, upgradePrice: 900000 // Benny's upgrade + mods
                 },
 
-                // APARTMENT (10 ARAÇ)
+                // APARTMENT (10 VEHICLES)
                 {
                     name: 'Baller', type: 'SUV', garageId: 'apartment', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/baller.jpg',
@@ -549,7 +549,7 @@
                 },
                 {
                     name: 'Baller', type: 'SUV', garageId: 'apartment', websiteId: 'other', update: 'Default',
-                    image: 'images/vehicle/baller_2.jpg', // İkinci Baller için farklı resim yolu
+                    image: 'images/vehicle/baller_2.jpg', // Different image path for second Baller
                     basePrice: 90000, upgradePrice: 300000
                 },
                 {
@@ -560,14 +560,14 @@
                 {
                     name: 'Revolter', type: 'Sports', garageId: 'apartment', websiteId: 'legendary', update: 'Doomsday',
                     image: 'images/vehicle/revolter.jpg',
-                    basePrice: 1610000, upgradePrice: 500000 // Imani Tech + Silahlar
+                    basePrice: 1610000, upgradePrice: 500000 // Imani Tech + Weapons
                 },
 
-                // 3655 WILD (2 ARAÇ)
+                // 3655 WILD (2 VEHICLES)
                 {
                     name: 'V-STR', type: 'Sports', garageId: 'wild', websiteId: 'legendary', update: 'Diamond Casino Heist',
                     image: 'images/vehicle/vstr.jpg',
-                    basePrice: 1285000, upgradePrice: 500000 // Imani Tech + Silahlar
+                    basePrice: 1285000, upgradePrice: 500000 // Imani Tech + Weapons
                 },
                 {
                     name: 'Taipan', type: 'Super', garageId: 'wild', websiteId: 'legendary', update: 'Gunrunning',
@@ -575,7 +575,7 @@
                     basePrice: 1980000, upgradePrice: 400000
                 },
                 
-                // CLUBHOUSE (10 ARAÇ)
+                // CLUBHOUSE (10 VEHICLES)
                 {
                     name: 'Avarus', type: 'Motorcycle', garageId: 'clubhouse', websiteId: 'ssas', update: 'Bikers',
                     image: 'images/vehicle/avarus.jpg',
@@ -609,7 +609,7 @@
                 {
                     name: 'Oppressor', type: 'Motorcycle', garageId: 'clubhouse', websiteId: 'warstock', update: 'Gunrunning',
                     image: 'images/vehicle/oppressor.jpg',
-                    basePrice: 2750000, upgradePrice: 800000 // Silahlar (MOC/Avenger'da)
+                    basePrice: 2750000, upgradePrice: 800000 // Weapons (in MOC/Avenger)
                 },
                 {
                     name: 'Vortex', type: 'Motorcycle', garageId: 'clubhouse', websiteId: 'ssas', update: 'Bikers',
@@ -627,7 +627,7 @@
                     basePrice: 1995000, upgradePrice: 300000
                 },
 
-                // UNIT 2 (10 ARAÇ)
+                // UNIT 2 (10 VEHICLES)
                 {
                     name: 'Everon', type: 'Offroad', garageId: 'unit2', websiteId: 'ssas', update: 'Diamond Casino Heist',
                     image: 'images/vehicle/everon.jpg',
@@ -636,7 +636,7 @@
                 {
                     name: 'Toreador', type: 'Weaponized', garageId: 'unit2', websiteId: 'warstock', update: 'Cayo Perico',
                     image: 'images/vehicle/toreador.jpg',
-                    basePrice: 4250000, upgradePrice: 100000 // Silahlar dahil
+                    basePrice: 4250000, upgradePrice: 100000 // Weapons included
                 },
                 {
                     name: 'Imorgon', type: 'Sports', garageId: 'unit2', websiteId: 'legendary', update: 'Diamond Casino Heist',
@@ -679,7 +679,7 @@
                     basePrice: 1300000, upgradePrice: 400000
                 },
 
-                // OFFICE 1 (20 ARAÇ)
+                // OFFICE 1 (20 VEHICLES)
                 {
                     name: 'Michelli GT', type: 'Classic', garageId: 'office1', websiteId: 'ssas', update: 'SA Super Sport',
                     image: 'images/vehicle/michelli_gt.jpg',
@@ -697,7 +697,7 @@
                 },
                 {
                     name: 'Mamba', type: 'Classic', garageId: 'office1', websiteId: 'legendary', update: 'Executives',
-                    image: 'images/vehicle/mamba.jpg', // 'Topless' değil, 'Mamba'
+                    image: 'images/vehicle/mamba.jpg',
                     basePrice: 990000, upgradePrice: 300000
                 },
                 {
@@ -752,7 +752,7 @@
                 },
                 {
                     name: 'Issi Sport', type: 'Sports', garageId: 'office1', websiteId: 'ssas', update: 'Arena War',
-                    image: 'images/vehicle/issi_sport.jpg', // 'Issi'yi 'Issi Sport' olarak varsaydım
+                    image: 'images/vehicle/issi_sport.jpg',
                     basePrice: 897000, upgradePrice: 400000
                 },
                 {
@@ -781,7 +781,7 @@
                     basePrice: 1145000, upgradePrice: 400000
                 },
 
-                // OFFICE 2 (19 ARAÇ)
+                // OFFICE 2 (19 VEHICLES)
                 {
                     name: 'Manana', type: 'Classic', garageId: 'office2', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/manana.jpg',
@@ -878,7 +878,7 @@
                     basePrice: 2475000, upgradePrice: 400000
                 },
 
-                // OFFICE 3 (20 ARAÇ)
+                // OFFICE 3 (20 VEHICLES)
                 {
                     name: 'Turismo R', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/turismo_r.jpg',
@@ -980,7 +980,7 @@
                     basePrice: 1000000, upgradePrice: 400000
                 },
                 
-                // FACILITY (3 ARAÇ)
+                // FACILITY (3 VEHICLES)
                 {
                     name: 'Chernobog', type: 'Weaponized', garageId: 'facility', websiteId: 'warstock', update: 'Doomsday Heist',
                     image: 'images/vehicle/chernobog.jpg',
@@ -989,53 +989,260 @@
                 {
                     name: 'TM-02 Khanjali', type: 'Weaponized', garageId: 'facility', websiteId: 'warstock', update: 'Doomsday Heist',
                     image: 'images/vehicle/khanjali.jpg',
-                    basePrice: 3850350, upgradePrice: 500000 // Railgun + Zırh
+                    basePrice: 3850350, upgradePrice: 500000 // Railgun + Armor
                 },
                 {
                     name: 'Thruster', type: 'Weaponized', garageId: 'facility', websiteId: 'warstock', update: 'Doomsday Heist',
                     image: 'images/vehicle/thruster.jpg',
-                    basePrice: 3657500, upgradePrice: 300000 // Füzeler
+                    basePrice: 3657500, upgradePrice: 300000 // Missiles
                 },
 
-                // NIGHTCLUB SERVICE (1 ARAÇ)
+                // NIGHTCLUB SERVICE (1 VEHICLE)
                 {
                     name: 'Menacer', type: 'Weaponized', garageId: 'nightclub_service', websiteId: 'warstock', update: 'After Hours',
                     image: 'images/vehicle/menacer.jpg',
-                    basePrice: 1775000, upgradePrice: 700000 // Tam zırh + Dual Minigun
+                    basePrice: 1775000, upgradePrice: 700000 // Full armor + Dual Minigun
                 },
 
-                // SERVICES (Bu mülkler araç olarak listelenir)
+                // NIGHTCLUB B2 (10 VEHICLES)
+                {
+                    name: 'Raiden', type: 'Sports', garageId: 'nightclub_b2', websiteId: 'legendary', update: 'Doomsday Heist',
+                    image: 'images/vehicle/raiden.jpg',
+                    basePrice: 1375000, upgradePrice: 400000
+                },
+                {
+                    name: 'Chino Custom', type: 'Muscle', garageId: 'nightclub_b2', websiteId: 'bennys', update: 'Lowriders',
+                    image: 'images/vehicle/chino_custom.jpg',
+                    basePrice: 225000, upgradePrice: 600000 // Benny's
+                },
+                {
+                    name: 'Pariah', type: 'Sports', garageId: 'nightclub_b2', websiteId: 'legendary', update: 'Doomsday Heist',
+                    image: 'images/vehicle/pariah.jpg',
+                    basePrice: 1420000, upgradePrice: 400000
+                },
+                {
+                    name: 'Ardent', type: 'Classic', garageId: 'nightclub_b2', websiteId: 'warstock', update: 'Gunrunning',
+                    image: 'images/vehicle/ardent.jpg',
+                    basePrice: 1150000, upgradePrice: 400000 // Weapons
+                },
+                {
+                    name: 'Scramjet', type: 'Weaponized', garageId: 'nightclub_b2', websiteId: 'warstock', update: 'After Hours',
+                    image: 'images/vehicle/scramjet.jpg',
+                    basePrice: 4000000, upgradePrice: 500000 // Weapons
+                },
+                {
+                    name: 'Elegy Retro Custom', type: 'Classic', garageId: 'nightclub_b2', websiteId: 'bennys', update: 'Import/Export',
+                    image: 'images/vehicle/elegy_retro.jpg',
+                    basePrice: 0, upgradePrice: 1304000 // 904k Benny's + 400k
+                },
+                {
+                    name: 'Felon', type: 'Coupe', garageId: 'nightclub_b2', websiteId: 'other', update: 'Default',
+                    image: 'images/vehicle/felon.jpg',
+                    basePrice: 100000, upgradePrice: 300000
+                },
+                {
+                    name: 'Super Diamond', type: 'Sedan', garageId: 'nightclub_b2', websiteId: 'legendary', update: 'Default',
+                    image: 'images/vehicle/super_diamond.jpg',
+                    basePrice: 250000, upgradePrice: 300000
+                },
+                {
+                    name: 'Baller', type: 'SUV', garageId: 'nightclub_b2', websiteId: 'other', update: 'Default',
+                    image: 'images/vehicle/baller_3.jpg',
+                    basePrice: 90000, upgradePrice: 300000
+                },
+                {
+                    name: 'Patriot Stretch', type: 'Utility', garageId: 'nightclub_b2', websiteId: 'ssas', update: 'After Hours',
+                    image: 'images/vehicle/patriot_stretch.jpg',
+                    basePrice: 60000, upgradePrice: 300000
+                },
+
+                // NIGHTCLUB B3 (10 VEHICLES)
+                {
+                    name: 'Windsor Drop', type: 'Coupe', garageId: 'nightclub_b3', websiteId: 'legendary', update: 'Ill-Gotten Gains',
+                    image: 'images/vehicle/windsor_drop.jpg', // 'Windsor L' assumed 'Windsor Drop'
+                    basePrice: 900000, upgradePrice: 300000
+                },
+                {
+                    name: 'Felon', type: 'Coupe', garageId: 'nightclub_b3', websiteId: 'other', update: 'Default',
+                    image: 'images/vehicle/felon_2.jpg',
+                    basePrice: 100000, upgradePrice: 300000
+                },
+                {
+                    name: 'Schwartzer', type: 'Sports', garageId: 'nightclub_b3', websiteId: 'other', update: 'Default',
+                    image: 'images/vehicle/schwartzer_2.jpg',
+                    basePrice: 80000, upgradePrice: 300000
+                },
+                {
+                    name: 'Felon', type: 'Coupe', garageId: 'nightclub_b3', websiteId: 'other', update: 'Default',
+                    image: 'images/vehicle/felon_3.jpg',
+                    basePrice: 100000, upgradePrice: 300000
+                },
+                {
+                    name: 'Seven-70', type: 'Sports', garageId: 'nightclub_b3', websiteId: 'legendary', update: 'Further Adventures',
+                    image: 'images/vehicle/seven_70.jpg',
+                    basePrice: 695000, upgradePrice: 350000
+                },
+                {
+                    name: 'Thrax', type: 'Super', garageId: 'nightclub_b3', websiteId: 'legendary', update: 'Diamond Casino',
+                    image: 'images/vehicle/thrax.jpg',
+                    basePrice: 2325000, upgradePrice: 400000
+                },
+                {
+                    name: 'Nero Custom', type: 'Super', garageId: 'nightclub_b3', websiteId: 'bennys', update: 'Import/Export',
+                    image: 'images/vehicle/nero_custom_2.jpg',
+                    basePrice: 1440000, upgradePrice: 1005000 // 605k Benny's + 400k
+
+                },
+                {
+                    name: 'Adder', type: 'Super', garageId: 'nightclub_b3', websiteId: 'legendary', update: 'Default',
+                    image: 'images/vehicle/adder_2.jpg',
+                    basePrice: 1000000, upgradePrice: 400000
+                },
+                {
+                    name: 'Nero', type: 'Super', garageId: 'nightclub_b3', websiteId: 'legendary', update: 'Import/Export',
+                    image: 'images/vehicle/nero.jpg',
+                    basePrice: 1440000, upgradePrice: 400000
+                },
+                {
+                    name: 'Surfer', type: 'Utility', garageId: 'nightclub_b3', websiteId: 'other', update: 'Default',
+                    image: 'images/vehicle/surfer.jpg',
+                    basePrice: 11000, upgradePrice: 200000
+                },
+
+                // --- NEWLY ADDED ---
+
+                // ARENA WORKSHOP (10 VEHICLES)
+                {
+                    name: 'Future Shock ZR380', type: 'Arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
+                    image: 'images/vehicle/fs_zr380.jpg',
+                    basePrice: 2138640, upgradePrice: 2000000 // Base car + Arena conversion + upgrades
+                },
+                {
+                    name: 'Apocalypse Imperator', type: 'Arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
+                    image: 'images/vehicle/apoc_imperator.jpg',
+                    basePrice: 2284940, upgradePrice: 2000000
+                },
+                {
+                    name: 'Nightmare Scarab', type: 'Arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
+                    image: 'images/vehicle/nm_scarab.jpg',
+                    basePrice: 3076290, upgradePrice: 1500000 // Tank
+                },
+                {
+                    name: 'Nightmare Brutus', type: 'Arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
+                    image: 'images/vehicle/nm_brutus.jpg',
+                    basePrice: 2666666, upgradePrice: 2000000 // Monster Truck
+                },
+                {
+                    name: 'Apocalypse Cerberus', type: 'Arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
+                    image: 'images/vehicle/apoc_cerberus.jpg',
+                    basePrice: 3870300, upgradePrice: 1500000 // Truck
+                },
+                {
+                    name: 'Hotring Sabre', type: 'Sports', garageId: 'arena', websiteId: 'ssas', update: 'SA Super Sport',
+                    image: 'images/vehicle/hotring_sabre.jpg',
+                    basePrice: 830000, upgradePrice: 300000 // Limited upgrades
+                },
+                {
+                    name: 'Apocalypse Gauntlet', type: 'Arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
+                    image: 'images/vehicle/apoc_gauntlet.jpg', // Per your list "Gauntlet"
+                    basePrice: 1320000, upgradePrice: 1500000
+                },
+                {
+                    name: 'Nightmare Issi', type: 'Arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
+                    image: 'images/vehicle/nm_issi.jpg',
+                    basePrice: 1089000, upgradePrice: 1500000
+                },
+                {
+                    name: 'Elegy RH8 (Arena)', type: 'Sports', garageId: 'arena', websiteId: 'legendary', update: 'Default',
+                    image: 'images/vehicle/elegy_rh8_arena.jpg',
+                    basePrice: 0, upgradePrice: 400000
+                },
+                {
+                    name: 'Elegy RH8 (Arena)', type: 'Sports', garageId: 'arena', websiteId: 'legendary', update: 'Default',
+                    image: 'images/vehicle/elegy_rh8_arena_2.jpg',
+                    basePrice: 0, upgradePrice: 400000
+                },
+
+                // ARENA B2 (9 VEHICLES)
+                {
+                    name: 'FQ 2', type: 'SUV', garageId: 'arena_b2', websiteId: 'other', update: 'Default',
+                    image: 'images/vehicle/fq2.jpg',
+                    basePrice: 50000, upgradePrice: 300000
+                },
+                {
+                    name: 'Dominator', type: 'Muscle', garageId: 'arena_b2', websiteId: 'other', update: 'Default',
+                    image: 'images/vehicle/dominator.jpg',
+                    basePrice: 35000, upgradePrice: 300000
+                },
+                {
+                    name: 'Fusilade', type: 'Sports', garageId: 'arena_b2', websiteId: 'other', update: 'Default',
+                    image: 'images/vehicle/fusilade.jpg',
+                    basePrice: 36000, upgradePrice: 300000
+                },
+                {
+                    name: 'Sabre Turbo', type: 'Muscle', garageId: 'arena_b2', websiteId: 'other', update: 'Default',
+                    image: 'images/vehicle/sabre_turbo.jpg',
+                    basePrice: 15000, upgradePrice: 300000
+                },
+                {
+                    name: 'Minivan', type: 'Utility', garageId: 'arena_b2', websiteId: 'other', update: 'Default',
+                    image: 'images/vehicle/minivan.jpg',
+                    basePrice: 30000, upgradePrice: 250000
+                },
+                {
+                    name: 'Komoda', type: 'Sports', garageId: 'arena_b2', websiteId: 'ssas', update: 'Diamond Casino Heist',
+                    image: 'images/vehicle/komoda.jpg',
+                    basePrice: 1700000, upgradePrice: 400000
+                },
+                {
+                    name: 'Buffalo', type: 'Sports', garageId: 'arena_b2', websiteId: 'other', update: 'Default',
+                    image: 'images/vehicle/buffalo.jpg',
+                    basePrice: 35000, upgradePrice: 300000
+                },
+                {
+                    name: 'Patriot Stretch', type: 'Utility', garageId: 'arena_b2', websiteId: 'ssas', update: 'After Hours',
+                    image: 'images/vehicle/patriot_stretch_2.jpg',
+                    basePrice: 60000, upgradePrice: 300000
+                },
+                {
+                    name: 'Future Shock Issi', type: 'Arena', garageId: 'arena_b2', websiteId: 'arena', update: 'Arena War',
+                    image: 'images/vehicle/fs_issi.jpg',
+                    basePrice: 1089000, upgradePrice: 1500000
+                },
+
+
+                // SERVICES (These properties are listed as vehicles)
                 {
                     name: 'Galaxy Super Yacht', type: 'Service', garageId: 'services', websiteId: 'docktease', update: 'Galaxy',
                     image: 'images/vehicle/yacht.jpg',
-                    basePrice: 8000000, upgradePrice: 2000000 // En pahalı model + yükseltmeler
+                    basePrice: 8000000, upgradePrice: 2000000 // Most expensive model + upgrades
                 },
                 {
                     name: 'MOC (Mobile Ops Center)', type: 'Service', garageId: 'services', websiteId: 'warstock', update: 'Gunrunning',
                     image: 'images/vehicle/moc.jpg',
-                    basePrice: 2790000, upgradePrice: 1500000 // Phantom Custom + Silah/Araç Atölyesi
+                    basePrice: 2790000, upgradePrice: 1500000 // Phantom Custom + Weapon/Vehicle Workshop
                 },
                 {
                     name: 'Avenger', type: 'Service', garageId: 'services', websiteId: 'warstock', update: 'Doomsday',
                     image: 'images/vehicle/avenger.jpg',
-                    basePrice: 4787500, upgradePrice: 2000000 // Atölyeler + Silahlar
+                    basePrice: 4787500, upgradePrice: 2000000 // Workshops + Weapons
                 },
                 {
                     name: 'Terrorbyte', type: 'Service', garageId: 'services', websiteId: 'warstock', update: 'After Hours',
                     image: 'images/vehicle/terrorbyte.jpg',
-                    basePrice: 3459500, upgradePrice: 1000000 // Drone + Atölyeler
+                    basePrice: 3459500, upgradePrice: 1000000 // Drone + Workshops
                 },
                 {
                     name: 'Kosatka', type: 'Service', garageId: 'services', websiteId: 'warstock', update: 'Cayo Perico',
                     image: 'images/vehicle/kosatka.jpg',
-                    basePrice: 2200000, upgradePrice: 6885000 // Tam gırtlak (Sparrow, Füzeler, Sonar vb.)
+                    basePrice: 2200000, upgradePrice: 6885000 // Fully loaded (Sparrow, Missiles, Sonar etc.)
                 }
             ]
         };
 
         // --- GLOBAL STATE ---
-        let currentFilterType = 'garage'; // 'garage', 'type', veya 'website'
-        let currentFilterId = 'all'; // 'all', 'penthouse', 'super', vb.
+        let currentFilterType = 'garage'; // 'garage', 'type', or 'website'
+        let currentFilterId = 'all'; // 'all', 'penthouse', 'super', etc.
 
         // --- FORMATTERS ---
         const formatCurrency = (value) => {
@@ -1053,39 +1260,39 @@
         // --- APP LOGIC ---
 
         /**
-         * Sayfa yüklendiğinde uygulamayı başlatan ana fonksiyon
+         * Main function that initializes the app on page load
          */
         document.addEventListener('DOMContentLoaded', () => {
-            console.log("Garaj Uygulaması Başlatıldı...");
-            // Lucide ikonlarını yükle
+            console.log("Garage App Initialized...");
+            // Load Lucide icons
             lucide.createIcons();
 
-            // Yıl bilgisini güncelle
+            // Update footer year
             $('#current-year').textContent = new Date().getFullYear();
 
-            // Filtre butonlarını ayarla
+            // Set up filter buttons
             setupFilterButtons();
             
-            // Başlangıç filtrelemesini yap (Garajlar)
+            // Perform initial filtering (Garages)
             updateFilterButtonsUI();
             filterAndDisplayVehicles();
 
-            // İstatistik kutularını doldur
+            // Populate stats boxes
             updateStatsBoxes();
 
-            // Mobil menü
+            // Mobile menu toggle
             $('#mobile-menu-btn').addEventListener('click', () => {
                 $('#mobile-menu').classList.toggle('hidden');
             });
         });
 
         /**
-         * YENİ: İstatistik kutularını detaylı olarak günceller
+         * NEW: Updates stat boxes with detailed categories
          */
         function updateStatsBoxes() {
             const { vehicles, garages } = mockData;
 
-            // Fiyata göre filtreleme ve toplama için yardımcı fonksiyon
+            // Helper function to filter and sum categories
             const calculateCategory = (filterFn) => {
                 const filtered = vehicles.filter(filterFn);
                 const count = filtered.length;
@@ -1093,41 +1300,40 @@
                 return { count, value };
             };
 
-            // 1. Mülkler
+            // 1. Properties
             const properties = garages.filter(g => g.basePrice > 0);
             const propertyValue = properties.reduce((sum, g) => sum + (g.basePrice || 0) + (g.upgradePrice || 0), 0);
-            $('#total-properties-count').textContent = properties.length + ' Mülk';
+            $('#total-properties-count').textContent = properties.length + ' Properties';
             $('#total-properties-value').textContent = formatCurrency(propertyValue);
 
-            // 2. Motosikletler
+            // 2. Motorcycles
             const motorcycles = calculateCategory(v => v.type === 'motorcycle');
-            $('#total-motorcycles-count').textContent = motorcycles.count + ' Araç';
+            $('#total-motorcycles-count').textContent = motorcycles.count + ' Vehicles';
             $('#total-motorcycles-value').textContent = formatCurrency(motorcycles.value);
 
-            // 3. Hava Araçları (Uçak + Helikopter)
+            // 3. Aircraft (Plane + Heli)
             const aircraft = calculateCategory(v => v.type === 'aircraft' || v.type === 'helicopter');
-            $('#total-aircraft-count').textContent = aircraft.count + ' Araç';
+            $('#total-aircraft-count').textContent = aircraft.count + ' Vehicles';
             $('#total-aircraft-value').textContent = formatCurrency(aircraft.value);
 
-            // 4. Deniz Araçları (Yacht'ı 'service' olarak bıraktık, burası botlar/sub'lar için)
-            // Kosatka 'service' olduğu için, Yacht da 'service' olduğu için bu kategori şimdilik boş olabilir.
-            // 'sea_vehicle' tipinde araç eklenirse (örn. Seashark, Speeder) burası dolar.
-            const sea = calculateCategory(v => v.type === 'sea_vehicle' || v.garageId === 'pegasus_boat'); // Pegasus botlarını da ekleyebiliriz
-            $('#total-sea-count').textContent = sea.count + ' Araç';
+            // 4. Sea Vehicles
+            // Note: Kosatka and Yacht are 'service', so this is for smaller boats.
+            const sea = calculateCategory(v => v.type === 'sea_vehicle');
+            $('#total-sea-count').textContent = sea.count + ' Vehicles';
             $('#total-sea-value').textContent = formatCurrency(sea.value);
 
-            // 5. Formula (Open Wheel)
+            // 5. Open Wheel
             const openwheel = calculateCategory(v => v.type === 'open_wheel');
-            $('#total-openwheel-count').textContent = openwheel.count + ' Araç';
+            $('#total-openwheel-count').textContent = openwheel.count + ' Vehicles';
             $('#total-openwheel-value').textContent = formatCurrency(openwheel.value);
 
-            // 6. Toplam Varlık Değeri
+            // 6. Total Asset Value
             const allVehicleValue = vehicles.reduce((sum, v) => sum + (v.basePrice || 0) + (v.upgradePrice || 0), 0);
             $('#total-value').textContent = formatCurrency(propertyValue + allVehicleValue);
         }
 
         /**
-         * Ana sıralama butonlarını (Garaj / Tip / Web Sitesi) ayarlar
+         * Sets up the main sorting buttons (Garage / Type / Website)
          */
         function setupFilterButtons() {
             $('#sort-by-garage').addEventListener('click', () => {
@@ -1153,13 +1359,13 @@
         }
 
         /**
-         * Alt filtre butonlarını (Penthouse, Super, Legendary vb.) oluşturur ve günceller
+         * Creates and updates the sub-filter buttons (Penthouse, Super, Legendary etc.)
          */
         function updateFilterButtonsUI() {
             const container = $('#filter-buttons-container');
-            container.innerHTML = ''; // Temizle
+            container.innerHTML = ''; // Clear
 
-            // Aktif ana butonu ayarla
+            // Set active main button
             $('#sort-by-garage').classList.toggle('active', currentFilterType === 'garage');
             $('#sort-by-type').classList.toggle('active', currentFilterType === 'type');
             $('#sort-by-website').classList.toggle('active', currentFilterType === 'website');
@@ -1168,7 +1374,7 @@
             $('#sort-by-type').classList.toggle('btn-secondary', currentFilterType !== 'type');
             $('#sort-by-website').classList.toggle('btn-secondary', currentFilterType !== 'website');
 
-            // Filtre listesini al (Garajlar, Tipler veya Web Siteleri)
+            // Get the list to filter by (Garages, Types, or Websites)
             const filterMap = {
                 garage: mockData.garages,
                 type: mockData.types,
@@ -1176,9 +1382,9 @@
             };
             const filterList = filterMap[currentFilterType];
 
-            // "Tümü" butonu
+            // "All" button
             const allButton = document.createElement('button');
-            allButton.textContent = 'Tümü';
+            allButton.textContent = 'All';
             allButton.className = 'btn-secondary px-3 py-1.5 text-sm font-medium rounded-md transition-all';
             allButton.classList.toggle('active', currentFilterId === 'all');
             allButton.addEventListener('click', () => {
@@ -1187,7 +1393,7 @@
             });
             container.appendChild(allButton);
 
-            // Dinamik filtre butonları
+            // Dynamic filter buttons
             filterList.forEach(filter => {
                 const button = document.createElement('button');
                 button.textContent = filter.name;
@@ -1202,7 +1408,7 @@
         }
 
         /**
-         * Araçları mevcut filtreye göre filtreler ve ekranda gösterir
+         * Filters vehicles based on the current state and displays them
          */
         function filterAndDisplayVehicles() {
             const { vehicles, garages, types, websites } = mockData;
@@ -1211,16 +1417,16 @@
             
             let propertyCost = 0;
             
-            // YENİ: Arka Planı ve Mülk Maliyetini Ayarlama
+            // NEW: Logic for Background and Property Cost
             const bodyEl = document.body;
             const defaultBg = "url('https://placehold.co/1920x1080/18181b/18181b?text=+')";
-            propertyCostDisplay.classList.add('hidden'); // Önce gizle
+            propertyCostDisplay.classList.add('hidden'); // Hide first
 
             if (currentFilterType === 'garage' && currentFilterId !== 'all') {
                 const newBgUrl = `url('images/background/${currentFilterId}.jpg')`;
                 bodyEl.style.backgroundImage = newBgUrl;
                 
-                // Seçili garajın maliyetini bul
+                // Find the cost of the selected garage
                 const garage = garages.find(g => g.id === currentFilterId);
                 if (garage && (garage.basePrice > 0 || garage.upgradePrice > 0)) {
                     propertyCost = (garage.basePrice || 0) + (garage.upgradePrice || 0);
@@ -1232,7 +1438,7 @@
                 bodyEl.style.backgroundImage = defaultBg;
             }
             
-            // Aktif butonları güncelle
+            // Update active buttons
             const filterMap = {
                 garage: garages,
                 type: types,
@@ -1241,15 +1447,15 @@
             const currentList = filterMap[currentFilterType];
 
             $$('#filter-buttons-container button').forEach(btn => {
-                const isActive = (btn.textContent === 'Tümü' && currentFilterId === 'all') || 
-                                 (btn.textContent !== 'Tümü' && currentList.find(f => f.name === btn.textContent)?.id === currentFilterId);
+                const isActive = (btn.textContent === 'All' && currentFilterId === 'all') || 
+                                 (btn.textContent !== 'All' && currentList.find(f => f.name === btn.textContent)?.id === currentFilterId);
                 btn.classList.toggle('active', isActive);
             });
 
-            // Araçları filtrele
+            // Filter vehicles
             let filteredVehicles = [];
             if (currentFilterId === 'all') {
-                filteredVehicles = vehicles; // "Tümü" seçiliyken mülk maliyeti gösterilmez
+                filteredVehicles = vehicles; // No property cost shown when 'All' is selected
             } else {
                 if (currentFilterType === 'garage') {
                     filteredVehicles = vehicles.filter(v => v.garageId === currentFilterId);
@@ -1260,18 +1466,18 @@
                 }
             }
 
-            // Başlığı güncelle
+            // Update title
             updateGalleryTitle();
             
-            // Araç kartlarını oluştur ve mülk maliyetini de toplama ekle
+            // Create vehicle cards and add property cost to the total
             displayVehicleCards(filteredVehicles, propertyCost);
         }
 
         /**
-         * Galeri başlığını ve sayaçları günceller
+         * Updates the gallery title and counters
          */
         function updateGalleryTitle() {
-            let title = 'Tüm Varlıklar';
+            let title = 'All Assets';
             if (currentFilterId !== 'all') {
                 const filterMap = {
                     garage: mockData.garages,
@@ -1280,38 +1486,38 @@
                 };
                 const list = filterMap[currentFilterType];
                 const filterName = list.find(f => f.id === currentFilterId)?.name;
-                title = filterName || 'Tüm Varlıklar';
+                title = filterName || 'All Assets';
             }
             $('#gallery-title').textContent = title;
         }
 
         /**
-         * Verilen araç listesini HTML kartları olarak ekranda gösterir
-         * @param {Array} vehiclesToShow - Gösterilecek araç nesneleri dizisi
-         * @param {number} propertyCost - Mülkün kendi maliyeti (varsa)
+         * Displays the given list of vehicles as HTML cards on the screen
+         * @param {Array} vehiclesToShow - Array of vehicle objects to display
+         * @param {number} propertyCost - The cost of the property itself (if any)
          */
         function displayVehicleCards(vehiclesToShow, propertyCost = 0) {
             const grid = $('#vehicle-grid');
             const noResults = $('#no-results');
-            grid.innerHTML = ''; // Temizle
+            grid.innerHTML = ''; // Clear
 
             if (vehiclesToShow.length === 0 && propertyCost === 0) {
-                 // Eğer hem araç yoksa hem de gösterilecek mülk maliyeti yoksa "Bulunamadı" de
+                 // Only show "Not Found" if there are no vehicles AND no property cost to show
                 noResults.classList.remove('hidden');
             } else {
                 noResults.classList.add('hidden');
             }
 
-            // Toplam, mülk maliyeti ile başlar
+            // Total starts with the property cost
             let filteredTotalValue = propertyCost;
 
             vehiclesToShow.forEach(vehicle => {
                 const totalValue = (vehicle.basePrice || 0) + (vehicle.upgradePrice || 0);
-                filteredTotalValue += totalValue; // Araç maliyetlerini ekle
+                filteredTotalValue += totalValue; // Add vehicle cost
 
                 const typeName = mockData.types.find(t => t.id === vehicle.type)?.name || vehicle.type.toUpperCase();
                 const placeholderImage = `https://placehold.co/600x400/3f3f46/71717a?text=${encodeURIComponent(vehicle.name)}`;
-                const websiteName = mockData.websites.find(w => w.id === vehicle.websiteId)?.name || 'Bilinmiyor';
+                const websiteName = mockData.websites.find(w => w.id === vehicle.websiteId)?.name || 'Unknown';
 
                 const card = document.createElement('div');
                 card.className = 'glass-effect rounded-lg overflow-hidden shadow-xl border border-zinc-700/50 transition-all hover:shadow-amber-500/20 hover:border-amber-500/50';
@@ -1327,7 +1533,7 @@
                             <h3 class="text-xl font-bold text-white truncate">${vehicle.name}</h3>
                             <span class="text-xs font-medium bg-zinc-700 text-zinc-200 px-2 py-1 rounded">${typeName}</span>
                         </div>
-                        <p class="text-sm text-zinc-400 mb-2 uppercase">${vehicle.update || 'Bilinmiyor'}</p>
+                        <p class="text-sm text-zinc-400 mb-2 uppercase">${vehicle.update || 'Unknown'}</p>
                         
                         <div class="flex justify-between items-center mt-3 pt-3 border-t border-zinc-700">
                              <span class="text-xs font-medium text-amber-400 truncate" title="${websiteName}">
@@ -1340,7 +1546,7 @@
                 grid.appendChild(card);
             });
 
-            // Filtrelenmiş sayaçları güncelle
+            // Update filtered counters
             $('#filtered-count').textContent = vehiclesToShow.length;
             $('#filtered-value').textContent = formatCurrency(filteredTotalValue);
         }
