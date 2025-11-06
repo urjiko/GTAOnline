@@ -21,6 +21,8 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
+            /* Arka plan değişimi için yumuşak geçiş */
+            transition: background-image 0.5s ease-in-out;
         }
 
         /* Rockstar Social Club benzeri karanlık ve modern tema */
@@ -613,6 +615,306 @@
                     basePrice: 1300000, upgradePrice: 400000
                 },
 
+                // OFFICE 1 (20 ARAÇ)
+                {
+                    name: 'Michelli GT', type: 'Classic', garageId: 'office1', websiteId: 'ssas', update: 'SA Super Sport',
+                    image: 'images/vehicle/michelli_gt.jpg',
+                    basePrice: 525000, upgradePrice: 300000
+                },
+                {
+                    name: 'Stafford', type: 'Classic', garageId: 'office1', websiteId: 'legendary', update: 'After Hours',
+                    image: 'images/vehicle/stafford.jpg',
+                    basePrice: 1280000, upgradePrice: 500000 // Imani Tech
+                },
+                {
+                    name: 'Swinger', type: 'Classic', garageId: 'office1', websiteId: 'legendary', update: 'After Hours',
+                    image: 'images/vehicle/swinger.jpg',
+                    basePrice: 909000, upgradePrice: 300000
+                },
+                {
+                    name: 'Mamba', type: 'Classic', garageId: 'office1', websiteId: 'legendary', update: 'Executives',
+                    image: 'images/vehicle/mamba.jpg', // 'Topless' değil, 'Mamba'
+                    basePrice: 990000, upgradePrice: 300000
+                },
+                {
+                    name: 'Stirling GT', type: 'Classic', garageId: 'office1', websiteId: 'legendary', update: 'Heists',
+                    image: 'images/vehicle/stirling_gt.jpg',
+                    basePrice: 975000, upgradePrice: 1000000 // HSW
+                },
+                {
+                    name: 'Monroe', type: 'Classic', garageId: 'office1', websiteId: 'legendary', update: 'Default',
+                    image: 'images/vehicle/monroe.jpg',
+                    basePrice: 490000, upgradePrice: 300000
+                },
+                {
+                    name: 'Nero Custom', type: 'Super', garageId: 'office1', websiteId: 'bennys', update: 'Import/Export',
+                    image: 'images/vehicle/nero_custom.jpg',
+                    basePrice: 1440000, upgradePrice: 1005000 // 605k Benny's + 400k
+                },
+                {
+                    name: 'X80 Proto', type: 'Super', garageId: 'office1', websiteId: 'legendary', update: 'Further Adventures',
+                    image: 'images/vehicle/x80_proto.jpg',
+                    basePrice: 2700000, upgradePrice: 400000
+                },
+                {
+                    name: 'Visione', type: 'Super', garageId: 'office1', websiteId: 'legendary', update: 'Smuggler\'s Run',
+                    image: 'images/vehicle/visione.jpg',
+                    basePrice: 2250000, upgradePrice: 400000
+                },
+                {
+                    name: 'Cyclone', type: 'Super', garageId: 'office1', websiteId: 'legendary', update: 'Smuggler\'s Run',
+                    image: 'images/vehicle/cyclone.jpg',
+                    basePrice: 1890000, upgradePrice: 400000
+                },
+                {
+                    name: 'Osiris', type: 'Super', garageId: 'office1', websiteId: 'legendary', update: 'Ill-Gotten Gains',
+                    image: 'images/vehicle/osiris.jpg',
+                    basePrice: 1950000, upgradePrice: 400000
+                },
+                {
+                    name: 'Banshee 900R', type: 'Super', garageId: 'office1', websiteId: 'bennys', update: 'Default',
+                    image: 'images/vehicle/banshee_900r.jpg',
+                    basePrice: 105000, upgradePrice: 965000 // 565k Benny's + 400k
+                },
+                {
+                    name: 'Verlierer', type: 'Sports', garageId: 'office1', websiteId: 'legendary', update: 'Executives',
+                    image: 'images/vehicle/verlierer.jpg',
+                    basePrice: 695000, upgradePrice: 350000
+                },
+                {
+                    name: 'Emerus', type: 'Super', garageId: 'office1', websiteId: 'legendary', update: 'Diamond Casino',
+                    image: 'images/vehicle/emerus.jpg',
+                    basePrice: 2750000, upgradePrice: 400000
+                },
+                {
+                    name: 'Issi Sport', type: 'Sports', garageId: 'office1', websiteId: 'ssas', update: 'Arena War',
+                    image: 'images/vehicle/issi_sport.jpg', // 'Issi'yi 'Issi Sport' olarak varsaydım
+                    basePrice: 897000, upgradePrice: 400000
+                },
+                {
+                    name: 'Torero', type: 'Classic', garageId: 'office1', websiteId: 'legendary', update: 'Gunrunning',
+                    image: 'images/vehicle/torero.jpg',
+                    basePrice: 998000, upgradePrice: 300000
+                },
+                {
+                    name: 'Zorrusso', type: 'Super', garageId: 'office1', websiteId: 'legendary', update: 'Diamond Casino',
+                    image: 'images/vehicle/zorrusso.jpg',
+                    basePrice: 1925000, upgradePrice: 400000
+                },
+                {
+                    name: 'Neon', type: 'Sports', garageId: 'office1', websiteId: 'legendary', update: 'Doomsday',
+                    image: 'images/vehicle/neon.jpg',
+                    basePrice: 1500000, upgradePrice: 400000
+                },
+                {
+                    name: 'GP1', type: 'Super', garageId: 'office1', websiteId: 'legendary', update: 'Cunning Stunts',
+                    image: 'images/vehicle/gp1.jpg',
+                    basePrice: 1260000, upgradePrice: 400000
+                },
+                {
+                    name: 'Comet SR', type: 'Sports', garageId: 'office1', websiteId: 'legendary', update: 'Doomsday',
+                    image: 'images/vehicle/comet_sr.jpg',
+                    basePrice: 1145000, upgradePrice: 400000
+                },
+
+                // OFFICE 2 (19 ARAÇ)
+                {
+                    name: 'Manana', type: 'Classic', garageId: 'office2', websiteId: 'other', update: 'Default',
+                    image: 'images/vehicle/manana.jpg',
+                    basePrice: 10000, upgradePrice: 250000
+                },
+                {
+                    name: 'Roosevelt', type: 'Classic', garageId: 'office2', websiteId: 'legendary', update: 'Valentine\'s Day',
+                    image: 'images/vehicle/roosevelt.jpg',
+                    basePrice: 750000, upgradePrice: 300000
+                },
+                {
+                    name: 'Infernus Classic', type: 'Classic', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts',
+                    image: 'images/vehicle/infernus_classic.jpg',
+                    basePrice: 915000, upgradePrice: 300000
+                },
+                {
+                    name: 'Turismo Classic', type: 'Classic', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts',
+                    image: 'images/vehicle/turismo_classic.jpg',
+                    basePrice: 705000, upgradePrice: 300000
+                },
+                {
+                    name: 'Z-Type', type: 'Classic', garageId: 'office2', websiteId: 'legendary', update: 'Default',
+                    image: 'images/vehicle/z_type.jpg',
+                    basePrice: 950000, upgradePrice: 300000
+                },
+                {
+                    name: 'Alpha', type: 'Sports', garageId: 'office2', websiteId: 'legendary', update: 'Default',
+                    image: 'images/vehicle/alpha.jpg',
+                    basePrice: 150000, upgradePrice: 300000
+                },
+                {
+                    name: 'Nightshade', type: 'Muscle', garageId: 'office2', websiteId: 'legendary', update: 'Executives',
+                    image: 'images/vehicle/nightshade.jpg',
+                    basePrice: 585000, upgradePrice: 300000
+                },
+                {
+                    name: 'Elegy RH8', type: 'Sports', garageId: 'office2', websiteId: 'legendary', update: 'Default',
+                    image: 'images/vehicle/elegy_rh8.jpg',
+                    basePrice: 0, upgradePrice: 400000
+                },
+                {
+                    name: 'Neo', type: 'Sports', garageId: 'office2', websiteId: 'legendary', update: 'Diamond Casino',
+                    image: 'images/vehicle/neo.jpg',
+                    basePrice: 1875000, upgradePrice: 400000
+                },
+                {
+                    name: 'S80RR', type: 'Super', garageId: 'office2', websiteId: 'legendary', update: 'Diamond Casino',
+                    image: 'images/vehicle/s80rr.jpg',
+                    basePrice: 2575000, upgradePrice: 400000
+                },
+                {
+                    name: 'Ruston', type: 'Sports', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts',
+                    image: 'images/vehicle/ruston.jpg',
+                    basePrice: 430000, upgradePrice: 300000
+                },
+                {
+                    name: 'Autarch', type: 'Super', garageId: 'office2', websiteId: 'legendary', update: 'Doomsday',
+                    image: 'images/vehicle/autarch.jpg',
+                    basePrice: 1955000, upgradePrice: 400000
+                },
+                {
+                    name: 'Tyrus', type: 'Super', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts',
+                    image: 'images/vehicle/tyrus.jpg',
+                    basePrice: 2550000, upgradePrice: 400000
+                },
+                {
+                    name: 'Jester', type: 'Sports', garageId: 'office2', websiteId: 'legendary', update: 'Default',
+                    image: 'images/vehicle/jester.jpg',
+                    basePrice: 240000, upgradePrice: 350000
+                },
+                {
+                    name: 'Itali GTB', type: 'Super', garageId: 'office2', websiteId: 'legendary', update: 'Import/Export',
+                    image: 'images/vehicle/itali_gtb.jpg',
+                    basePrice: 1189000, upgradePrice: 300000
+                },
+                {
+                    name: 'Massacro', type: 'Sports', garageId: 'office2', websiteId: 'legendary', update: 'Default',
+                    image: 'images/vehicle/massacro.jpg',
+                    basePrice: 275000, upgradePrice: 350000
+                },
+                {
+                    name: 'ETR1', type: 'Super', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts',
+                    image: 'images/vehicle/etr1.jpg',
+                    basePrice: 1995000, upgradePrice: 400000
+                },
+                {
+                    name: 'Drift Tampa', type: 'Sports', garageId: 'office2', websiteId: 'ssas', update: 'Cunning Stunts',
+                    image: 'images/vehicle/drift_tampa.jpg',
+                    basePrice: 995000, upgradePrice: 400000
+                },
+                {
+                    name: 'RE-7B', type: 'Super', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts',
+                    image: 'images/vehicle/re_7b.jpg',
+                    basePrice: 2475000, upgradePrice: 400000
+                },
+
+                // OFFICE 3 (20 ARAÇ)
+                {
+                    name: 'Turismo R', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
+                    image: 'images/vehicle/turismo_r.jpg',
+                    basePrice: 500000, upgradePrice: 400000
+                },
+                {
+                    name: 'Reaper', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Further Adventures',
+                    image: 'images/vehicle/reaper.jpg',
+                    basePrice: 1595000, upgradePrice: 400000
+                },
+                {
+                    name: 'T20', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Ill-Gotten Gains',
+                    image: 'images/vehicle/t20.jpg',
+                    basePrice: 2200000, upgradePrice: 400000
+                },
+                {
+                    name: 'XA-21', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Gunrunning',
+                    image: 'images/vehicle/xa_21.jpg',
+                    basePrice: 2375000, upgradePrice: 400000
+                },
+                {
+                    name: 'Cheetah', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
+                    image: 'images/vehicle/cheetah.jpg',
+                    basePrice: 650000, upgradePrice: 400000
+                },
+                {
+                    name: '811', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Further Adventures',
+                    image: 'images/vehicle/811.jpg',
+                    basePrice: 1135000, upgradePrice: 400000
+                },
+                {
+                    name: 'Infernus', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
+                    image: 'images/vehicle/infernus.jpg',
+                    basePrice: 440000, upgradePrice: 350000
+                },
+                {
+                    name: 'Tezeract', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'SA Super Sport',
+                    image: 'images/vehicle/tezeract.jpg',
+                    basePrice: 2825000, upgradePrice: 400000
+                },
+                {
+                    name: 'Tyrant', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'SA Super Sport',
+                    image: 'images/vehicle/tyrant.jpg',
+                    basePrice: 2515000, upgradePrice: 400000
+                },
+                {
+                    name: 'Specter Custom', type: 'Sports', garageId: 'office3', websiteId: 'bennys', update: 'Import/Export',
+                    image: 'images/vehicle/specter_custom.jpg',
+                    basePrice: 599000, upgradePrice: 642000 // 252k Benny's + 390k
+                },
+                {
+                    name: 'Itali GTB Custom', type: 'Super', garageId: 'office3', websiteId: 'bennys', update: 'Import/Export',
+                    image: 'images/vehicle/itali_gtb_custom.jpg',
+                    basePrice: 1189000, upgradePrice: 895000 // 495k Benny's + 400k
+                },
+                {
+                    name: 'Vacca', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
+                    image: 'images/vehicle/vacca.jpg',
+                    basePrice: 240000, upgradePrice: 350000
+                },
+                {
+                    name: 'Vagner', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Gunrunning',
+                    image: 'images/vehicle/vagner.jpg',
+                    basePrice: 1535000, upgradePrice: 400000
+                },
+                {
+                    name: 'Zentorno', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
+                    image: 'images/vehicle/zentorno.jpg',
+                    basePrice: 725000, upgradePrice: 400000
+                },
+                {
+                    name: 'Deveste Eight', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Arena War',
+                    image: 'images/vehicle/deveste_eight.jpg',
+                    basePrice: 1795000, upgradePrice: 1000000 // HSW
+                },
+                {
+                    name: 'Entity XXR', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'SA Super Sport',
+                    image: 'images/vehicle/entity_xxr.jpg',
+                    basePrice: 2305000, upgradePrice: 400000
+                },
+                {
+                    name: 'Entity XF', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
+                    image: 'images/vehicle/entity_xf.jpg',
+                    basePrice: 795000, upgradePrice: 400000
+                },
+                {
+                    name: 'FMJ', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Further Adventures',
+                    image: 'images/vehicle/fmj.jpg',
+                    basePrice: 1750000, upgradePrice: 400000
+                },
+                {
+                    name: 'Tempesta', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Import/Export',
+                    image: 'images/vehicle/tempesta.jpg',
+                    basePrice: 1329000, upgradePrice: 400000
+                },
+                {
+                    name: 'Adder', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
+                    image: 'images/vehicle/adder.jpg',
+                    basePrice: 1000000, upgradePrice: 400000
+                },
 
                 // SERVICES (ÖRNEK - Listenin sonundan)
                 {
@@ -786,7 +1088,7 @@
                 button.classList.toggle('active', currentFilterId === filter.id);
                 button.addEventListener('click', () => {
                     currentFilterId = filter.id;
-                    filterAndDisplayVehicles(); // <<< HATA DÜZELTİLDİ (Vehilcles -> Vehicles)
+                    filterAndDisplayVehicles();
                 });
                 container.appendChild(button);
             });
@@ -797,6 +1099,17 @@
          */
         function filterAndDisplayVehicles() {
             const { vehicles, garages, types, websites } = mockData;
+            
+            // YENİ: Arka Planı Değiştirme Lojiği
+            const bodyEl = document.body;
+            const defaultBg = "url('https://placehold.co/1920x1080/18181b/18181b?text=+')";
+
+            if (currentFilterType === 'garage' && currentFilterId !== 'all') {
+                const newBgUrl = `url('images/background/${currentFilterId}.jpg')`;
+                bodyEl.style.backgroundImage = newBgUrl;
+            } else {
+                bodyEl.style.backgroundImage = defaultBg;
+            }
             
             // Aktif butonları güncelle
             const filterMap = {
