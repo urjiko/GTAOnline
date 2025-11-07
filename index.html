@@ -74,10 +74,11 @@
             color: #ffffff;
             background-color: #27272a; /* zinc-800 */
         }
+        /* UPDATED: Active button is now orange */
         .btn-sort.active {
-            color: #ffffff;
-            background-color: #3f3f46; /* zinc-700 */
-            border-color: #52525b; /* zinc-600 */
+            color: #18181b; /* zinc-900 (Dark text) */
+            background-color: #f59e0b; /* amber-500 */
+            border-color: #f59e0b; /* amber-500 */
         }
         .btn-sort:first-child {
             border-top-left-radius: 0.375rem;
@@ -118,6 +119,34 @@
             height: 100%;
             background-color: #f59e0b; /* amber-500 */
             transition: width 0.3s ease-out; /* Added transition */
+        }
+        
+        /* NEW: Styles for Expandable Properties */
+        #property-summary {
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        #property-summary:hover {
+            background-color: rgba(63, 63, 70, 0.3); /* zinc-700 30% */
+        }
+        #property-details-list {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            border-top: 1px solid transparent;
+        }
+        #property-summary[open] #property-details-list {
+            max-height: 500px; /* Adjust as needed */
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top-color: #3f3f46; /* zinc-700 */
+        }
+        #property-summary summary::-webkit-details-marker {
+            display: none;
+        }
+        #property-summary summary {
+            list-style: none;
+            outline: none;
         }
     </style>
 </head>
@@ -181,19 +210,26 @@
 
                 <!-- Column 3: Totals -->
                 <div class="col-span-1 md:col-span-1 flex flex-col justify-between space-y-4">
-                    <!-- Total Properties -->
-                    <div class="glass-effect p-4 rounded-lg shadow-md border border-zinc-700/50">
-                        <div class="flex items-center space-x-3">
-                            <i data-lucide="warehouse" class="text-amber-500 w-8 h-8"></i>
-                            <div>
-                                <span class="text-xs text-zinc-400 uppercase">Properties</span>
-                                <span id="total-properties-count" class="text-xl font-bold text-white block">0 Properties</span>
+                    
+                    <!-- NEW: Expandable Properties -->
+                    <details id="property-summary" class="glass-effect p-4 rounded-lg shadow-md border border-zinc-700/50">
+                        <summary class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="warehouse" class="text-amber-500 w-8 h-8"></i>
+                                <div>
+                                    <span class="text-xs text-zinc-400 uppercase">Properties</span>
+                                    <span id="total-properties-count" class="text-xl font-bold text-white block">0 Properties</span>
+                                </div>
                             </div>
+                            <div class="text-right">
+                                <span class="text-green-400 font-semibold block" id="total-properties-value">$0</span>
+                                <span class="text-xs text-zinc-400">(Click to expand)</span>
+                            </div>
+                        </summary>
+                        <div id="property-details-list" class="space-y-2">
+                            <!-- JS will populate this -->
                         </div>
-                        <div class="text-right text-green-400 font-semibold mt-2">
-                            <span id="total-properties-value">$0</span>
-                        </div>
-                    </div>
+                    </details>
                     
                     <!-- Total Asset Value -->
                     <div class="glass-effect p-4 rounded-lg shadow-md flex flex-col justify-between bg-amber-500/10 border border-amber-500/50">
@@ -327,6 +363,7 @@
                 { id: 'mini_vehicles', name: 'Mini Vehicles', basePrice: 0, upgradePrice: 0 },
                 { id: 'pegasus', name: 'Pegasus', basePrice: 0, upgradePrice: 0 }
             ],
+            // FIXED: Removed 'armored' type, it's now part of 'weaponized'
             types: [
                 { id: 'super', name: 'Super' },
                 { id: 'sports', name: 'Sports' },
@@ -338,7 +375,7 @@
                 { id: 'coupe', name: 'Coupe' },
                 { id: 'motorcycle', name: 'Motorcycle' },
                 { id: 'weaponized', name: 'Weaponized' },
-                { id: 'armored', name: 'Armored' },
+                // { id: 'armored', name: 'Armored' }, // REMOVED
                 { id: 'aircraft', name: 'Aircraft' },
                 { id: 'helicopter', name: 'Helicopter' },
                 { id: 'service', name: 'Service' },
@@ -361,667 +398,668 @@
                 { id: 'dynasty8', name: 'Dynasty 8' }, // For Properties
                 { id: 'other', name: 'Other / Street' }
             ],
+            // FIXED: All 'type' properties are now lowercase
             vehicles: [
                 // PENTHOUSE (10 VEHICLES)
                 {
-                    name: 'Streiter', type: 'Sports', garageId: 'penthouse', websiteId: 'ssas', update: 'Doomsday Heist',
+                    name: 'Streiter', type: 'sports', garageId: 'penthouse', websiteId: 'ssas', update: 'Doomsday Heist',
                     image: 'images/vehicle/streiter.jpg',
                     basePrice: 500000, upgradePrice: 850000 // Imani Tech + Weapons
                 },
                 {
-                    name: 'Schwartzer GT', type: 'Sports', garageId: 'penthouse', websiteId: 'legendary', update: 'After Hours',
+                    name: 'Schwartzer GT', type: 'sports', garageId: 'penthouse', websiteId: 'legendary', update: 'After Hours',
                     image: 'images/vehicle/schwartzer_gt.jpg',
                     basePrice: 1380000, upgradePrice: 400000
                 },
                 {
-                    name: 'Schwartzer', type: 'Sports', garageId: 'penthouse', websiteId: 'other', update: 'Default',
+                    name: 'Schwartzer', type: 'sports', garageId: 'penthouse', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/schwartzer.jpg',
                     basePrice: 80000, upgradePrice: 300000
                 },
                 {
-                    name: 'Scafter', type: 'Sedan', garageId: 'penthouse', websiteId: 'other', update: 'Default',
+                    name: 'Scafter', type: 'sedan', garageId: 'penthouse', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/scafter.jpg',
                     basePrice: 65000, upgradePrice: 300000
                 },
                 {
-                    name: 'Krieger', type: 'Super', garageId: 'penthouse', websiteId: 'legendary', update: 'Diamond Casino',
+                    name: 'Krieger', type: 'super', garageId: 'penthouse', websiteId: 'legendary', update: 'Diamond Casino',
                     image: 'images/vehicle/krieger.jpg',
                     basePrice: 2875000, upgradePrice: 400000
                 },
                 {
-                    name: 'Dubsta', type: 'Offroad', garageId: 'penthouse', websiteId: 'other', update: 'Default',
+                    name: 'Dubsta', type: 'offroad', garageId: 'penthouse', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/dubsta.jpg',
                     basePrice: 70000, upgradePrice: 300000
                 },
                 {
-                    name: 'Rocoto', type: 'SUV', garageId: 'penthouse', websiteId: 'other', update: 'Default',
+                    name: 'Rocoto', type: 'suv', garageId: 'penthouse', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/rocoto.jpg',
                     basePrice: 85000, upgradePrice: 300000
                 },
                 {
-                    name: '8F Drafter', type: 'Sports', garageId: 'penthouse', websiteId: 'legendary', update: 'Diamond Casino',
+                    name: '8F Drafter', type: 'sports', garageId: 'penthouse', websiteId: 'legendary', update: 'Diamond Casino',
                     image: 'images/vehicle/8f_drafter.jpg',
                     basePrice: 718000, upgradePrice: 1200000 // HSW + Imani
                 },
                 {
-                    name: 'Tailgater S', type: 'Sedan', garageId: 'penthouse', websiteId: 'legendary', update: 'Tuners',
+                    name: 'Tailgater S', type: 'sedan', garageId: 'penthouse', websiteId: 'legendary', update: 'Tuners',
                     image: 'images/vehicle/tailgater.jpg', // Original 'Taligater' corrected to 'Tailgater S'
                     basePrice: 1495000, upgradePrice: 1000000 // Imani Tech
                 },
                 {
-                    name: '9F Cabrio', type: 'Sports', garageId: 'penthouse', websiteId: 'legendary', update: 'Default',
+                    name: '9F Cabrio', type: 'sports', garageId: 'penthouse', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/9f_cabrio.jpg',
                     basePrice: 130000, upgradePrice: 300000
                 },
 
                 // EXCEPTIONALISTS (10 VEHICLES)
                 {
-                    name: 'APC', type: 'Weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Gunrunning',
+                    name: 'APC', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Gunrunning',
                     image: 'images/vehicle/apc.jpg',
                     basePrice: 3092250, upgradePrice: 800000 // Missiles + Armor
                 },
                 {
-                    name: 'Insurgent', type: 'Armored', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Heists',
+                    name: 'Insurgent', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Heists',
                     image: 'images/vehicle/insurgent.jpg',
                     basePrice: 897750, upgradePrice: 300000
                 },
                 {
-                    name: 'Caracara', type: 'Offroad', garageId: 'exceptionalists', websiteId: 'warstock', update: 'SA Super Sport',
+                    name: 'Caracara', type: 'offroad', garageId: 'exceptionalists', websiteId: 'warstock', update: 'SA Super Sport',
                     image: 'images/vehicle/caracara.jpg',
                     basePrice: 1775000, upgradePrice: 600000 // Weapons
                 },
                 {
-                    name: 'Weaponized Tampa', type: 'Weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Gunrunning',
+                    name: 'Weaponized Tampa', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Gunrunning',
                     image: 'images/vehicle/wep_tampa.jpg',
                     basePrice: 2108050, upgradePrice: 1200000 // All weapons (Dual minigun, missiles, mines)
                 },
                 {
-                    name: 'Duke O\'Death', type: 'Armored', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Returning Player',
+                    name: 'Duke O\'Death', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Returning Player',
                     image: 'images/vehicle/duke.jpg',
                     basePrice: 665000, upgradePrice: 0 // Already armored
                 },
                 {
-                    name: 'Insurgent Pick-Up Custom', type: 'Weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Gunrunning',
+                    name: 'Insurgent Pick-Up Custom', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Gunrunning',
                     image: 'images/vehicle/ins_pick-up.jpg',
                     basePrice: 1795000, upgradePrice: 1202500 // Base Pegasus Cost + MOC Conversion + Weapons/Armor
                 },
                 {
-                    name: 'Half-track', type: 'Weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Gunrunning',
+                    name: 'Half-track', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Gunrunning',
                     image: 'images/vehicle/half-track.jpg',
                     basePrice: 2254350, upgradePrice: 800000 // Quad Cannon + Armor
                 },
                 {
-                    name: 'Dubsta (6x6)', type: 'Offroad', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Hipster',
+                    name: 'Dubsta (6x6)', type: 'offroad', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Hipster',
                     image: 'images/vehicle/dubsta_6x6.jpg', // Different from other Dubsta
                     basePrice: 249000, upgradePrice: 300000
                 },
                 {
-                    name: 'Mesa (Merryweather)', type: 'Offroad', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Default',
+                    name: 'Mesa (Merryweather)', type: 'offroad', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Default',
                     image: 'images/vehicle/mesa.jpg',
                     basePrice: 87000, upgradePrice: 300000
                 },
                 {
-                    name: 'Nightshark', type: 'Armored', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Gunrunning',
+                    name: 'Nightshark', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Gunrunning',
                     image: 'images/vehicle/nightshark.jpg',
                     basePrice: 1245000, upgradePrice: 400000 // Armor and weapons only (no performance)
                 },
 
                 // 331 SUPPLY (10 VEHICLES)
                 {
-                    name: 'Moonbeam Custom', type: 'Muscle', garageId: 'supply', websiteId: 'bennys', update: 'Lowriders',
+                    name: 'Moonbeam Custom', type: 'muscle', garageId: 'supply', websiteId: 'bennys', update: 'Lowriders',
                     image: 'images/vehicle/moonbeam.jpg',
                     basePrice: 32500, upgradePrice: 800000 // Benny's upgrade + mods
                 },
                 {
-                    name: 'Rat-Loader', type: 'Muscle', garageId: 'supply', websiteId: 'other', update: 'Default',
+                    name: 'Rat-Loader', type: 'muscle', garageId: 'supply', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/rat-loader.jpg',
                     basePrice: 6000, upgradePrice: 350000 // Extensive mods
                 },
                 {
-                    name: 'Lurcher', type: 'Muscle', garageId: 'supply', websiteId: 'ssas', update: 'Halloween',
+                    name: 'Lurcher', type: 'muscle', garageId: 'supply', websiteId: 'ssas', update: 'Halloween',
                     image: 'images/vehicle/lurcher.jpg',
                     basePrice: 650000, upgradePrice: 300000
                 },
                 {
-                    name: 'Rapid GT', type: 'Sports', garageId: 'supply', websiteId: 'legendary', update: 'Default',
+                    name: 'Rapid GT', type: 'sports', garageId: 'supply', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/rapid_gt.jpg',
                     basePrice: 132000, upgradePrice: 300000
                 },
                 {
-                    name: 'GB200', type: 'Sports', garageId: 'supply', websiteId: 'legendary', update: 'SA Super Sport',
+                    name: 'GB200', type: 'sports', garageId: 'supply', websiteId: 'legendary', update: 'SA Super Sport',
                     image: 'images/vehicle/gb200.jpg',
                     basePrice: 940000, upgradePrice: 400000
                 },
                 {
-                    name: 'Desert Raid', type: 'Offroad', garageId: 'supply', websiteId: 'legendary', update: 'Cunning Stunts',
+                    name: 'Desert Raid', type: 'offroad', garageId: 'supply', websiteId: 'legendary', update: 'Cunning Stunts',
                     image: 'images/vehicle/desert_raid.jpg',
                     basePrice: 695000, upgradePrice: 350000
                 },
                 {
-                    name: 'Tornado Rat Rod', type: 'Classic', garageId: 'supply', websiteId: 'bennys', update: 'Bikers',
+                    name: 'Tornado Rat Rod', type: 'classic', garageId: 'supply', websiteId: 'bennys', update: 'Bikers',
                     image: 'images/vehicle/tornado_rat.jpg',
                     basePrice: 378000, upgradePrice: 400000
                 },
                 {
-                    name: 'Fränken Stange', type: 'Classic', garageId: 'supply', websiteId: 'ssas', update: 'Halloween',
+                    name: 'Fränken Stange', type: 'classic', garageId: 'supply', websiteId: 'ssas', update: 'Halloween',
                     image: 'images/vehicle/franken.jpg',
                     basePrice: 550000, upgradePrice: 300000
                 },
                 {
-                    name: 'Sentinel Classic', type: 'Classic', garageId: 'supply', websiteId: 'ssas', update: 'Doomsday',
+                    name: 'Sentinel Classic', type: 'classic', garageId: 'supply', websiteId: 'ssas', update: 'Doomsday',
                     image: 'images/vehicle/sentinel_classic.jpg',
                     basePrice: 650000, upgradePrice: 400000
                 },
                 {
-                    name: 'Slamvan Custom', type: 'Muscle', garageId: 'supply', websiteId: 'bennys', update: 'Lowriders',
+                    name: 'Slamvan Custom', type: 'muscle', garageId: 'supply', websiteId: 'bennys', update: 'Lowriders',
                     image: 'images/vehicle/slamvan_c.jpg',
                     basePrice: 49500, upgradePrice: 900000 // Benny's upgrade + mods
                 },
 
                 // APARTMENT (10 VEHICLES)
                 {
-                    name: 'Baller', type: 'SUV', garageId: 'apartment', websiteId: 'other', update: 'Default',
+                    name: 'Baller', type: 'suv', garageId: 'apartment', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/baller.jpg',
                     basePrice: 90000, upgradePrice: 300000
                 },
                 {
-                    name: 'Oracle XS', type: 'Coupe', garageId: 'apartment', websiteId: 'other', update: 'Default',
+                    name: 'Oracle XS', type: 'coupe', garageId: 'apartment', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/oracle_xs.jpg',
                     basePrice: 80000, upgradePrice: 300000
                 },
                 {
-                    name: 'Oracle', type: 'Coupe', garageId: 'apartment', websiteId: 'other', update: 'Default',
+                    name: 'Oracle', type: 'coupe', garageId: 'apartment', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/oracle.jpg',
                     basePrice: 80000, upgradePrice: 300000
                 },
                 {
-                    name: 'Zion', type: 'Coupe', garageId: 'apartment', websiteId: 'other', update: 'Default',
+                    name: 'Zion', type: 'coupe', garageId: 'apartment', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/zion.jpg',
                     basePrice: 60000, upgradePrice: 300000
                 },
                 {
-                    name: 'Zion Cabrio', type: 'Coupe', garageId: 'apartment', websiteId: 'other', update: 'Default',
+                    name: 'Zion Cabrio', type: 'coupe', garageId: 'apartment', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/zion_cabrio.jpg',
                     basePrice: 65000, upgradePrice: 300000
                 },
                 {
-                    name: 'Zion Classic', type: 'Classic', garageId: 'apartment', websiteId: 'ssas', update: 'Diamond Casino',
+                    name: 'Zion Classic', type: 'classic', garageId: 'apartment', websiteId: 'ssas', update: 'Diamond Casino',
                     image: 'images/vehicle/zion_classic.jpg',
                     basePrice: 812000, upgradePrice: 400000
                 },
                 {
-                    name: 'SC1', type: 'Super', garageId: 'apartment', websiteId: 'legendary', update: 'Doomsday',
+                    name: 'SC1', type: 'super', garageId: 'apartment', websiteId: 'legendary', update: 'Doomsday',
                     image: 'images/vehicle/sc1.jpg',
                     basePrice: 1603000, upgradePrice: 400000
                 },
                 {
-                    name: 'Baller', type: 'SUV', garageId: 'apartment', websiteId: 'other', update: 'Default',
+                    name: 'Baller', type: 'suv', garageId: 'apartment', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/baller_2.jpg', // Different image path for second Baller
                     basePrice: 90000, upgradePrice: 300000
                 },
                 {
-                    name: 'Sentinel XS', type: 'Coupe', garageId: 'apartment', websiteId: 'other', update: 'Default',
+                    name: 'Sentinel XS', type: 'coupe', garageId: 'apartment', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/sentinel_xs.jpg',
                     basePrice: 60000, upgradePrice: 350000
                 },
                 {
-                    name: 'Revolter', type: 'Sports', garageId: 'apartment', websiteId: 'legendary', update: 'Doomsday',
+                    name: 'Revolter', type: 'sports', garageId: 'apartment', websiteId: 'legendary', update: 'Doomsday',
                     image: 'images/vehicle/revolter.jpg',
                     basePrice: 1610000, upgradePrice: 850000 // Imani Tech + Weapons
                 },
 
                 // 3655 WILD (2 VEHICLES)
                 {
-                    name: 'V-STR', type: 'Sports', garageId: 'wild', websiteId: 'legendary', update: 'Diamond Casino Heist',
+                    name: 'V-STR', type: 'sports', garageId: 'wild', websiteId: 'legendary', update: 'Diamond Casino Heist',
                     image: 'images/vehicle/vstr.jpg',
                     basePrice: 1285000, upgradePrice: 850000 // Imani Tech + Weapons
                 },
                 {
-                    name: 'Taipan', type: 'Super', garageId: 'wild', websiteId: 'legendary', update: 'Gunrunning',
+                    name: 'Taipan', type: 'super', garageId: 'wild', websiteId: 'legendary', update: 'Gunrunning',
                     image: 'images/vehicle/taipan.jpg',
                     basePrice: 1980000, upgradePrice: 400000
                 },
                 
                 // CLUBHOUSE (10 VEHICLES)
                 {
-                    name: 'Avarus', type: 'Motorcycle', garageId: 'clubhouse', websiteId: 'ssas', update: 'Bikers',
+                    name: 'Avarus', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', update: 'Bikers',
                     image: 'images/vehicle/avarus.jpg',
                     basePrice: 118000, upgradePrice: 300000
                 },
                 {
-                    name: 'Daemon', type: 'Motorcycle', garageId: 'clubhouse', websiteId: 'bennys', update: 'Bikers',
+                    name: 'Daemon', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'bennys', update: 'Bikers',
                     image: 'images/vehicle/daemon.jpg',
                     basePrice: 145000, upgradePrice: 300000 // Benny's
                 },
                 {
-                    name: 'Shotaro', type: 'Motorcycle', garageId: 'clubhouse', websiteId: 'legendary', update: 'Bikers',
+                    name: 'Shotaro', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'legendary', update: 'Bikers',
                     image: 'images/vehicle/shotaro.jpg',
                     basePrice: 2225000, upgradePrice: 300000
                 },
                 {
-                    name: 'Diabolus Custom', type: 'Motorcycle', garageId: 'clubhouse', websiteId: 'bennys', update: 'Bikers',
+                    name: 'Diabolus Custom', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'bennys', update: 'Bikers',
                     image: 'images/vehicle/diabolus_custom.jpg',
                     basePrice: 130000, upgradePrice: 500000 // Benny's
                 },
                 {
-                    name: 'Akuma', type: 'Motorcycle', garageId: 'clubhouse', websiteId: 'ssas', update: 'Default',
+                    name: 'Akuma', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', update: 'Default',
                     image: 'images/vehicle/akuma.jpg',
                     basePrice: 9000, upgradePrice: 200000
                 },
                 {
-                    name: 'Bati 801', type: 'Motorcycle', garageId: 'clubhouse', websiteId: 'ssas', update: 'Default',
+                    name: 'Bati 801', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', update: 'Default',
                     image: 'images/vehicle/bati_801.jpg',
                     basePrice: 15000, upgradePrice: 200000
                 },
                 {
-                    name: 'Oppressor', type: 'Motorcycle', garageId: 'clubhouse', websiteId: 'warstock', update: 'Gunrunning',
+                    name: 'Oppressor', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'warstock', update: 'Gunrunning',
                     image: 'images/vehicle/oppressor.jpg',
                     basePrice: 2750000, upgradePrice: 800000 // Weapons (in MOC/Avenger)
                 },
                 {
-                    name: 'Vortex', type: 'Motorcycle', garageId: 'clubhouse', websiteId: 'ssas', update: 'Bikers',
+                    name: 'Vortex', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', update: 'Bikers',
                     image: 'images/vehicle/vortex.jpg',
                     basePrice: 356000, upgradePrice: 300000
                 },
                 {
-                    name: 'Nightblade', type: 'Motorcycle', garageId: 'clubhouse', websiteId: 'ssas', update: 'Bikers',
+                    name: 'Nightblade', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', update: 'Bikers',
                     image: 'images/vehicle/nightblade.jpg',
                     basePrice: 100000, upgradePrice: 300000
                 },
                 {
-                    name: 'Sanctus', type: 'Motorcycle', garageId: 'clubhouse', websiteId: 'ssas', update: 'Bikers',
+                    name: 'Sanctus', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', update: 'Bikers',
                     image: 'images/vehicle/sanctus.jpg',
                     basePrice: 1995000, upgradePrice: 300000
                 },
 
                 // UNIT 2 (10 VEHICLES)
                 {
-                    name: 'Everon', type: 'Offroad', garageId: 'unit2', websiteId: 'ssas', update: 'Diamond Casino Heist',
+                    name: 'Everon', type: 'offroad', garageId: 'unit2', websiteId: 'ssas', update: 'Diamond Casino Heist',
                     image: 'images/vehicle/everon.jpg',
                     basePrice: 1475000, upgradePrice: 700000 // Imani Tech
                 },
                 {
-                    name: 'Toreador', type: 'Weaponized', garageId: 'unit2', websiteId: 'warstock', update: 'Cayo Perico',
+                    name: 'Toreador', type: 'weaponized', garageId: 'unit2', websiteId: 'warstock', update: 'Cayo Perico',
                     image: 'images/vehicle/toreador.jpg',
                     basePrice: 4250000, upgradePrice: 100000 // Weapons included
                 },
                 {
-                    name: 'Imorgon', type: 'Sports', garageId: 'unit2', websiteId: 'legendary', update: 'Diamond Casino Heist',
+                    name: 'Imorgon', type: 'sports', garageId: 'unit2', websiteId: 'legendary', update: 'Diamond Casino Heist',
                     image: 'images/vehicle/imorgon.jpg',
                     basePrice: 2165000, upgradePrice: 400000
                 },
                 {
-                    name: 'Itali GTO', type: 'Sports', garageId: 'unit2', websiteId: 'legendary', update: 'Arena War',
+                    name: 'Itali GTO', type: 'sports', garageId: 'unit2', websiteId: 'legendary', update: 'Arena War',
                     image: 'images/vehicle/itali_gto.jpg',
                     basePrice: 1965000, upgradePrice: 400000
                 },
                 {
-                    name: 'Raptor', type: 'Sports', garageId: 'unit2', websiteId: 'legendary', update: 'Bikers',
+                    name: 'Raptor', type: 'sports', garageId: 'unit2', websiteId: 'legendary', update: 'Bikers',
                     image: 'images/vehicle/raptor.jpg',
                     basePrice: 648000, upgradePrice: 350000
                 },
                 {
-                    name: 'Toros', type: 'SUV', garageId: 'unit2', websiteId: 'legendary', update: 'Arena War',
+                    name: 'Toros', type: 'suv', garageId: 'unit2', websiteId: 'legendary', update: 'Arena War',
                     image: 'images/vehicle/toros.jpg',
                     basePrice: 498000, upgradePrice: 350000
                 },
                 {
-                    name: 'Flash GT', type: 'Sports', garageId: 'unit2', websiteId: 'legendary', update: 'SA Super Sport',
+                    name: 'Flash GT', type: 'sports', garageId: 'unit2', websiteId: 'legendary', update: 'SA Super Sport',
                     image: 'images/vehicle/flash_gt.jpg',
                     basePrice: 1675000, upgradePrice: 400000
                 },
                 {
-                    name: 'Lynx', type: 'Sports', garageId: 'unit2', websiteId: 'legendary', update: 'Cunning Stunts',
+                    name: 'Lynx', type: 'sports', garageId: 'unit2', websiteId: 'legendary', update: 'Cunning Stunts',
                     image: 'images/vehicle/lynx.jpg',
                     basePrice: 1735000, upgradePrice: 400000
                 },
                 {
-                    name: 'Locust', type: 'Sports', garageId: 'unit2', websiteId: 'legendary', update: 'Diamond Casino',
+                    name: 'Locust', type: 'sports', garageId: 'unit2', websiteId: 'legendary', update: 'Diamond Casino',
                     image: 'images/vehicle/locust.jpg',
                     basePrice: 1625000, upgradePrice: 400000
                 },
                 {
-                    name: 'Schlagen GT', type: 'Sports', garageId: 'unit2', websiteId: 'legendary', update: 'Arena War',
+                    name: 'Schlagen GT', type: 'sports', garageId: 'unit2', websiteId: 'legendary', update: 'Arena War',
                     image: 'images/vehicle/schlagen_gt.jpg',
                     basePrice: 1300000, upgradePrice: 400000
                 },
 
                 // OFFICE 1 (20 VEHICLES)
                 {
-                    name: 'Michelli GT', type: 'Classic', garageId: 'office1', websiteId: 'ssas', update: 'SA Super Sport',
+                    name: 'Michelli GT', type: 'classic', garageId: 'office1', websiteId: 'ssas', update: 'SA Super Sport',
                     image: 'images/vehicle/michelli_gt.jpg',
                     basePrice: 525000, upgradePrice: 300000
                 },
                 {
-                    name: 'Stafford', type: 'Classic', garageId: 'office1', websiteId: 'legendary', update: 'After Hours',
+                    name: 'Stafford', type: 'classic', garageId: 'office1', websiteId: 'legendary', update: 'After Hours',
                     image: 'images/vehicle/stafford.jpg',
                     basePrice: 1280000, upgradePrice: 850000 // Imani Tech
                 },
                 {
-                    name: 'Swinger', type: 'Classic', garageId: 'office1', websiteId: 'legendary', update: 'After Hours',
+                    name: 'Swinger', type: 'classic', garageId: 'office1', websiteId: 'legendary', update: 'After Hours',
                     image: 'images/vehicle/swinger.jpg',
                     basePrice: 909000, upgradePrice: 300000
                 },
                 {
-                    name: 'Mamba', type: 'Classic', garageId: 'office1', websiteId: 'legendary', update: 'Executives',
+                    name: 'Mamba', type: 'classic', garageId: 'office1', websiteId: 'legendary', update: 'Executives',
                     image: 'images/vehicle/mamba.jpg',
                     basePrice: 990000, upgradePrice: 300000
                 },
                 {
-                    name: 'Stirling GT', type: 'Classic', garageId: 'office1', websiteId: 'legendary', update: 'Heists',
+                    name: 'Stirling GT', type: 'classic', garageId: 'office1', websiteId: 'legendary', update: 'Heists',
                     image: 'images/vehicle/stirling_gt.jpg',
                     basePrice: 975000, upgradePrice: 1000000 // HSW
                 },
                 {
-                    name: 'Monroe', type: 'Classic', garageId: 'office1', websiteId: 'legendary', update: 'Default',
+                    name: 'Monroe', type: 'classic', garageId: 'office1', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/monroe.jpg',
                     basePrice: 490000, upgradePrice: 300000
                 },
                 {
-                    name: 'Nero Custom', type: 'Super', garageId: 'office1', websiteId: 'bennys', update: 'Import/Export',
+                    name: 'Nero Custom', type: 'super', garageId: 'office1', websiteId: 'bennys', update: 'Import/Export',
                     image: 'images/vehicle/nero_custom.jpg',
                     basePrice: 1440000, upgradePrice: 1005000 // 605k Benny's + 400k
                 },
                 {
-                    name: 'X80 Proto', type: 'Super', garageId: 'office1', websiteId: 'legendary', update: 'Further Adventures',
+                    name: 'X80 Proto', type: 'super', garageId: 'office1', websiteId: 'legendary', update: 'Further Adventures',
                     image: 'images/vehicle/x80_proto.jpg',
                     basePrice: 2700000, upgradePrice: 400000
                 },
                 {
-                    name: 'Visione', type: 'Super', garageId: 'office1', websiteId: 'legendary', update: 'Smuggler\'s Run',
+                    name: 'Visione', type: 'super', garageId: 'office1', websiteId: 'legendary', update: 'Smuggler\'s Run',
                     image: 'images/vehicle/visione.jpg',
                     basePrice: 2250000, upgradePrice: 400000
                 },
                 {
-                    name: 'Cyclone', type: 'Super', garageId: 'office1', websiteId: 'legendary', update: 'Smuggler\'s Run',
+                    name: 'Cyclone', type: 'super', garageId: 'office1', websiteId: 'legendary', update: 'Smuggler\'s Run',
                     image: 'images/vehicle/cyclone.jpg',
                     basePrice: 1890000, upgradePrice: 400000
                 },
                 {
-                    name: 'Osiris', type: 'Super', garageId: 'office1', websiteId: 'legendary', update: 'Ill-Gotten Gains',
+                    name: 'Osiris', type: 'super', garageId: 'office1', websiteId: 'legendary', update: 'Ill-Gotten Gains',
                     image: 'images/vehicle/osiris.jpg',
                     basePrice: 1950000, upgradePrice: 400000
                 },
                 {
-                    name: 'Banshee 900R', type: 'Super', garageId: 'office1', websiteId: 'bennys', update: 'Default',
+                    name: 'Banshee 900R', type: 'super', garageId: 'office1', websiteId: 'bennys', update: 'Default',
                     image: 'images/vehicle/banshee_900r.jpg',
                     basePrice: 105000, upgradePrice: 965000 // 565k Benny's + 400k
                 },
                 {
-                    name: 'Verlierer', type: 'Sports', garageId: 'office1', websiteId: 'legendary', update: 'Executives',
+                    name: 'Verlierer', type: 'sports', garageId: 'office1', websiteId: 'legendary', update: 'Executives',
                     image: 'images/vehicle/verlierer.jpg',
                     basePrice: 695000, upgradePrice: 350000
                 },
                 {
-                    name: 'Emerus', type: 'Super', garageId: 'office1', websiteId: 'legendary', update: 'Diamond Casino',
+                    name: 'Emerus', type: 'super', garageId: 'office1', websiteId: 'legendary', update: 'Diamond Casino',
                     image: 'images/vehicle/emerus.jpg',
                     basePrice: 2750000, upgradePrice: 400000
                 },
                 {
-                    name: 'Issi Sport', type: 'Sports', garageId: 'office1', websiteId: 'ssas', update: 'Arena War',
+                    name: 'Issi Sport', type: 'sports', garageId: 'office1', websiteId: 'ssas', update: 'Arena War',
                     image: 'images/vehicle/issi_sport.jpg',
                     basePrice: 897000, upgradePrice: 400000
                 },
                 {
-                    name: 'Torero', type: 'Classic', garageId: 'office1', websiteId: 'legendary', update: 'Gunrunning',
+                    name: 'Torero', type: 'classic', garageId: 'office1', websiteId: 'legendary', update: 'Gunrunning',
                     image: 'images/vehicle/torero.jpg',
                     basePrice: 998000, upgradePrice: 300000
                 },
                 {
-                    name: 'Zorrusso', type: 'Super', garageId: 'office1', websiteId: 'legendary', update: 'Diamond Casino',
+                    name: 'Zorrusso', type: 'super', garageId: 'office1', websiteId: 'legendary', update: 'Diamond Casino',
                     image: 'images/vehicle/zorrusso.jpg',
                     basePrice: 1925000, upgradePrice: 400000
                 },
                 {
-                    name: 'Neon', type: 'Sports', garageId: 'office1', websiteId: 'legendary', update: 'Doomsday',
+                    name: 'Neon', type: 'sports', garageId: 'office1', websiteId: 'legendary', update: 'Doomsday',
                     image: 'images/vehicle/neon.jpg',
                     basePrice: 1500000, upgradePrice: 400000
                 },
                 {
-                    name: 'GP1', type: 'Super', garageId: 'office1', websiteId: 'legendary', update: 'Cunning Stunts',
+                    name: 'GP1', type: 'super', garageId: 'office1', websiteId: 'legendary', update: 'Cunning Stunts',
                     image: 'images/vehicle/gp1.jpg',
                     basePrice: 1260000, upgradePrice: 400000
                 },
                 {
-                    name: 'Comet SR', type: 'Sports', garageId: 'office1', websiteId: 'legendary', update: 'Doomsday',
+                    name: 'Comet SR', type: 'sports', garageId: 'office1', websiteId: 'legendary', update: 'Doomsday',
                     image: 'images/vehicle/comet_sr.jpg',
                     basePrice: 1145000, upgradePrice: 400000
                 },
 
                 // OFFICE 2 (19 VEHICLES)
                 {
-                    name: 'Manana', type: 'Classic', garageId: 'office2', websiteId: 'other', update: 'Default',
+                    name: 'Manana', type: 'classic', garageId: 'office2', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/manana.jpg',
                     basePrice: 10000, upgradePrice: 250000
                 },
                 {
-                    name: 'Roosevelt', type: 'Classic', garageId: 'office2', websiteId: 'legendary', update: 'Valentine\'s Day',
+                    name: 'Roosevelt', type: 'classic', garageId: 'office2', websiteId: 'legendary', update: 'Valentine\'s Day',
                     image: 'images/vehicle/roosevelt.jpg',
                     basePrice: 750000, upgradePrice: 300000
                 },
                 {
-                    name: 'Infernus Classic', type: 'Classic', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts',
+                    name: 'Infernus Classic', type: 'classic', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts',
                     image: 'images/vehicle/infernus_classic.jpg',
                     basePrice: 915000, upgradePrice: 300000
                 },
                 {
-                    name: 'Turismo Classic', type: 'Classic', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts',
+                    name: 'Turismo Classic', type: 'classic', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts',
                     image: 'images/vehicle/turismo_classic.jpg',
                     basePrice: 705000, upgradePrice: 300000
                 },
                 {
-                    name: 'Z-Type', type: 'Classic', garageId: 'office2', websiteId: 'legendary', update: 'Default',
+                    name: 'Z-Type', type: 'classic', garageId: 'office2', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/z_type.jpg',
                     basePrice: 950000, upgradePrice: 300000
                 },
                 {
-                    name: 'Alpha', type: 'Sports', garageId: 'office2', websiteId: 'legendary', update: 'Default',
+                    name: 'Alpha', type: 'sports', garageId: 'office2', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/alpha.jpg',
                     basePrice: 150000, upgradePrice: 300000
                 },
                 {
-                    name: 'Nightshade', type: 'Muscle', garageId: 'office2', websiteId: 'legendary', update: 'Executives',
+                    name: 'Nightshade', type: 'muscle', garageId: 'office2', websiteId: 'legendary', update: 'Executives',
                     image: 'images/vehicle/nightshade.jpg',
                     basePrice: 585000, upgradePrice: 300000
                 },
                 {
-                    name: 'Elegy RH8', type: 'Sports', garageId: 'office2', websiteId: 'legendary', update: 'Default',
+                    name: 'Elegy RH8', type: 'sports', garageId: 'office2', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/elegy_rh8.jpg',
                     basePrice: 0, upgradePrice: 400000
                 },
                 {
-                    name: 'Neo', type: 'Sports', garageId: 'office2', websiteId: 'legendary', update: 'Diamond Casino',
+                    name: 'Neo', type: 'sports', garageId: 'office2', websiteId: 'legendary', update: 'Diamond Casino',
                     image: 'images/vehicle/neo.jpg',
                     basePrice: 1875000, upgradePrice: 400000
                 },
                 {
-                    name: 'S80RR', type: 'Super', garageId: 'office2', websiteId: 'legendary', update: 'Diamond Casino',
+                    name: 'S80RR', type: 'super', garageId: 'office2', websiteId: 'legendary', update: 'Diamond Casino',
                     image: 'images/vehicle/s80rr.jpg',
                     basePrice: 2575000, upgradePrice: 400000
                 },
                 {
-                    name: 'Ruston', type: 'Sports', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts',
+                    name: 'Ruston', type: 'sports', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts',
                     image: 'images/vehicle/ruston.jpg',
                     basePrice: 430000, upgradePrice: 300000
                 },
                 {
-                    name: 'Autarch', type: 'Super', garageId: 'office2', websiteId: 'legendary', update: 'Doomsday',
+                    name: 'Autarch', type: 'super', garageId: 'office2', websiteId: 'legendary', update: 'Doomsday',
                     image: 'images/vehicle/autarch.jpg',
                     basePrice: 1955000, upgradePrice: 400000
                 },
                 {
-                    name: 'Tyrus', type: 'Super', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts',
+                    name: 'Tyrus', type: 'super', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts',
                     image: 'images/vehicle/tyrus.jpg',
                     basePrice: 2550000, upgradePrice: 400000
                 },
                 {
-                    name: 'Jester', type: 'Sports', garageId: 'office2', websiteId: 'legendary', update: 'Default',
+                    name: 'Jester', type: 'sports', garageId: 'office2', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/jester.jpg',
                     basePrice: 240000, upgradePrice: 350000
                 },
                 {
-                    name: 'Itali GTB', type: 'Super', garageId: 'office2', websiteId: 'legendary', update: 'Import/Export',
+                    name: 'Itali GTB', type: 'super', garageId: 'office2', websiteId: 'legendary', update: 'Import/Export',
                     image: 'images/vehicle/itali_gtb.jpg',
                     basePrice: 1189000, upgradePrice: 300000
                 },
                 {
-                    name: 'Massacro', type: 'Sports', garageId: 'office2', websiteId: 'legendary', update: 'Default',
+                    name: 'Massacro', type: 'sports', garageId: 'office2', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/massacro.jpg',
                     basePrice: 275000, upgradePrice: 350000
                 },
                 {
-                    name: 'ETR1', type: 'Super', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts',
+                    name: 'ETR1', type: 'super', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts',
                     image: 'images/vehicle/etr1.jpg',
                     basePrice: 1995000, upgradePrice: 400000
                 },
                 {
-                    name: 'Drift Tampa', type: 'Sports', garageId: 'office2', websiteId: 'ssas', update: 'Cunning Stunts',
+                    name: 'Drift Tampa', type: 'sports', garageId: 'office2', websiteId: 'ssas', update: 'Cunning Stunts',
                     image: 'images/vehicle/drift_tampa.jpg',
                     basePrice: 995000, upgradePrice: 400000
                 },
                 {
-                    name: 'RE-7B', type: 'Super', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts',
+                    name: 'RE-7B', type: 'super', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts',
                     image: 'images/vehicle/re_7b.jpg',
                     basePrice: 2475000, upgradePrice: 400000
                 },
 
                 // OFFICE 3 (20 VEHICLES)
                 {
-                    name: 'Turismo R', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
+                    name: 'Turismo R', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/turismo_r.jpg',
                     basePrice: 500000, upgradePrice: 400000
                 },
                 {
-                    name: 'Reaper', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Further Adventures',
+                    name: 'Reaper', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Further Adventures',
                     image: 'images/vehicle/reaper.jpg',
                     basePrice: 1595000, upgradePrice: 400000
                 },
                 {
-                    name: 'T20', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Ill-Gotten Gains',
+                    name: 'T20', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Ill-Gotten Gains',
                     image: 'images/vehicle/t20.jpg',
                     basePrice: 2200000, upgradePrice: 400000
                 },
                 {
-                    name: 'XA-21', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Gunrunning',
+                    name: 'XA-21', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Gunrunning',
                     image: 'images/vehicle/xa_21.jpg',
                     basePrice: 2375000, upgradePrice: 400000
                 },
                 {
-                    name: 'Cheetah', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
+                    name: 'Cheetah', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/cheetah.jpg',
                     basePrice: 650000, upgradePrice: 400000
                 },
                 {
-                    name: '811', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Further Adventures',
+                    name: '811', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Further Adventures',
                     image: 'images/vehicle/811.jpg',
                     basePrice: 1135000, upgradePrice: 400000
                 },
                 {
-                    name: 'Infernus', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
+                    name: 'Infernus', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/infernus.jpg',
                     basePrice: 440000, upgradePrice: 350000
                 },
                 {
-                    name: 'Tezeract', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'SA Super Sport',
+                    name: 'Tezeract', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'SA Super Sport',
                     image: 'images/vehicle/tezeract.jpg',
                     basePrice: 2825000, upgradePrice: 400000
                 },
                 {
-                    name: 'Tyrant', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'SA Super Sport',
+                    name: 'Tyrant', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'SA Super Sport',
                     image: 'images/vehicle/tyrant.jpg',
                     basePrice: 2515000, upgradePrice: 400000
                 },
                 {
-                    name: 'Specter Custom', type: 'Sports', garageId: 'office3', websiteId: 'bennys', update: 'Import/Export',
+                    name: 'Specter Custom', type: 'sports', garageId: 'office3', websiteId: 'bennys', update: 'Import/Export',
                     image: 'images/vehicle/specter_custom.jpg',
                     basePrice: 599000, upgradePrice: 642000 // 252k Benny's + 390k
                 },
                 {
-                    name: 'Itali GTB Custom', type: 'Super', garageId: 'office3', websiteId: 'bennys', update: 'Import/Export',
+                    name: 'Itali GTB Custom', type: 'super', garageId: 'office3', websiteId: 'bennys', update: 'Import/Export',
                     image: 'images/vehicle/itali_gtb_custom.jpg',
                     basePrice: 1189000, upgradePrice: 895000 // 495k Benny's + 400k
                 },
                 {
-                    name: 'Vacca', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
+                    name: 'Vacca', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/vacca.jpg',
                     basePrice: 240000, upgradePrice: 350000
                 },
                 {
-                    name: 'Vagner', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Gunrunning',
+                    name: 'Vagner', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Gunrunning',
                     image: 'images/vehicle/vagner.jpg',
                     basePrice: 1535000, upgradePrice: 400000
                 },
                 {
-                    name: 'Zentorno', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
+                    name: 'Zentorno', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/zentorno.jpg',
                     basePrice: 725000, upgradePrice: 400000
                 },
                 {
-                    name: 'Deveste Eight', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Arena War',
+                    name: 'Deveste Eight', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Arena War',
                     image: 'images/vehicle/deveste_eight.jpg',
                     basePrice: 1795000, upgradePrice: 1000000 // HSW
                 },
                 {
-                    name: 'Entity XXR', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'SA Super Sport',
+                    name: 'Entity XXR', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'SA Super Sport',
                     image: 'images/vehicle/entity_xxr.jpg',
                     basePrice: 2305000, upgradePrice: 400000
                 },
                 {
-                    name: 'Entity XF', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
+                    name: 'Entity XF', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/entity_xf.jpg',
                     basePrice: 795000, upgradePrice: 400000
                 },
                 {
-                    name: 'FMJ', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Further Adventures',
+                    name: 'FMJ', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Further Adventures',
                     image: 'images/vehicle/fmj.jpg',
                     basePrice: 1750000, upgradePrice: 400000
                 },
                 {
-                    name: 'Tempesta', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Import/Export',
+                    name: 'Tempesta', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Import/Export',
                     image: 'images/vehicle/tempesta.jpg',
                     basePrice: 1329000, upgradePrice: 400000
                 },
                 {
-                    name: 'Adder', type: 'Super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
+                    name: 'Adder', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/adder.jpg',
                     basePrice: 1000000, upgradePrice: 400000
                 },
                 
                 // FACILITY (3 VEHICLES)
                 {
-                    name: 'Chernobog', type: 'Weaponized', garageId: 'facility', websiteId: 'warstock', update: 'Doomsday Heist',
+                    name: 'Chernobog', type: 'weaponized', garageId: 'facility', websiteId: 'warstock', update: 'Doomsday Heist',
                     image: 'images/vehicle/chernobog.jpg',
                     basePrice: 3311700, upgradePrice: 100000
                 },
                 {
-                    name: 'TM-02 Khanjali', type: 'Weaponized', garageId: 'facility', websiteId: 'warstock', update: 'Doomsday Heist',
+                    name: 'TM-02 Khanjali', type: 'weaponized', garageId: 'facility', websiteId: 'warstock', update: 'Doomsday Heist',
                     image: 'images/vehicle/khanjali.jpg',
                     basePrice: 3850350, upgradePrice: 500000 // Railgun + Armor
                 },
                 {
-                    name: 'Thruster', type: 'Weaponized', garageId: 'facility', websiteId: 'warstock', update: 'Doomsday Heist',
+                    name: 'Thruster', type: 'weaponized', garageId: 'facility', websiteId: 'warstock', update: 'Doomsday Heist',
                     image: 'images/vehicle/thruster.jpg',
                     basePrice: 3657500, upgradePrice: 300000 // Missiles
                 },
 
                 // NIGHTCLUB SERVICE (4 VEHICLES - Menacer + 3 Delivery)
                 {
-                    name: 'Menacer', type: 'Weaponized', garageId: 'nightclub_service', websiteId: 'warstock', update: 'After Hours',
+                    name: 'Menacer', type: 'weaponized', garageId: 'nightclub_service', websiteId: 'warstock', update: 'After Hours',
                     image: 'images/vehicle/menacer.jpg',
                     basePrice: 1775000, upgradePrice: 700000 // Full armor + Dual Minigun
                 },
                 {
-                    name: 'Speedo Custom', type: 'Weaponized', garageId: 'nightclub_service', websiteId: 'warstock', update: 'After Hours',
+                    name: 'Speedo Custom', type: 'weaponized', garageId: 'nightclub_service', websiteId: 'warstock', update: 'After Hours',
                     image: 'images/vehicle/speedo_custom.jpg',
                     basePrice: 0, upgradePrice: 500000 // Included with NC, full upgrades
                 },
                 {
-                    name: 'Mule Custom', type: 'Weaponized', garageId: 'nightclub_service', websiteId: 'warstock', update: 'After Hours',
+                    name: 'Mule Custom', type: 'weaponized', garageId: 'nightclub_service', websiteId: 'warstock', update: 'After Hours',
                     image: 'images/vehicle/mule_custom.jpg',
                     basePrice: 95760, upgradePrice: 500000 // Base vehicle + full upgrades
                 },
                 {
-                    name: 'Pounder Custom', type: 'Weaponized', garageId: 'nightclub_service', websiteId: 'warstock', update: 'After Hours',
+                    name: 'Pounder Custom', type: 'weaponized', garageId: 'nightclub_service', websiteId: 'warstock', update: 'After Hours',
                     image: 'images/vehicle/pounder_custom.jpg',
                     basePrice: 320530, upgradePrice: 600000 // Base vehicle + full upgrades
                 },
@@ -1029,476 +1067,474 @@
 
                 // NIGHTCLUB B2 (10 VEHICLES)
                 {
-                    name: 'Raiden', type: 'Sports', garageId: 'nightclub_b2', websiteId: 'legendary', update: 'Doomsday Heist',
+                    name: 'Raiden', type: 'sports', garageId: 'nightclub_b2', websiteId: 'legendary', update: 'Doomsday Heist',
                     image: 'images/vehicle/raiden.jpg',
                     basePrice: 1375000, upgradePrice: 400000
                 },
                 {
-                    name: 'Chino Custom', type: 'Muscle', garageId: 'nightclub_b2', websiteId: 'bennys', update: 'Lowriders',
+                    name: 'Chino Custom', type: 'muscle', garageId: 'nightclub_b2', websiteId: 'bennys', update: 'Lowriders',
                     image: 'images/vehicle/chino_custom.jpg',
                     basePrice: 225000, upgradePrice: 600000 // Benny's
                 },
                 {
-                    name: 'Pariah', type: 'Sports', garageId: 'nightclub_b2', websiteId: 'legendary', update: 'Doomsday Heist',
+                    name: 'Pariah', type: 'sports', garageId: 'nightclub_b2', websiteId: 'legendary', update: 'Doomsday Heist',
                     image: 'images/vehicle/pariah.jpg',
                     basePrice: 1420000, upgradePrice: 400000
                 },
                 {
-                    name: 'Ardent', type: 'Classic', garageId: 'nightclub_b2', websiteId: 'warstock', update: 'Gunrunning',
+                    name: 'Ardent', type: 'classic', garageId: 'nightclub_b2', websiteId: 'warstock', update: 'Gunrunning',
                     image: 'images/vehicle/ardent.jpg',
                     basePrice: 1150000, upgradePrice: 400000 // Weapons
                 },
                 {
-                    name: 'Scramjet', type: 'Weaponized', garageId: 'nightclub_b2', websiteId: 'warstock', update: 'After Hours',
+                    name: 'Scramjet', type: 'weaponized', garageId: 'nightclub_b2', websiteId: 'warstock', update: 'After Hours',
                     image: 'images/vehicle/scramjet.jpg',
                     basePrice: 4000000, upgradePrice: 500000 // Weapons
                 },
                 {
-                    name: 'Elegy Retro Custom', type: 'Classic', garageId: 'nightclub_b2', websiteId: 'bennys', update: 'Import/Export',
+                    name: 'Elegy Retro Custom', type: 'classic', garageId: 'nightclub_b2', websiteId: 'bennys', update: 'Import/Export',
                     image: 'images/vehicle/elegy_retro.jpg',
                     basePrice: 0, upgradePrice: 1304000 // 904k Benny's + 400k
                 },
                 {
-                    name: 'Felon', type: 'Coupe', garageId: 'nightclub_b2', websiteId: 'other', update: 'Default',
+                    name: 'Felon', type: 'coupe', garageId: 'nightclub_b2', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/felon.jpg',
                     basePrice: 100000, upgradePrice: 300000
                 },
                 {
-                    name: 'Super Diamond', type: 'Sedan', garageId: 'nightclub_b2', websiteId: 'legendary', update: 'Default',
+                    name: 'Super Diamond', type: 'sedan', garageId: 'nightclub_b2', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/super_diamond.jpg',
                     basePrice: 250000, upgradePrice: 300000
                 },
                 {
-                    name: 'Baller', type: 'SUV', garageId: 'nightclub_b2', websiteId: 'other', update: 'Default',
+                    name: 'Baller', type: 'suv', garageId: 'nightclub_b2', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/baller_3.jpg',
                     basePrice: 90000, upgradePrice: 300000
                 },
                 {
-                    name: 'Patriot Stretch', type: 'Utility', garageId: 'nightclub_b2', websiteId: 'ssas', update: 'After Hours',
+                    name: 'Patriot Stretch', type: 'utility', garageId: 'nightclub_b2', websiteId: 'ssas', update: 'After Hours',
                     image: 'images/vehicle/patriot_stretch.jpg',
                     basePrice: 60000, upgradePrice: 300000
                 },
 
                 // NIGHTCLUB B3 (10 VEHICLES)
                 {
-                    name: 'Windsor Drop', type: 'Coupe', garageId: 'nightclub_b3', websiteId: 'legendary', update: 'Ill-Gotten Gains',
+                    name: 'Windsor Drop', type: 'coupe', garageId: 'nightclub_b3', websiteId: 'legendary', update: 'Ill-Gotten Gains',
                     image: 'images/vehicle/windsor_drop.jpg', // 'Windsor L' assumed 'Windsor Drop'
                     basePrice: 900000, upgradePrice: 300000
                 },
                 {
-                    name: 'Felon', type: 'Coupe', garageId: 'nightclub_b3', websiteId: 'other', update: 'Default',
+                    name: 'Felon', type: 'coupe', garageId: 'nightclub_b3', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/felon_2.jpg',
                     basePrice: 100000, upgradePrice: 300000
                 },
                 {
-                    name: 'Schwartzer', type: 'Sports', garageId: 'nightclub_b3', websiteId: 'other', update: 'Default',
+                    name: 'Schwartzer', type: 'sports', garageId: 'nightclub_b3', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/schwartzer_2.jpg',
                     basePrice: 80000, upgradePrice: 300000
                 },
                 {
-                    name: 'Felon', type: 'Coupe', garageId: 'nightclub_b3', websiteId: 'other', update: 'Default',
+                    name: 'Felon', type: 'coupe', garageId: 'nightclub_b3', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/felon_3.jpg',
                     basePrice: 100000, upgradePrice: 300000
                 },
                 {
-                    name: 'Seven-70', type: 'Sports', garageId: 'nightclub_b3', websiteId: 'legendary', update: 'Further Adventures',
+                    name: 'Seven-70', type: 'sports', garageId: 'nightclub_b3', websiteId: 'legendary', update: 'Further Adventures',
                     image: 'images/vehicle/seven_70.jpg',
                     basePrice: 695000, upgradePrice: 350000
                 },
                 {
-                    name: 'Thrax', type: 'Super', garageId: 'nightclub_b3', websiteId: 'legendary', update: 'Diamond Casino',
+                    name: 'Thrax', type: 'super', garageId: 'nightclub_b3', websiteId: 'legendary', update: 'Diamond Casino',
                     image: 'images/vehicle/thrax.jpg',
                     basePrice: 2325000, upgradePrice: 400000
                 },
                 {
-                    name: 'Nero Custom', type: 'Super', garageId: 'nightclub_b3', websiteId: 'bennys', update: 'Import/Export',
+                    name: 'Nero Custom', type: 'super', garageId: 'nightclub_b3', websiteId: 'bennys', update: 'Import/Export',
                     image: 'images/vehicle/nero_custom_2.jpg',
                     basePrice: 1440000, upgradePrice: 1005000 // 605k Benny's + 400k
 
                 },
                 {
-                    name: 'Adder', type: 'Super', garageId: 'nightclub_b3', websiteId: 'legendary', update: 'Default',
+                    name: 'Adder', type: 'super', garageId: 'nightclub_b3', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/adder_2.jpg',
                     basePrice: 1000000, upgradePrice: 400000
                 },
                 {
-                    name: 'Nero', type: 'Super', garageId: 'nightclub_b3', websiteId: 'legendary', update: 'Import/Export',
+                    name: 'Nero', type: 'super', garageId: 'nightclub_b3', websiteId: 'legendary', update: 'Import/Export',
                     image: 'images/vehicle/nero.jpg',
                     basePrice: 1440000, upgradePrice: 400000
                 },
                 {
-                    name: 'Surfer', type: 'Utility', garageId: 'nightclub_b3', websiteId: 'other', update: 'Default',
+                    name: 'Surfer', type: 'utility', garageId: 'nightclub_b3', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/surfer.jpg',
                     basePrice: 11000, upgradePrice: 200000
                 },
 
                 // ARENA WORKSHOP (10 VEHICLES) - PRICES FIXED
                 {
-                    name: 'Future Shock ZR380', type: 'Arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
+                    name: 'Future Shock ZR380', type: 'arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
                     image: 'images/vehicle/fs_zr380.jpg',
                     basePrice: 2138640, upgradePrice: 2000000 // Base car + Arena conversion + upgrades
                 },
                 {
-                    name: 'Apocalypse Imperator', type: 'Arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
+                    name: 'Apocalypse Imperator', type: 'arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
                     image: 'images/vehicle/apoc_imperator.jpg',
                     basePrice: 2284940, upgradePrice: 2000000
                 },
                 {
-                    name: 'Nightmare Scarab', type: 'Arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
+                    name: 'Nightmare Scarab', type: 'arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
                     image: 'images/vehicle/nm_scarab.jpg',
                     basePrice: 3076290, upgradePrice: 1500000 // Tank
                 },
                 {
-                    name: 'Nightmare Brutus', type: 'Arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
+                    name: 'Nightmare Brutus', type: 'arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
                     image: 'images/vehicle/nm_brutus.jpg',
                     basePrice: 2666666, upgradePrice: 2000000 // Monster Truck
                 },
                 {
-                    name: 'Apocalypse Cerberus', type: 'Arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
+                    name: 'Apocalypse Cerberus', type: 'arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
                     image: 'images/vehicle/apoc_cerberus.jpg',
                     basePrice: 3870300, upgradePrice: 1500000 // Truck
                 },
                 {
-                    name: 'Hotring Sabre', type: 'Sports', garageId: 'arena', websiteId: 'ssas', update: 'SA Super Sport',
+                    name: 'Hotring Sabre', type: 'sports', garageId: 'arena', websiteId: 'ssas', update: 'SA Super Sport',
                     image: 'images/vehicle/hotring_sabre.jpg',
                     basePrice: 830000, upgradePrice: 300000 // Limited upgrades
                 },
                 {
-                    name: 'Apocalypse Gauntlet', type: 'Arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
+                    name: 'Apocalypse Gauntlet', type: 'arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
                     image: 'images/vehicle/apoc_gauntlet.jpg',
                     basePrice: 745000, upgradePrice: 2820000 // $1.32M conversion + $1.5M upgrades
                 },
                 {
-                    name: 'Nightmare Issi', type: 'Arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
+                    name: 'Nightmare Issi', type: 'arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War',
                     image: 'images/vehicle/nm_issi.jpg',
                     basePrice: 360000, upgradePrice: 2589000 // $1.089M conversion + $1.5M upgrades
                 },
                 {
-                    name: 'Elegy RH8 (Arena)', type: 'Sports', garageId: 'arena', websiteId: 'legendary', update: 'Default',
+                    name: 'Elegy RH8 (Arena)', type: 'sports', garageId: 'arena', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/elegy_rh8_arena.jpg',
                     basePrice: 0, upgradePrice: 400000
                 },
                 {
-                    name: 'Elegy RH8 (Arena)', type: 'Sports', garageId: 'arena', websiteId: 'legendary', update: 'Default',
+                    name: 'Elegy RH8 (Arena)', type: 'sports', garageId: 'arena', websiteId: 'legendary', update: 'Default',
                     image: 'images/vehicle/elegy_rh8_arena_2.jpg',
                     basePrice: 0, upgradePrice: 400000
                 },
 
                 // ARENA B2 (9 VEHICLES) - PRICES FIXED
                 {
-                    name: 'FQ 2', type: 'SUV', garageId: 'arena_b2', websiteId: 'other', update: 'Default',
+                    name: 'FQ 2', type: 'suv', garageId: 'arena_b2', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/fq2.jpg',
                     basePrice: 50000, upgradePrice: 300000
                 },
                 {
-                    name: 'Dominator', type: 'Muscle', garageId: 'arena_b2', websiteId: 'other', update: 'Default',
+                    name: 'Dominator', type: 'muscle', garageId: 'arena_b2', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/dominator.jpg',
                     basePrice: 35000, upgradePrice: 300000
                 },
                 {
-                    name: 'Fusilade', type: 'Sports', garageId: 'arena_b2', websiteId: 'other', update: 'Default',
+                    name: 'Fusilade', type: 'sports', garageId: 'arena_b2', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/fusilade.jpg',
                     basePrice: 36000, upgradePrice: 300000
                 },
                 {
-                    name: 'Sabre Turbo', type: 'Muscle', garageId: 'arena_b2', websiteId: 'other', update: 'Default',
+                    name: 'Sabre Turbo', type: 'muscle', garageId: 'arena_b2', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/sabre_turbo.jpg',
                     basePrice: 15000, upgradePrice: 300000
                 },
                 {
-                    name: 'Minivan', type: 'Utility', garageId: 'arena_b2', websiteId: 'other', update: 'Default',
+                    name: 'Minivan', type: 'utility', garageId: 'arena_b2', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/minivan.jpg',
                     basePrice: 30000, upgradePrice: 250000
                 },
                 {
-                    name: 'Komoda', type: 'Sports', garageId: 'arena_b2', websiteId: 'ssas', update: 'Diamond Casino Heist',
+                    name: 'Komoda', type: 'sports', garageId: 'arena_b2', websiteId: 'ssas', update: 'Diamond Casino Heist',
                     image: 'images/vehicle/komoda.jpg',
                     basePrice: 1700000, upgradePrice: 400000
                 },
                 {
-                    name: 'Buffalo', type: 'Sports', garageId: 'arena_b2', websiteId: 'other', update: 'Default',
+                    name: 'Buffalo', type: 'sports', garageId: 'arena_b2', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/buffalo.jpg',
                     basePrice: 35000, upgradePrice: 300000
                 },
                 {
-                    name: 'Patriot Stretch', type: 'Utility', garageId: 'arena_b2', websiteId: 'ssas', update: 'After Hours',
+                    name: 'Patriot Stretch', type: 'utility', garageId: 'arena_b2', websiteId: 'ssas', update: 'After Hours',
                     image: 'images/vehicle/patriot_stretch_2.jpg',
                     basePrice: 60000, upgradePrice: 300000
                 },
                 {
-                    name: 'Future Shock Issi', type: 'Arena', garageId: 'arena_b2', websiteId: 'arena', update: 'Arena War',
+                    name: 'Future Shock Issi', type: 'arena', garageId: 'arena_b2', websiteId: 'arena', update: 'Arena War',
                     image: 'images/vehicle/fs_issi.jpg',
                     basePrice: 360000, upgradePrice: 2589000 // $1.089M conversion + $1.5M upgrades
                 },
 
                 // CASINO (9 VEHICLES)
                 {
-                    name: 'Clique', type: 'Muscle', garageId: 'casino', websiteId: 'legendary', update: 'Festive Surprise 2018',
+                    name: 'Clique', type: 'muscle', garageId: 'casino', websiteId: 'legendary', update: 'Festive Surprise 2018',
                     image: 'images/vehicle/clique.jpg',
                     basePrice: 909000, upgradePrice: 350000
                 },
                 {
-                    name: 'Vamos', type: 'Muscle', garageId: 'casino', websiteId: 'ssas', update: 'Arena War',
+                    name: 'Vamos', type: 'muscle', garageId: 'casino', websiteId: 'ssas', update: 'Arena War',
                     image: 'images/vehicle/vamos.jpg',
                     basePrice: 596000, upgradePrice: 350000
                 },
                 {
-                    name: 'Hermes', type: 'Muscle', garageId: 'casino', websiteId: 'ssas', update: 'Festive Surprise 2017',
+                    name: 'Hermes', type: 'muscle', garageId: 'casino', websiteId: 'ssas', update: 'Festive Surprise 2017',
                     image: 'images/vehicle/hermes.jpg',
                     basePrice: 535000, upgradePrice: 350000
                 },
                 {
-                    name: 'Brioso 300', type: 'Classic', garageId: 'casino', websiteId: 'ssas', update: 'Cayo Perico Heist',
+                    name: 'Brioso 300', type: 'classic', garageId: 'casino', websiteId: 'ssas', update: 'Cayo Perico Heist',
                     image: 'images/vehicle/brioso_300.jpg',
                     basePrice: 610000, upgradePrice: 300000
                 },
                 {
-                    name: 'Peyote', type: 'Classic', garageId: 'casino', websiteId: 'other', update: 'Default',
+                    name: 'Peyote', type: 'classic', garageId: 'casino', websiteId: 'other', update: 'Default',
                     image: 'images/vehicle/peyote.jpg',
                     basePrice: 12000, upgradePrice: 250000
                 },
                 {
-                    name: 'Coquette BlackFin', type: 'Classic', garageId: 'casino', websiteId: 'legendary', update: 'Ill-Gotten Gains',
+                    name: 'Coquette BlackFin', type: 'classic', garageId: 'casino', websiteId: 'legendary', update: 'Ill-Gotten Gains',
                     image: 'images/vehicle/coquette_blackfin.jpg',
                     basePrice: 695000, upgradePrice: 350000
                 },
                 {
-                    name: 'Stallion', type: 'Muscle', garageId: 'casino', websiteId: 'ssas', update: 'Default',
+                    name: 'Stallion', type: 'muscle', garageId: 'casino', websiteId: 'ssas', update: 'Default',
                     image: 'images/vehicle/stallion.jpg',
                     basePrice: 38000, upgradePrice: 300000
                 },
                 {
-                    name: 'Dukes', type: 'Muscle', garageId: 'casino', websiteId: 'ssas', update: 'Default',
+                    name: 'Dukes', type: 'muscle', garageId: 'casino', websiteId: 'ssas', update: 'Default',
                     image: 'images/vehicle/dukes.jpg',
                     basePrice: 62000, upgradePrice: 300000
                 },
                 {
-                    name: 'Buccaneer', type: 'Muscle', garageId: 'casino', websiteId: 'ssas', update: 'Default',
+                    name: 'Buccaneer', type: 'muscle', garageId: 'casino', websiteId: 'ssas', update: 'Default',
                     image: 'images/vehicle/buccaneer.jpg',
                     basePrice: 29000, upgradePrice: 300000 // (Benny's is an option, but not specified)
                 },
 
                 // ARCADE (9 VEHICLES) - PRICES FIXED
                 {
-                    name: 'Kuruma (Armored)', type: 'Armored', garageId: 'arcade', websiteId: 'ssas', update: 'Heists',
+                    name: 'Kuruma (Armored)', type: 'weaponized', garageId: 'arcade', websiteId: 'ssas', update: 'Heists',
                     image: 'images/vehicle/kuruma_armored.jpg',
                     basePrice: 698250, upgradePrice: 350000
                 },
                 {
-                    name: 'Half-track', type: 'Weaponized', garageId: 'arcade', websiteId: 'warstock', update: 'Gunrunning',
+                    name: 'Half-track', type: 'weaponized', garageId: 'arcade', websiteId: 'warstock', update: 'Gunrunning',
                     image: 'images/vehicle/half-track_2.jpg',
                     basePrice: 2254350, upgradePrice: 800000 // Quad Cannon + Armor
                 },
                 {
-                    name: 'BR8', type: 'Open Wheel', garageId: 'arcade', websiteId: 'legendary', update: 'Summer Special',
+                    name: 'BR8', type: 'open_wheel', garageId: 'arcade', websiteId: 'legendary', update: 'Summer Special',
                     image: 'images/vehicle/br8.jpg',
                     basePrice: 3400000, upgradePrice: 300000
                 },
                 {
-                    name: 'PR4', type: 'Open Wheel', garageId: 'arcade', websiteId: 'legendary', update: 'Diamond Casino Heist',
+                    name: 'PR4', type: 'open_wheel', garageId: 'arcade', websiteId: 'legendary', update: 'Diamond Casino Heist',
                     image: 'images/vehicle/pr4.jpg',
                     basePrice: 3515000, upgradePrice: 300000
                 },
                 {
-                    name: 'DR1', type: 'Open Wheel', garageId: 'arcade', websiteId: 'legendary', update: 'Summer Special',
+                    name: 'DR1', type: 'open_wheel', garageId: 'arcade', websiteId: 'legendary', update: 'Summer Special',
                     image: 'images/vehicle/dr1.jpg',
                     basePrice: 2997000, upgradePrice: 300000
                 },
                 {
-                    name: 'Deluxo', type: 'Weaponized', garageId: 'arcade', websiteId: 'warstock', update: 'Doomsday Heist',
+                    name: 'Deluxo', type: 'weaponized', garageId: 'arcade', websiteId: 'warstock', update: 'Doomsday Heist',
                     image: 'images/vehicle/deluxo.jpg',
                     basePrice: 5750000, upgradePrice: 750000 // Weapons + Performance
                 },
                 {
-                    name: 'Paragon R (Armored)', type: 'Armored', garageId: 'arcade', websiteId: 'legendary', update: 'Diamond Casino',
+                    name: 'Paragon R (Armored)', type: 'weaponized', garageId: 'arcade', websiteId: 'legendary', update: 'Diamond Casino',
                     image: 'images/vehicle/paragon_r_armored.jpg',
                     basePrice: 905000, upgradePrice: 400000 // Free from missions, but has purchase price
                 },
                 {
-                    name: 'Vigilante', type: 'Weaponized', garageId: 'arcade', websiteId: 'warstock', update: 'Smuggler\'s Run',
+                    name: 'Vigilante', type: 'weaponized', garageId: 'arcade', websiteId: 'warstock', update: 'Smuggler\'s Run',
                     image: 'images/vehicle/vigilante.jpg',
                     basePrice: 3750000, upgradePrice: 750000 // Weapons + Performance
                 },
                 {
-                    name: 'Future Shock Issi', type: 'Arena', garageId: 'arcade', websiteId: 'arena', update: 'Arena War',
+                    name: 'Future Shock Issi', type: 'arena', garageId: 'arcade', websiteId: 'arena', update: 'Arena War',
                     image: 'images/vehicle/fs_issi_2.jpg',
                     basePrice: 360000, upgradePrice: 2589000 // $1.089M conversion + $1.5M upgrades
                 },
 
                 // TERRORBYTE (1 VEHICLE)
                 {
-                    name: 'Oppressor Mk II', type: 'Motorcycle', garageId: 'terrorbyte', websiteId: 'warstock', update: 'After Hours',
+                    name: 'Oppressor Mk II', type: 'motorcycle', garageId: 'terrorbyte', websiteId: 'warstock', update: 'After Hours',
                     image: 'images/vehicle/oppressor_mk2.jpg',
                     basePrice: 8000000, upgradePrice: 1500000 // Missiles, Chaff, etc.
                 },
                 
                 // SPECIAL VEHICLE (8 VEHICLES)
                 {
-                    name: 'Phantom Wedge', type: 'Special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export',
+                    name: 'Phantom Wedge', type: 'special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export',
                     image: 'images/vehicle/phantom_wedge.jpg',
                     basePrice: 2553600, upgradePrice: 0 // No upgrades
                 },
                 {
-                    name: 'Ruiner 2000', type: 'Special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export',
+                    name: 'Ruiner 2000', type: 'special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export',
                     image: 'images/vehicle/ruiner_2000.jpg',
                     basePrice: 5745600, upgradePrice: 0 // No upgrades
                 },
                 {
-                    name: 'Technical Aqua', type: 'Special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export',
+                    name: 'Technical Aqua', type: 'special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export',
                     image: 'images/vehicle/technical_aqua.jpg',
                     basePrice: 1489600, upgradePrice: 0 // No upgrades
                 },
                 {
-                    name: 'Wastelander', type: 'Special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export',
+                    name: 'Wastelander', type: 'special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export',
                     image: 'images/vehicle/wastelander.jpg',
                     basePrice: 658350, upgradePrice: 0 // No upgrades
                 },
                 {
-                    name: 'Armored Boxville', type: 'Special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export',
+                    name: 'Armored Boxville', type: 'special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export',
                     image: 'images/vehicle/armored_boxville.jpg',
                     basePrice: 2926000, upgradePrice: 0 // No upgrades
                 },
                 {
-                    name: 'Rocket Voltic', type: 'Special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export',
+                    name: 'Rocket Voltic', type: 'special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export',
                     image: 'images/vehicle/rocket_voltic.jpg',
                     basePrice: 3830400, upgradePrice: 0 // No upgrades
                 },
                 {
-                    name: 'Ramp Buggy', type: 'Special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export',
+                    name: 'Ramp Buggy', type: 'special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export',
                     image: 'images/vehicle/ramp_buggy.jpg',
                     basePrice: 3192000, upgradePrice: 0 // No upgrades
                 },
                 {
-                    name: 'Blazer Aqua', type: 'Special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export',
+                    name: 'Blazer Aqua', type: 'special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export',
                     image: 'images/vehicle/blazer_aqua.jpg',
                     basePrice: 1755600, upgradePrice: 0 // No upgrades
                 },
 
                 // PERSONAL AIRCRAFT (20 VEHICLES)
                 {
-                    name: 'Tula', type: 'Aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run',
+                    name: 'Tula', type: 'aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run',
                     image: 'images/vehicle/tula.jpg',
                     basePrice: 5173700, upgradePrice: 1000000 // Bombs, JATO, Weapons
                 },
                 {
-                    name: 'Havok', type: 'Helicopter', garageId: 'aircraft', websiteId: 'elitastravel', update: 'Smuggler\'s Run',
+                    name: 'Havok', type: 'helicopter', garageId: 'aircraft', websiteId: 'elitastravel', update: 'Smuggler\'s Run',
                     image: 'images/vehicle/havok.jpg',
                     basePrice: 2300900, upgradePrice: 500000 // Minigun
                 },
                 {
-                    name: 'Mogul', type: 'Aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run',
+                    name: 'Mogul', type: 'aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run',
                     image: 'images/vehicle/mogul.jpg',
                     basePrice: 3125500, upgradePrice: 800000 // Weapons, Bombs
                 },
                 {
-                    name: 'Volatol', type: 'Aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Doomsday Heist',
+                    name: 'Volatol', type: 'aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Doomsday Heist',
                     image: 'images/vehicle/volatol.jpg',
                     basePrice: 3724000, upgradePrice: 500000 // Bombs
                 },
                 {
-                    name: 'Miljet', type: 'Aircraft', garageId: 'aircraft', websiteId: 'elitastravel', update: 'Default',
+                    name: 'Miljet', type: 'aircraft', garageId: 'aircraft', websiteId: 'elitastravel', update: 'Default',
                     image: 'images/vehicle/miljet.jpg',
                     basePrice: 1700000, upgradePrice: 300000 // Performance
                 },
                 {
-                    name: 'LF-22 Starling', type: 'Aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run',
+                    name: 'LF-22 Starling', type: 'aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run',
                     image: 'images/vehicle/starling.jpg',
                     basePrice: 3657500, upgradePrice: 800000 // Missiles, Bombs
                 },
                 {
-                    name: 'Cuban 800', type: 'Aircraft', garageId: 'aircraft', websiteId: 'elitastravel', update: 'Default',
+                    name: 'Cuban 800', type: 'aircraft', garageId: 'aircraft', websiteId: 'elitastravel', update: 'Default',
                     image: 'images/vehicle/cuban_800.jpg',
                     basePrice: 240000, upgradePrice: 300000 // Performance
                 },
                 {
-                    name: 'Pyro', type: 'Aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run',
+                    name: 'Pyro', type: 'aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run',
                     image: 'images/vehicle/pyro.jpg',
                     basePrice: 4455500, upgradePrice: 800000 // Weapons
                 },
                 {
-                    name: 'Volatus', type: 'Helicopter', garageId: 'aircraft', websiteId: 'elitastravel', update: 'Executives',
+                    name: 'Volatus', type: 'helicopter', garageId: 'aircraft', websiteId: 'elitastravel', update: 'Executives',
                     image: 'images/vehicle/volatus.jpg',
                     basePrice: 2295000, upgradePrice: 300000 // Performance
                 },
                 {
-                    name: 'Hydra', type: 'Aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Heists',
+                    name: 'Hydra', type: 'aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Heists',
                     image: 'images/vehicle/hydra.jpg',
                     basePrice: 4000000, upgradePrice: 500000 // Performance
                 },
                 {
-                    name: 'Rogue', type: 'Aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run',
+                    name: 'Rogue', type: 'aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run',
                     image: 'images/vehicle/rogue.jpg',
                     basePrice: 1596000, upgradePrice: 800000 // Weapons, Bombs
                 },
                 {
-                    name: 'B-11 Strikeforce', type: 'Aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'After Hours',
+                    name: 'B-11 Strikeforce', type: 'aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'After Hours',
                     image: 'images/vehicle/b11_strikeforce.jpg',
                     basePrice: 5000000, upgradePrice: 1000000 // Weapons, Bombs
                 },
                 {
-                    name: 'V-65 Molotok', type: 'Aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run',
+                    name: 'V-65 Molotok', type: 'aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run',
                     image: 'images/vehicle/v65_molotok.jpg',
                     basePrice: 4788000, upgradePrice: 800000 // Weapons
                 },
                 {
-                    name: 'RM-10 Bombushka', type: 'Aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run',
+                    name: 'RM-10 Bombushka', type: 'aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run',
                     image: 'images/vehicle/bombushka.jpg',
                     basePrice: 5918500, upgradePrice: 1000000 // Weapons, JATO
                 },
                 {
-                    name: 'Besra', type: 'Aircraft', garageId: 'aircraft', websiteId: 'elitastravel', update: 'Default',
+                    name: 'Besra', type: 'aircraft', garageId: 'aircraft', websiteId: 'elitastravel', update: 'Default',
                     image: 'images/vehicle/besra.jpg',
                     basePrice: 1150000, upgradePrice: 300000 // Performance
                 },
                 {
-                    name: 'Alpha-Z1', type: 'Aircraft', garageId: 'aircraft', websiteId: 'elitastravel', update: 'Smuggler\'s Run',
+                    name: 'Alpha-Z1', type: 'aircraft', garageId: 'aircraft', websiteId: 'elitastravel', update: 'Smuggler\'s Run',
                     image: 'images/vehicle/alpha_z1.jpg',
                     basePrice: 2121350, upgradePrice: 300000 // Performance
                 },
                 {
-                    name: 'Akula', type: 'Helicopter', garageId: 'aircraft', websiteId: 'warstock', update: 'Doomsday Heist',
+                    name: 'Akula', type: 'helicopter', garageId: 'aircraft', websiteId: 'warstock', update: 'Doomsday Heist',
                     image: 'images/vehicle/akula.jpg',
                     basePrice: 4500000, upgradePrice: 1000000 // Stealth, Weapons, Bombs
                 },
                 {
-                    name: 'Ultralight', type: 'Aircraft', garageId: 'aircraft', websiteId: 'elitastravel', update: 'Smuggler\'s Run',
+                    name: 'Ultralight', type: 'aircraft', garageId: 'aircraft', websiteId: 'elitastravel', update: 'Smuggler\'s Run',
                     image: 'images/vehicle/ultralight.jpg',
                     basePrice: 665000, upgradePrice: 500000 // Engine, Minigun
                 },
                 {
-                    name: 'P-996 LAZER', type: 'Aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run',
+                    name: 'P-996 LAZER', type: 'aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run',
                     image: 'images/vehicle/lazer.jpg',
                     basePrice: 6500000, upgradePrice: 300000 // Performance (stolen from fort)
                 },
                 {
-                    name: 'FH-1 Hunter', type: 'Helicopter', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run',
+                    name: 'FH-1 Hunter', type: 'helicopter', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run',
                     image: 'images/vehicle/hunter.jpg',
                     basePrice: 4123000, upgradePrice: 1000000 // Co-pilot cannon, Bombs
                 },
 
                 // SERVICES (These properties are listed as vehicles)
-                // Corrected type to 'sea_vehicle' for correct counting
                 {
                     name: 'Galaxy Super Yacht', type: 'sea_vehicle', garageId: 'services', websiteId: 'docktease', update: 'Galaxy',
                     image: 'images/vehicle/yacht.jpg',
                     basePrice: 8000000, upgradePrice: 2000000 // Most expensive model + upgrades
                 },
                 {
-                    name: 'MOC (Mobile Ops Center)', type: 'Service', garageId: 'services', websiteId: 'warstock', update: 'Gunrunning',
+                    name: 'MOC (Mobile Ops Center)', type: 'service', garageId: 'services', websiteId: 'warstock', update: 'Gunrunning',
                     image: 'images/vehicle/moc.jpg',
                     basePrice: 2790000, upgradePrice: 1500000 // Phantom Custom + Weapon/Vehicle Workshop
                 },
                 {
-                    name: 'Avenger', type: 'Service', garageId: 'services', websiteId: 'warstock', update: 'Doomsday',
+                    name: 'Avenger', type: 'service', garageId: 'services', websiteId: 'warstock', update: 'Doomsday',
                     image: 'images/vehicle/avenger.jpg',
                     basePrice: 4787500, upgradePrice: 2000000 // Workshops + Weapons
                 },
                 {
-                    name: 'Terrorbyte', type: 'Service', garageId: 'services', websiteId: 'warstock', update: 'After Hours',
+                    name: 'Terrorbyte', type: 'service', garageId: 'services', websiteId: 'warstock', update: 'After Hours',
                     image: 'images/vehicle/terrorbyte.jpg',
                     basePrice: 3459500, upgradePrice: 1000000 // Drone + Workshops
                 },
-                // Corrected type to 'sea_vehicle' for correct counting
                 {
                     name: 'Kosatka', type: 'sea_vehicle', garageId: 'services', websiteId: 'warstock', update: 'Cayo Perico',
                     image: 'images/vehicle/kosatka.jpg',
@@ -1509,109 +1545,109 @@
 
                 // MINI VEHICLES (3 VEHICLES)
                 {
-                    name: 'Nano Drone', type: 'RC', garageId: 'mini_vehicles', websiteId: 'warstock', update: 'Diamond Casino Heist',
+                    name: 'Nano Drone', type: 'rc', garageId: 'mini_vehicles', websiteId: 'warstock', update: 'Diamond Casino Heist',
                     image: 'images/vehicle/nano_drone.jpg',
                     basePrice: 0, upgradePrice: 0 // Included with Arcade
                 },
                 {
-                    name: 'RC Bandito', type: 'RC', garageId: 'mini_vehicles', websiteId: 'arena', update: 'Arena War',
+                    name: 'RC Bandito', type: 'rc', garageId: 'mini_vehicles', websiteId: 'arena', update: 'Arena War',
                     image: 'images/vehicle/rc_bandito.jpg',
                     basePrice: 1590000, upgradePrice: 500000 // Bombs etc.
                 },
                 {
-                    name: 'RC Tank', type: 'RC', garageId: 'mini_vehicles', websiteId: 'warstock', update: 'Diamond Casino Heist',
+                    name: 'RC Tank', type: 'rc', garageId: 'mini_vehicles', websiteId: 'warstock', update: 'Diamond Casino Heist',
                     image: 'images/vehicle/rc_tank.jpg',
                     basePrice: 2275000, upgradePrice: 0
                 },
                 
                 // PEGASUS (27 VEHICLES)
                 {
-                    name: 'Insurgent Pick-Up', type: 'Weaponized', garageId: 'pegasus', websiteId: 'warstock', update: 'Heists',
+                    name: 'Insurgent Pick-Up', type: 'weaponized', garageId: 'pegasus', websiteId: 'warstock', update: 'Heists',
                     image: 'images/vehicle/insurgent_pickup_pegasus.jpg',
                     basePrice: 1795000, upgradePrice: 0 // Pegasus vehicle
                 },
                 {
-                    name: 'Turreted Limo', type: 'Weaponized', garageId: 'pegasus', websiteId: 'warstock', update: 'Executives',
+                    name: 'Turreted Limo', type: 'weaponized', garageId: 'pegasus', websiteId: 'warstock', update: 'Executives',
                     image: 'images/vehicle/turreted_limo.jpg',
                     basePrice: 1650000, upgradePrice: 0
                 },
                 {
-                    name: 'Rhino Tank', type: 'Weaponized', garageId: 'pegasus', websiteId: 'warstock', update: 'Default',
+                    name: 'Rhino Tank', type: 'weaponized', garageId: 'pegasus', websiteId: 'warstock', update: 'Default',
                     image: 'images/vehicle/rhino_tank.jpg',
                     basePrice: 1500000, upgradePrice: 0
                 },
                 {
-                    name: 'Frogger', type: 'Helicopter', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default',
+                    name: 'Frogger', type: 'helicopter', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default',
                     image: 'images/vehicle/frogger.jpg',
                     basePrice: 1300000, upgradePrice: 0
                 },
                 {
-                    name: 'Cargobob', type: 'Helicopter', garageId: 'pegasus', websiteId: 'warstock', update: 'Default',
+                    name: 'Cargobob', type: 'helicopter', garageId: 'pegasus', websiteId: 'warstock', update: 'Default',
                     image: 'images/vehicle/cargobob.jpg',
                     basePrice: 1790000, upgradePrice: 0
                 },
                 {
-                    name: 'Buzzard', type: 'Helicopter', garageId: 'pegasus', websiteId: 'warstock', update: 'Default',
+                    name: 'Buzzard', type: 'helicopter', garageId: 'pegasus', websiteId: 'warstock', update: 'Default',
                     image: 'images/vehicle/buzzard.jpg',
                     basePrice: 1750000, upgradePrice: 0
                 },
                 {
-                    name: 'Swift', type: 'Helicopter', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default',
+                    name: 'Swift', type: 'helicopter', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default',
                     image: 'images/vehicle/swift.jpg',
                     basePrice: 1500000, upgradePrice: 0
                 },
                 {
-                    name: 'Swift Deluxe', type: 'Helicopter', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Ill-Gotten Gains',
+                    name: 'Swift Deluxe', type: 'helicopter', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Ill-Gotten Gains',
                     image: 'images/vehicle/swift_deluxe.jpg',
                     basePrice: 5150000, upgradePrice: 0
                 },
                 {
-                    name: 'Savage', type: 'Helicopter', garageId: 'pegasus', websiteId: 'warstock', update: 'Heists',
+                    name: 'Savage', type: 'helicopter', garageId: 'pegasus', websiteId: 'warstock', update: 'Heists',
                     image: 'images/vehicle/savage.jpg',
                     basePrice: 2593500, upgradePrice: 0
                 },
                 {
-                    name: 'Duster', type: 'Aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default',
+                    name: 'Duster', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default',
                     image: 'images/vehicle/duster.jpg',
                     basePrice: 275000, upgradePrice: 0
                 },
                 {
-                    name: 'Luxor', type: 'Aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default',
+                    name: 'Luxor', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default',
                     image: 'images/vehicle/luxor.jpg',
                     basePrice: 1625000, upgradePrice: 0
                 },
                 {
-                    name: 'Luxor Deluxe', type: 'Aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Ill-Gotten Gains',
+                    name: 'Luxor Deluxe', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Ill-Gotten Gains',
                     image: 'images/vehicle/luxor_deluxe.jpg',
                     basePrice: 10000000, upgradePrice: 0
                 },
                 {
-                    name: 'Titan', type: 'Aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default',
+                    name: 'Titan', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default',
                     image: 'images/vehicle/titan.jpg',
                     basePrice: 2000000, upgradePrice: 0
                 },
                 {
-                    name: 'Besra (Pegasus)', type: 'Aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default',
+                    name: 'Besra (Pegasus)', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default',
                     image: 'images/vehicle/besra_pegasus.jpg',
                     basePrice: 1150000, upgradePrice: 0
                 },
                 {
-                    name: 'Miljet (Pegasus)', type: 'Aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default',
+                    name: 'Miljet (Pegasus)', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default',
                     image: 'images/vehicle/miljet_pegasus.jpg',
                     basePrice: 1700000, upgradePrice: 0
                 },
                 {
-                    name: 'Dodo', type: 'Aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default',
+                    name: 'Dodo', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default',
                     image: 'images/vehicle/dodo.jpg',
                     basePrice: 500000, upgradePrice: 0
                 },
                 {
-                    name: 'Hydra (Pegasus)', type: 'Aircraft', garageId: 'pegasus', websiteId: 'warstock', update: 'Heists',
+                    name: 'Hydra (Pegasus)', type: 'aircraft', garageId: 'pegasus', websiteId: 'warstock', update: 'Heists',
                     image: 'images/vehicle/hydra_pegasus.jpg',
                     basePrice: 4000000, upgradePrice: 0
                 },
                 {
-                    name: 'P-996 LAZER (Pegasus)', type: 'Aircraft', garageId: 'pegasus', websiteId: 'warstock', update: 'Smuggler\'s Run',
+                    name: 'P-996 LAZER (Pegasus)', type: 'aircraft', garageId: 'pegasus', websiteId: 'warstock', update: 'Smuggler\'s Run',
                     image: 'images/vehicle/lazer_pegasus.jpg',
                     basePrice: 6500000, upgradePrice: 0
                 },
@@ -1641,27 +1677,27 @@
                     basePrice: 1750000, upgradePrice: 0
                 },
                 {
-                    name: 'Liberator', type: 'Special', garageId: 'pegasus', websiteId: 'warstock', update: 'Independence Day',
+                    name: 'Liberator', type: 'special', garageId: 'pegasus', websiteId: 'warstock', update: 'Independence Day',
                     image: 'images/vehicle/liberator.jpg',
                     basePrice: 742014, upgradePrice: 0
                 },
                 {
-                    name: 'Marshall', type: 'Special', garageId: 'pegasus', websiteId: 'warstock', update: 'Default',
+                    name: 'Marshall', type: 'special', garageId: 'pegasus', websiteId: 'warstock', update: 'Default',
                     image: 'images/vehicle/marshall.jpg',
                     basePrice: 500000, upgradePrice: 0
                 },
                 {
-                    name: 'Journey', type: 'Utility', garageId: 'pegasus', websiteId: 'ssas', update: 'Default',
+                    name: 'Journey', type: 'utility', garageId: 'pegasus', websiteId: 'ssas', update: 'Default',
                     image: 'images/vehicle/journey.jpg',
                     basePrice: 15000, upgradePrice: 0
                 },
                 {
-                    name: 'Stretch', type: 'Utility', garageId: 'pegasus', websiteId: 'ssas', update: 'Default',
+                    name: 'Stretch', type: 'utility', garageId: 'pegasus', websiteId: 'ssas', update: 'Default',
                     image: 'images/vehicle/stretch.jpg',
                     basePrice: 30000, upgradePrice: 0
                 },
                 {
-                    name: 'Dump', type: 'Utility', garageId: 'pegasus', websiteId: 'warstock', update: 'Default',
+                    name: 'Dump', type: 'utility', garageId: 'pegasus', websiteId: 'warstock', update: 'Default',
                     image: 'images/vehicle/dump.jpg',
                     basePrice: 1000000, upgradePrice: 0
                 },
@@ -1671,17 +1707,17 @@
                     basePrice: 1325000, upgradePrice: 0
                 },
                 {
-                    name: 'Blimp', type: 'Aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default',
+                    name: 'Blimp', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default',
                     image: 'images/vehicle/blimp.jpg',
                     basePrice: 1190000, upgradePrice: 0
                 },
                 {
-                    name: 'Blimp (Galaxy)', type: 'Aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'After Hours',
+                    name: 'Blimp (Galaxy)', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'After Hours',
                     image: 'images/vehicle/blimp_galaxy.jpg',
                     basePrice: 1190000, upgradePrice: 0 // Assuming same price, livery
                 },
                 {
-                    name: 'Festival Bus', type: 'Utility', garageId: 'pegasus', websiteId: 'ssas', update: 'After Hours',
+                    name: 'Festival Bus', type: 'utility', garageId: 'pegasus', websiteId: 'ssas', update: 'After Hours',
                     image: 'images/vehicle/festival_bus.jpg',
                     basePrice: 1842000, upgradePrice: 0
                 }
@@ -1741,8 +1777,10 @@
             const { vehicles, garages } = mockData;
             const listCol1 = $('#asset-summary-list-1');
             const listCol2 = $('#asset-summary-list-2');
+            const propertyDetailsList = $('#property-details-list');
             listCol1.innerHTML = '';
             listCol2.innerHTML = '';
+            propertyDetailsList.innerHTML = ''; // Clear property list
 
             // Helper function to filter and sum categories
             const calculateCategory = (filterFn) => {
@@ -1758,7 +1796,8 @@
                 { name: 'Sports Cars', fn: v => v.type === 'sports' },
                 { name: 'Classic Cars', fn: v => v.type === 'classic' },
                 { name: 'Muscle Cars', fn: v => v.type === 'muscle' },
-                { name: 'Weaponized', fn: v => v.type === 'weaponized' || v.type === 'armored' },
+                // FIXED: 'weaponized' now includes 'armored' by data change, not logic
+                { name: 'Weaponized', fn: v => v.type === 'weaponized' },
                 { name: 'Arena War', fn: v => v.type === 'arena' },
                 { name: 'Special Vehicles', fn: v => v.type === 'special' },
                 { name: 'Off-Road', fn: v => v.type === 'offroad' },
@@ -1821,6 +1860,21 @@
             const propertyValue = properties.reduce((sum, g) => sum + (g.basePrice || 0) + (g.upgradePrice || 0), 0);
             $('#total-properties-count').textContent = properties.length + ' Properties';
             $('#total-properties-value').textContent = formatCurrency(propertyValue);
+
+            // --- NEW: Populate Expandable Property List ---
+            const sortedProperties = properties
+                .map(p => ({ name: p.name, value: (p.basePrice || 0) + (p.upgradePrice || 0) }))
+                .sort((a, b) => b.value - a.value);
+            
+            sortedProperties.forEach((prop, index) => {
+                propertyDetailsList.innerHTML += `
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-zinc-300">${index + 1}. ${prop.name}</span>
+                        <span class="font-semibold text-zinc-100">${formatCurrency(prop.value)}</span>
+                    </div>
+                `;
+            });
+            // --- END NEW PROPERTY LIST ---
             
             // 2. Total Asset Value (This part is fine)
             const allVehicleValue = vehicles.reduce((sum, v) => sum + (v.basePrice || 0) + (v.upgradePrice || 0), 0);
@@ -1953,15 +2007,11 @@
             if (currentFilterId === 'all') {
                 filteredVehicles = vehicles; // No property cost shown when 'All' is selected
             } else {
+                // FIXED: Simplified logic, no more special case needed
                 if (currentFilterType === 'garage') {
                     filteredVehicles = vehicles.filter(v => v.garageId === currentFilterId);
                 } else if (currentFilterType === 'type') {
-                    // SPECIAL CASE: Combine 'weaponized' and 'armored'
-                    if (currentFilterId === 'weaponized') {
-                        filteredVehicles = vehicles.filter(v => v.type === 'weaponized' || v.type === 'armored');
-                    } else {
-                        filteredVehicles = vehicles.filter(v => v.type === currentFilterId);
-                    }
+                    filteredVehicles = vehicles.filter(v => v.type === currentFilterId);
                 } else if (currentFilterType === 'website') {
                     filteredVehicles = vehicles.filter(v => v.websiteId === currentFilterId);
                 }
