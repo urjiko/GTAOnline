@@ -4,412 +4,239 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GTA My Assets</title>
-    <!-- External Font (Inter) and Icons (Lucide) -->
+    <!-- Google Fonts: Oswald (GTA Style) & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                    },
+                    colors: {
+                        gta: {
+                            black: '#000000',
+                            dark: '#121212',
+                            gray: '#2f2f2f',
+                            yellow: '#fbbf24',
+                            green: '#2ecc71',
+                            blue: '#3498db',
+                            red: '#e74c3c'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        /* Main Style */
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #18181b; /* Tailwind 'zinc-900' */
-            color: #e4e4e7; /* Tailwind 'zinc-200' */
-            background-image: url('https://placehold.co/1920x1080/18181b/18181b?text=+'); /* Placeholder for background pattern/image */
+            background-color: #000;
+            color: #fff;
+            background-image: linear-gradient(to bottom, rgba(0,0,0,0.85), #000), url('https://placehold.co/1920x1080/111/222?text=LS+Background');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            /* Smooth transition for background change */
-            transition: background-image 0.5s ease-in-out;
+            font-family: 'Inter', sans-serif;
         }
-
-        /* Rockstar Social Club-like dark and modern theme */
-        .glass-effect {
-            background-color: rgba(24, 24, 27, 0.8); /* zinc-900 80% opacity */
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(63, 63, 70, 0.5); /* zinc-700 50% opacity */
-        }
-
-        /* Scrollbar Style */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #27272a; /* zinc-800 */
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #52525b; /* zinc-600 */
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #71717a; /* zinc-500 */
-        }
-
-        /* Active Menu Item */
-        .nav-link.active {
-            color: #ffffff;
-            background-color: #f59e0b; /* amber-500 */
-        }
-        .nav-link.active:hover {
-            background-color: #f59e0b;
-        }
-
-        /* --- NEW BUTTON STYLES (MATCHING SCREENSHOT) --- */
-
-        /* Main Sort Buttons (Garage, Type, Website) */
-        .btn-sort {
-            background-color: #18181b; /* zinc-900 */
-            color: #a1a1aa; /* zinc-400 */
-            padding: 0.5rem 1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.875rem;
-            transition: all 0.2s ease;
-            border: 1px solid #3f3f46; /* zinc-700 */
-        }
-        .btn-sort:hover {
-            color: #ffffff;
-            background-color: #27272a; /* zinc-800 */
-        }
-        /* Active button is now orange */
-        .btn-sort.active {
-            color: #18181b; /* zinc-900 (Dark text) */
-            background-color: #f59e0b; /* amber-500 */
-            border-color: #f59e0b; /* amber-500 */
-        }
-        .btn-sort:first-child {
-            border-top-left-radius: 0.375rem;
-            border-bottom-left-radius: 0.375rem;
-        }
-        .btn-sort:last-child {
-            border-top-right-radius: 0.375rem;
-            border-bottom-right-radius: 0.375rem;
-        }
-
-        /* Sub-Filter Buttons (All, Penthouse, Super, etc.) */
-        .filter-container {
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 0.5rem 0;
-        }
-        .btn-filter {
-            color: #a1a1aa; /* zinc-400 */
-            font-weight: 600;
-            text-transform: uppercase;
-            padding: 0.5rem 0.25rem;
-            margin: 0; /* No margin */
-            border-bottom: 3px solid transparent;
-            transition: all 0.2s ease;
-            display: inline-block;
-        }
-        .btn-filter:hover {
-            color: #ffffff;
-        }
-        .btn-filter.active {
-            color: #ffffff;
-            border-bottom-color: #f59e0b; /* amber-500 */
-        }
-        /* Style for the | separator */
-        .filter-separator {
-            color: #52525b; /* zinc-600 */
-            font-weight: 200;
-            padding: 0 0.5rem;
-            display: inline-block;
-            vertical-align: middle;
-        }
-        
-        /* NEW: Style for the asset list progress bar */
-        .asset-progress-bar {
-            background-color: #3f3f46; /* zinc-700 */
-            border-radius: 2px;
-            height: 4px;
-            overflow: hidden;
-        }
-        .asset-progress-fill {
-            height: 100%;
-            background-color: #f59e0b; /* amber-500 */
-            transition: width 0.3s ease-out;
-        }
-        
-        /* NEW: Styles for Expandable Properties */
-        #property-summary {
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-        #property-summary:hover {
-            background-color: rgba(63, 63, 70, 0.3); /* zinc-700 30% */
-        }
-        #property-details-list {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-out;
-            border-top: 1px solid transparent;
-        }
-        #property-summary[open] #property-details-list {
-            max-height: 500px; /* Adjust as needed */
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top-color: #3f3f46; /* zinc-700 */
-        }
-        #property-summary summary::-webkit-details-marker {
-            display: none;
-        }
-        #property-summary summary {
-            list-style: none;
-            outline: none;
-        }
+        .gta-panel { background-color: rgba(18, 18, 18, 0.95); border-top: 2px solid #333; border-bottom: 2px solid #333; }
+        .asset-progress-bar { background-color: #333; height: 6px; width: 100%; margin-top: 6px; overflow: hidden; border-radius: 2px; }
+        .asset-progress-fill { height: 100%; background-color: #fbbf24; transition: width 1s ease-out; }
+        .btn-sort { font-family: 'Oswald', sans-serif; text-transform: uppercase; background: transparent; color: #888; border: 1px solid #333; padding: 8px 20px; font-size: 1rem; cursor: pointer; transition: all 0.2s; }
+        .btn-sort:hover { color: #fff; border-color: #666; }
+        .btn-sort.active { background-color: #fbbf24; color: #000; border-color: #fbbf24; font-weight: bold; }
+        .filter-container { overflow-x: auto; white-space: nowrap; padding: 0.5rem 0; }
+        .btn-filter { font-family: 'Oswald', sans-serif; color: #9ca3af; font-weight: 500; text-transform: uppercase; padding: 0.25rem 0; margin: 0; border-bottom: 3px solid transparent; transition: all 0.2s ease; display: inline-block; font-size: 1.1rem; cursor: pointer; }
+        .btn-filter:hover { color: #fff; }
+        .btn-filter.active { color: #fbbf24; border-bottom-color: #fbbf24; }
+        .filter-separator { color: #52525b; font-weight: 200; padding: 0 0.75rem; display: inline-block; vertical-align: middle; font-size: 1.2rem; }
+        .vehicle-card { background-color: #121212; border: 1px solid #333; transition: transform 0.2s, border-color 0.2s; position: relative; overflow: hidden; }
+        .vehicle-card:hover { border-color: #fbbf24; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .vehicle-image { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-bottom: 4px solid #000; }
+        .update-tag { position: absolute; top: 0; left: 0; background: rgba(0,0,0,0.9); color: #fbbf24; font-family: 'Oswald', sans-serif; font-size: 0.75rem; padding: 4px 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        details summary::-webkit-details-marker { display: none; }
+        details summary { list-style: none; outline: none; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        /* Hide scrollbar for filter container */
+        .filter-container::-webkit-scrollbar { display: none; }
+        .filter-container { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="min-h-screen w-full">
+<body class="flex flex-col">
 
-    <!-- 1. HEADER / NAVIGATION -->
-    <header class="sticky top-0 z-50 w-full glass-effect shadow-lg">
-        <div class="container mx-auto px-4">
-            <div class="flex items-center justify-between h-16">
-                <!-- Left Side: Logo / Title -->
-                <div class="flex items-center space-x-2">
-                    <i data-lucide="user-round" class="text-amber-500"></i>
-                    <span class="text-xl font-bold text-white uppercase">GTA My Assets</span>
+    <!-- NAV -->
+    <nav class="bg-black border-b border-gray-800 sticky top-0 z-50">
+        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="bg-gta-yellow text-black font-bold px-3 py-1 text-2xl font-display tracking-tighter rounded-sm">R<span class="text-lg align-top">★</span></div>
+                <div class="flex gap-8 text-sm font-bold tracking-wide text-gray-400 uppercase hidden md:flex font-display">
+                    <a href="#" class="hover:text-white transition">Overview</a>
+                    <a href="#" class="hover:text-white transition">Career</a>
+                    <a href="#" class="text-white border-b-4 border-gta-yellow pb-5 -mb-5">My Assets</a>
+                    <a href="#" class="hover:text-white transition">Stats</a>
                 </div>
-
-                <!-- Right Side: Main Menu -->
-                <nav class="hidden md:flex items-center space-x-1">
-                    <a href="#" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-zinc-300 hover:bg-zinc-700 hover:text-white transition-colors">OVERVIEW</a>
-                    <a href="#" class="nav-link active px-3 py-2 rounded-md text-sm font-medium text-zinc-300 hover:bg-zinc-700 hover:text-white transition-colors">VEHICLES</a>
-                    <a href="#" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-zinc-300 hover:bg-zinc-700 hover:text-white transition-colors">STATS</a>
-                    <a href="#" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-zinc-300 hover:bg-zinc-700 hover:text-white transition-colors">WEAPONS</a>
-                    <a href="#" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-zinc-300 hover:bg-zinc-700 hover:text-white transition-colors">AWARDS</a>
-                </nav>
-
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-zinc-300 hover:text-white">
-                        <i data-lucide="menu"></i>
-                    </button>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="text-right hidden sm:block">
+                    <div class="text-white font-display tracking-wide text-lg">PLAYER_ONE</div>
+                    <div class="text-gta-green text-sm font-mono tracking-tight" id="header-cash">$124,500,000</div>
+                </div>
+                <div class="h-10 w-10 bg-gray-800 border-2 border-gray-600 overflow-hidden">
+                    <img src="https://placehold.co/100x100/333/fff?text=P" alt="Avatar">
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu (Hidden) -->
-        <div id="mobile-menu" class="md:hidden hidden glass-effect">
-            <nav class="flex flex-col px-2 pt-2 pb-3 space-y-1">
-                <a href="#" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-zinc-300 hover:bg-zinc-700 hover:text-white transition-colors">OVERVIEW</a>
-                <a href="#" class="nav-link active block px-3 py-2 rounded-md text-base font-medium text-zinc-300 hover:bg-zinc-700 hover:text-white transition-colors">VEHICLES</a>
-                <a href="#" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-zinc-300 hover:bg-zinc-700 hover:text-white transition-colors">STATS</a>
-                <a href="#" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-zinc-300 hover:bg-zinc-700 hover:text-white transition-colors">WEAPONS</a>
-                <a href="#" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-zinc-300 hover:bg-zinc-700 hover:text-white transition-colors">AWARDS</a>
-            </nav>
-        </div>
-    </header>
+    </nav>
 
-    <!-- 2. MAIN CONTENT SECTION -->
-    <main class="container mx-auto p-4 md:p-6">
-        
-        <!-- NEW ASSET SUMMARY SECTION -->
-        <section id="asset-summary" class="glass-effect rounded-lg shadow-lg p-4 md:p-6 mb-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
-                <!-- Column 1: Asset List -->
-                <div id="asset-summary-list-1" class="col-span-1 md:col-span-1 space-y-3">
-                    <!-- JS will populate this -->
+    <!-- MAIN -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- SUMMARY -->
+        <section id="asset-summary" class="gta-panel p-6 mb-8 shadow-lg">
+            <div class="flex justify-between items-center border-b border-gray-800 pb-4 mb-6">
+                <h3 class="text-gray-400 text-sm font-bold uppercase tracking-widest font-display">ASSET BREAKDOWN</h3>
+                <div class="text-right">
+                    <span class="text-xs text-gray-500 uppercase block">Total Valuation</span>
+                    <span class="text-3xl font-display font-bold text-white tracking-wide" id="grand-total-display">$0</span>
                 </div>
-
-                <!-- Column 2: Asset List -->
-                <div id="asset-summary-list-2" class="col-span-1 md:col-span-1 space-y-3">
-                    <!-- JS will populate this -->
-                </div>
-
-                <!-- Column 3: Totals -->
-                <div class="col-span-1 md:col-span-1 flex flex-col justify-between space-y-4">
-                    
-                    <!-- NEW: Expandable Properties -->
-                    <details id="property-summary" class="glass-effect p-4 rounded-lg shadow-md border border-zinc-700/50">
-                        <summary class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3">
-                                <i data-lucide="warehouse" class="text-amber-500 w-8 h-8"></i>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div id="asset-summary-list-1" class="space-y-4"></div>
+                <div id="asset-summary-list-2" class="space-y-4"></div>
+                <div class="flex flex-col justify-start space-y-6">
+                    <details class="group bg-zinc-900 border border-zinc-800">
+                        <summary class="flex justify-between items-center p-4 cursor-pointer hover:bg-zinc-800 transition">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="warehouse" class="text-gta-yellow w-5 h-5"></i>
                                 <div>
-                                    <span class="text-xs text-zinc-400 uppercase">Properties</span>
-                                    <span id="total-properties-count" class="text-xl font-bold text-white block">0 Properties</span>
+                                    <span class="font-display text-lg text-white tracking-wide">PROPERTIES</span>
+                                    <span class="text-xs text-gray-500 block uppercase" id="total-properties-count">0 Owned</span>
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <span class="text-green-400 font-semibold block" id="total-properties-value">$0</span>
-                                <span class="text-xs text-zinc-400">(Click to expand)</span>
-                            </div>
+                            <span class="text-gta-yellow font-bold group-open:rotate-180 transition-transform">▼</span>
                         </summary>
-                        <div id="property-details-list" class="space-y-2">
-                            <!-- JS will populate this -->
+                        <div class="p-4 border-t border-zinc-800 bg-black max-h-64 overflow-y-auto" id="property-details-content"></div>
+                        <div class="p-3 bg-zinc-900 border-t border-zinc-800 text-right">
+                            <span class="text-gta-green font-mono font-bold" id="total-properties-value">$0</span>
                         </div>
                     </details>
-                    
-                    <!-- Total Asset Value -->
-                    <div class="glass-effect p-4 rounded-lg shadow-md flex flex-col justify-between bg-amber-500/10 border border-amber-500/50">
-                        <div class="flex items-center space-x-3">
-                            <i data-lucide="dollar-sign" class="text-amber-400 w-8 h-8"></i>
-                            <div>
-                                <span class="text-xs text-amber-300 uppercase">Total Assets</span>
-                                <span class="text-xs text-zinc-400">(Property + Vehicles)</span>
-                            </div>
+                    <div class="bg-zinc-900 border border-zinc-800 p-4 flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="car" class="text-gta-blue w-5 h-5"></i>
+                            <span class="font-display text-lg text-white tracking-wide">VEHICLES</span>
                         </div>
-                        <div class="text-right mt-2">
-                            <span id="total-value" class="text-3xl font-extrabold text-white block">$0</span>
+                        <div class="text-right">
+                            <span class="text-xs text-gray-500 block uppercase" id="total-vehicles-count">0 Owned</span>
+                            <span class="text-gta-green font-mono font-bold" id="total-vehicles-value">$0</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- VEHICLE GALLERY SECTION -->
-        <section id="vehicle-gallery" class="glass-effect rounded-lg shadow-lg p-4 md:p-6">
-            
-            <!-- Title and Filtering -->
-            <div class="flex flex-col md:flex-row items-center justify-between mb-6">
-                <!-- NEW DYNAMIC TITLE (Garages, Types, Websites) -->
-                <h1 id="dynamic-gallery-title" class="text-4xl font-extrabold text-white uppercase tracking-wide mb-4 md:mb-0">
-                    Garages
-                </h1>
-                
-                <!-- MOVED SORT BY TO THE RIGHT -->
-                <div class="flex items-center space-x-4">
-                    <span class="text-zinc-400 font-medium hidden sm:block">Sort By:</span>
-                    <!-- NEW SORT BUTTONS STYLE -->
-                    <div class="flex" role="group">
-                        <button id="sort-by-garage" class="btn-sort active">
-                            Garage
-                        </button>
-                        <button id="sort-by-type" class="btn-sort">
-                            Type
-                        </button>
-                        <button id="sort-by-website" class="btn-sort">
-                            Website
-                        </button>
-                    </div>
+        <!-- CONTROLS -->
+        <div class="flex flex-col md:flex-row justify-between items-end mb-6 border-b-2 border-gray-800 pb-4">
+            <div>
+                <h1 class="text-6xl font-display font-bold text-white mb-1 tracking-tighter" id="dynamic-gallery-title">GARAGES</h1>
+                <div class="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-gray-500">
+                    <span class="text-white" id="filtered-count">0</span> ITEMS
+                    <span class="text-gray-700">|</span>
+                    VALUED AT <span class="text-gta-green font-mono text-sm" id="filtered-value">$0</span>
                 </div>
             </div>
-
-            <!-- Filter Buttons Area (NEW STYLE with horizontal scroll) -->
-            <div id="filter-buttons-container" class="mb-4 filter-container">
-                <!-- JavaScript will populate this with .btn-filter and | separators -->
+            <div class="flex gap-2 mt-4 md:mt-0">
+                <button id="btn-garage" class="btn-sort active" onclick="changeSort('garage')">Garages</button>
+                <button id="btn-type" class="btn-sort" onclick="changeSort('type')">Types</button>
+                <button id="btn-website" class="btn-sort" onclick="changeSort('website')">Dealers</button>
             </div>
+        </div>
 
-            <!-- Separator -->
-            <hr class="border-zinc-700 mb-6">
+        <!-- SUB FILTERS -->
+        <div class="w-full overflow-x-auto pb-2 mb-8">
+            <div class="flex items-center px-1 filter-container" id="sub-filter-container"></div>
+        </div>
 
-            <!-- Displayed Vehicle Info -->
-            <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-                <!-- NEW STYLE FOR GALLERY TITLE -->
-                <h2 id="gallery-title" class="text-3xl font-bold text-white mb-2 md:mb-0">All Garages</h2>
-                <div class="flex items-center space-x-4">
-                    <span class="text-zinc-400">
-                        <span id="filtered-count" class="font-bold text-white">0</span> Vehicles
-                    </span>
-                    <!-- Property Value Display -->
-                    <div id="property-cost-display" class="glass-effect p-2 px-3 rounded-lg flex-col items-center hidden border border-blue-500/50 bg-blue-500/10">
-                        <span class="text-xs text-blue-300 uppercase">Property Value</span>
-                        <span id="property-cost-value" class="text-lg font-bold text-white">$0</span>
-                    </div>
-                    <!-- Displayed Total Value -->
-                    <div class="glass-effect p-2 px-3 rounded-lg flex-col items-center border border-green-500/50 bg-green-500/10">
-                         <span class="text-xs text-green-300 uppercase">Displayed Value</span>
-                        <span id="filtered-value" class="text-lg font-bold text-white">$0</span>
-                    </div>
+        <!-- PROPERTY VALUE HEADER -->
+        <div id="property-cost-display" class="hidden mb-8 fade-in">
+            <div class="bg-zinc-900 border-l-4 border-gta-yellow p-4 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="building" class="text-gta-yellow"></i>
+                    <span class="font-display text-xl text-white tracking-wide">PROPERTY VALUE</span>
                 </div>
+                <span class="text-2xl font-mono font-bold text-white" id="property-cost-value">$0</span>
             </div>
+        </div>
 
-            <!-- Vehicle Cards Area -->
-            <div id="vehicle-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- JavaScript will populate this -->
-            </div>
-            
-            <!-- Loading... (Empty State) -->
-            <div id="no-results" class="hidden text-center py-16">
-                <i data-lucide="search-x" class="w-16 h-16 text-zinc-600 mx-auto mb-4"></i>
-                <h3 class="text-xl font-semibold text-white">No Vehicles Found</h3>
-                <p class="text-zinc-400">No vehicles match the selected filter.</p>
-            </div>
+        <!-- GRID -->
+        <div id="vehicle-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
 
-        </section>
-
+        <!-- EMPTY STATE -->
+        <div id="empty-state" class="hidden py-24 text-center opacity-50">
+            <i data-lucide="search-x" class="w-16 h-16 mx-auto mb-4 text-gray-600"></i>
+            <h2 class="text-3xl text-gray-500 font-display uppercase tracking-widest">No Assets Found</h2>
+        </div>
     </main>
 
-    <!-- 3. FOOTER -->
-    <footer class="mt-12 pb-6 text-center">
-        <p class="text-sm text-zinc-500">&copy; <span id="current-year">2024</span> Personal Garage Project. All rights reserved.</p>
-    </footer>
+    <footer class="mt-12 pb-6 text-center"><p class="text-sm text-zinc-500">&copy; 2024 Personal Garage Project.</p></footer>
 
-    <!-- 4. JAVASCRIPT -->
+    <!-- LOGIC -->
     <script>
         // --- DATA ---
         const mockData = {
             garages: [
-                { id: 'penthouse', name: 'Penthouse', basePrice: 1500000, upgradePrice: 5375000, parentId: null },
-                { id: 'exceptionalists', name: 'Exceptionalists', basePrice: 112500, upgradePrice: 0, parentId: null },
-                { id: 'supply', name: '331 Supply', basePrice: 109000, upgradePrice: 0, parentId: null },
-                { id: 'apartment', name: 'Apartment', basePrice: 1100000, upgradePrice: 600000, parentId: null },
-                { id: 'wild', name: '3655 Wild', basePrice: 120000, upgradePrice: 0, parentId: null },
-                { id: 'clubhouse', name: 'Clubhouse', basePrice: 495000, upgradePrice: 1200000, parentId: null },
+                { id: 'penthouse', name: 'Eclipse Penthouse', basePrice: 1100000, upgradePrice: 400000, parentId: null },
+                { id: 'exceptionalists', name: 'Exceptionalists Way', basePrice: 112500, upgradePrice: 0, parentId: null },
+                { id: 'supply', name: '331 Supply St', basePrice: 109000, upgradePrice: 0, parentId: null },
+                { id: 'apartment', name: '3 Alta St', basePrice: 1100000, upgradePrice: 600000, parentId: null },
+                { id: 'wild', name: '3655 Wild Oats', basePrice: 120000, upgradePrice: 0, parentId: null },
+                { id: 'clubhouse', name: 'MC Clubhouse', basePrice: 495000, upgradePrice: 1200000, parentId: null },
                 { id: 'unit2', name: 'Unit 2', basePrice: 135000, upgradePrice: 0, parentId: null },
-                { id: 'office', name: 'Office Garages', basePrice: 4000000, upgradePrice: 4435000, parentId: null },
+                { id: 'office', name: 'CEO Office', basePrice: 4000000, upgradePrice: 4435000, parentId: null },
                 { id: 'nightclub', name: 'Nightclub', basePrice: 1080000, upgradePrice: 3500000, parentId: null },
                 { id: 'arena', name: 'Arena Workshop', basePrice: 995000, upgradePrice: 3500000, parentId: null },
                 { id: 'facility', name: 'Facility', basePrice: 2950000, upgradePrice: 4075000, parentId: null },
-                { id: 'casino', name: 'Casino', basePrice: 900000, upgradePrice: 0, parentId: null },
+                { id: 'casino', name: 'Casino Garage', basePrice: 900000, upgradePrice: 0, parentId: null },
                 { id: 'arcade', name: 'Arcade', basePrice: 1875000, upgradePrice: 2200000, parentId: null },
-                
-                // Child & Virtual
                 { id: 'office1', name: 'Office 1', basePrice: 0, upgradePrice: 0, parentId: 'office' },
                 { id: 'office2', name: 'Office 2', basePrice: 0, upgradePrice: 0, parentId: 'office' },
                 { id: 'office3', name: 'Office 3', basePrice: 0, upgradePrice: 0, parentId: 'office' },
-                { id: 'nightclub_service', name: 'Nightclub Service', basePrice: 0, upgradePrice: 0, parentId: 'nightclub' },
-                { id: 'nightclub_b2', name: 'Nightclub B2', basePrice: 0, upgradePrice: 0, parentId: 'nightclub' },
-                { id: 'nightclub_b3', name: 'Nightclub B3', basePrice: 0, upgradePrice: 0, parentId: 'nightclub' },
+                { id: 'nightclub_service', name: 'NC Entrance', basePrice: 0, upgradePrice: 0, parentId: 'nightclub' },
+                { id: 'nightclub_b2', name: 'NC Basement 1', basePrice: 0, upgradePrice: 0, parentId: 'nightclub' },
+                { id: 'nightclub_b3', name: 'NC Basement 2', basePrice: 0, upgradePrice: 0, parentId: 'nightclub' },
                 { id: 'arena_b2', name: 'Arena B2', basePrice: 0, upgradePrice: 0, parentId: 'arena' },
                 { id: 'terrorbyte', name: 'Terrorbyte', basePrice: 0, upgradePrice: 0, parentId: null },
                 { id: 'special_vehicle', name: 'Special Vehicle', basePrice: 0, upgradePrice: 0, parentId: null },
-                { id: 'aircraft', name: 'Personal Aircraft', basePrice: 0, upgradePrice: 0, parentId: null },
+                { id: 'aircraft', name: 'Hangar', basePrice: 0, upgradePrice: 0, parentId: null },
                 { id: 'services', name: 'Services', basePrice: 0, upgradePrice: 0, parentId: null },
-                { id: 'mini_vehicles', name: 'Mini Vehicles', basePrice: 0, upgradePrice: 0, parentId: null },
+                { id: 'mini_vehicles', name: 'RC Units', basePrice: 0, upgradePrice: 0, parentId: null },
                 { id: 'pegasus', name: 'Pegasus', basePrice: 0, upgradePrice: 0, parentId: null }
             ],
             types: [
-                { id: 'super', name: 'Super' },
-                { id: 'sports', name: 'Sports' },
-                { id: 'classic', name: 'Classic' },
-                { id: 'muscle', name: 'Muscle' },
-                { id: 'offroad', name: 'Off-Road' },
-                { id: 'sedan', name: 'Sedan' },
-                { id: 'suv', name: 'SUV' },
-                { id: 'coupe', name: 'Coupe' },
-                { id: 'motorcycle', name: 'Motorcycle' },
-                { id: 'weaponized', name: 'Weaponized' },
-                { id: 'aircraft', name: 'Aircraft' },
-                { id: 'helicopter', name: 'Helicopter' },
-                { id: 'service', name: 'Service' },
-                { id: 'special', name: 'Special' },
-                { id: 'open_wheel', name: 'Open Wheel' },
-                { id: 'arena', name: 'Arena War' },
-                { id: 'utility', name: 'Utility' },
-                { id: 'sea_vehicle', name: 'Sea Vehicle' },
-                { id: 'bicycle', name: 'Bicycle' },
-                { id: 'rc', name: 'Remote Control' }
+                { id: 'super', name: 'Super' }, { id: 'sports', name: 'Sports' }, { id: 'classic', name: 'Classic' },
+                { id: 'muscle', name: 'Muscle' }, { id: 'offroad', name: 'Off-Road' }, { id: 'sedan', name: 'Sedan' },
+                { id: 'suv', name: 'SUV' }, { id: 'coupe', name: 'Coupe' }, { id: 'motorcycle', name: 'Motorcycle' },
+                { id: 'weaponized', name: 'Weaponized' }, { id: 'aircraft', name: 'Aircraft' }, { id: 'helicopter', name: 'Helicopter' },
+                { id: 'service', name: 'Service' }, { id: 'special', name: 'Special' }, { id: 'open_wheel', name: 'Open Wheel' },
+                { id: 'arena', name: 'Arena War' }, { id: 'utility', name: 'Utility' }, { id: 'sea_vehicle', name: 'Sea' },
+                { id: 'bicycle', name: 'Bicycle' }, { id: 'rc', name: 'Remote' }
             ],
             websites: [
-                { id: 'legendary', name: 'Legendary Motorsport' },
-                { id: 'warstock', name: 'Warstock Cache & Carry' },
-                { id: 'ssas', name: 'S. San Andreas Super Autos' },
-                { id: 'bennys', name: "Benny's Original Motor Works" },
-                { id: 'arena', name: 'Arena War' },
-                { id: 'elitastravel', name: 'Elitás Travel' },
-                { id: 'docktease', name: 'DockTease' },
-                { id: 'dynasty8', name: 'Dynasty 8' },
+                { id: 'legendary', name: 'Legendary' }, { id: 'warstock', name: 'Warstock' },
+                { id: 'ssas', name: 'SSA Super Autos' }, { id: 'bennys', name: "Benny's" },
+                { id: 'arena', name: 'Arena War' }, { id: 'elitastravel', name: 'Elitas' },
+                { id: 'docktease', name: 'DockTease' }, { id: 'dynasty8', name: 'Dynasty 8' },
                 { id: 'other', name: 'Other / Street' }
             ],
-            // FULL VEHICLE LIST - CORRECT TYPES ENSURED
             vehicles: [
-                // PENTHOUSE
                 { name: 'Streiter', type: 'sports', garageId: 'penthouse', websiteId: 'ssas', update: 'Doomsday Heist', image: 'images/vehicle/streiter.jpg', basePrice: 500000, upgradePrice: 850000 },
                 { name: 'Schwartzer GT', type: 'sports', garageId: 'penthouse', websiteId: 'legendary', update: 'After Hours', image: 'images/vehicle/schwartzer_gt.jpg', basePrice: 1380000, upgradePrice: 400000 },
                 { name: 'Schwartzer', type: 'sports', garageId: 'penthouse', websiteId: 'other', update: 'Default', image: 'images/vehicle/schwartzer.jpg', basePrice: 80000, upgradePrice: 300000 },
@@ -420,8 +247,6 @@
                 { name: '8F Drafter', type: 'sports', garageId: 'penthouse', websiteId: 'legendary', update: 'Diamond Casino', image: 'images/vehicle/8f_drafter.jpg', basePrice: 718000, upgradePrice: 1200000 },
                 { name: 'Tailgater S', type: 'sedan', garageId: 'penthouse', websiteId: 'legendary', update: 'Tuners', image: 'images/vehicle/tailgater.jpg', basePrice: 1495000, upgradePrice: 1000000 },
                 { name: '9F Cabrio', type: 'sports', garageId: 'penthouse', websiteId: 'legendary', update: 'Default', image: 'images/vehicle/9f_cabrio.jpg', basePrice: 130000, upgradePrice: 300000 },
-                
-                // EXCEPTIONALISTS
                 { name: 'APC', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Gunrunning', image: 'images/vehicle/apc.jpg', basePrice: 3092250, upgradePrice: 800000 },
                 { name: 'Insurgent', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Heists', image: 'images/vehicle/insurgent.jpg', basePrice: 897750, upgradePrice: 300000 },
                 { name: 'Caracara', type: 'offroad', garageId: 'exceptionalists', websiteId: 'warstock', update: 'SA Super Sport', image: 'images/vehicle/caracara.jpg', basePrice: 1775000, upgradePrice: 600000 },
@@ -432,8 +257,6 @@
                 { name: 'Dubsta (6x6)', type: 'offroad', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Hipster', image: 'images/vehicle/dubsta_6x6.jpg', basePrice: 249000, upgradePrice: 300000 },
                 { name: 'Mesa (Merryweather)', type: 'offroad', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Default', image: 'images/vehicle/mesa.jpg', basePrice: 87000, upgradePrice: 300000 },
                 { name: 'Nightshark', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', update: 'Gunrunning', image: 'images/vehicle/nightshark.jpg', basePrice: 1245000, upgradePrice: 400000 },
-
-                // 331 SUPPLY
                 { name: 'Moonbeam Custom', type: 'muscle', garageId: 'supply', websiteId: 'bennys', update: 'Lowriders', image: 'images/vehicle/moonbeam.jpg', basePrice: 32500, upgradePrice: 800000 },
                 { name: 'Rat-Loader', type: 'muscle', garageId: 'supply', websiteId: 'other', update: 'Default', image: 'images/vehicle/rat-loader.jpg', basePrice: 6000, upgradePrice: 350000 },
                 { name: 'Lurcher', type: 'muscle', garageId: 'supply', websiteId: 'ssas', update: 'Halloween', image: 'images/vehicle/lurcher.jpg', basePrice: 650000, upgradePrice: 300000 },
@@ -444,8 +267,6 @@
                 { name: 'Fränken Stange', type: 'classic', garageId: 'supply', websiteId: 'ssas', update: 'Halloween', image: 'images/vehicle/franken.jpg', basePrice: 550000, upgradePrice: 300000 },
                 { name: 'Sentinel Classic', type: 'classic', garageId: 'supply', websiteId: 'ssas', update: 'Doomsday', image: 'images/vehicle/sentinel_classic.jpg', basePrice: 650000, upgradePrice: 400000 },
                 { name: 'Slamvan Custom', type: 'muscle', garageId: 'supply', websiteId: 'bennys', update: 'Lowriders', image: 'images/vehicle/slamvan_c.jpg', basePrice: 49500, upgradePrice: 900000 },
-
-                // APARTMENT
                 { name: 'Baller', type: 'suv', garageId: 'apartment', websiteId: 'other', update: 'Default', image: 'images/vehicle/baller.jpg', basePrice: 90000, upgradePrice: 300000 },
                 { name: 'Oracle XS', type: 'coupe', garageId: 'apartment', websiteId: 'other', update: 'Default', image: 'images/vehicle/oracle_xs.jpg', basePrice: 80000, upgradePrice: 300000 },
                 { name: 'Oracle', type: 'coupe', garageId: 'apartment', websiteId: 'other', update: 'Default', image: 'images/vehicle/oracle.jpg', basePrice: 80000, upgradePrice: 300000 },
@@ -456,12 +277,8 @@
                 { name: 'Baller', type: 'suv', garageId: 'apartment', websiteId: 'other', update: 'Default', image: 'images/vehicle/baller_2.jpg', basePrice: 90000, upgradePrice: 300000 },
                 { name: 'Sentinel XS', type: 'coupe', garageId: 'apartment', websiteId: 'other', update: 'Default', image: 'images/vehicle/sentinel_xs.jpg', basePrice: 60000, upgradePrice: 350000 },
                 { name: 'Revolter', type: 'sports', garageId: 'apartment', websiteId: 'legendary', update: 'Doomsday', image: 'images/vehicle/revolter.jpg', basePrice: 1610000, upgradePrice: 850000 },
-
-                // 3655 WILD
                 { name: 'V-STR', type: 'sports', garageId: 'wild', websiteId: 'legendary', update: 'Diamond Casino Heist', image: 'images/vehicle/vstr.jpg', basePrice: 1285000, upgradePrice: 850000 },
                 { name: 'Taipan', type: 'super', garageId: 'wild', websiteId: 'legendary', update: 'Gunrunning', image: 'images/vehicle/taipan.jpg', basePrice: 1980000, upgradePrice: 400000 },
-
-                // CLUBHOUSE (ALL MOTORCYCLES)
                 { name: 'Avarus', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', update: 'Bikers', image: 'images/vehicle/avarus.jpg', basePrice: 118000, upgradePrice: 300000 },
                 { name: 'Daemon', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'bennys', update: 'Bikers', image: 'images/vehicle/daemon.jpg', basePrice: 145000, upgradePrice: 300000 },
                 { name: 'Shotaro', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'legendary', update: 'Bikers', image: 'images/vehicle/shotaro.jpg', basePrice: 2225000, upgradePrice: 300000 },
@@ -472,8 +289,6 @@
                 { name: 'Vortex', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', update: 'Bikers', image: 'images/vehicle/vortex.jpg', basePrice: 356000, upgradePrice: 300000 },
                 { name: 'Nightblade', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', update: 'Bikers', image: 'images/vehicle/nightblade.jpg', basePrice: 100000, upgradePrice: 300000 },
                 { name: 'Sanctus', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', update: 'Bikers', image: 'images/vehicle/sanctus.jpg', basePrice: 1995000, upgradePrice: 300000 },
-
-                // UNIT 2
                 { name: 'Everon', type: 'offroad', garageId: 'unit2', websiteId: 'ssas', update: 'Diamond Casino Heist', image: 'images/vehicle/everon.jpg', basePrice: 1475000, upgradePrice: 700000 },
                 { name: 'Toreador', type: 'weaponized', garageId: 'unit2', websiteId: 'warstock', update: 'Cayo Perico', image: 'images/vehicle/toreador.jpg', basePrice: 4250000, upgradePrice: 100000 },
                 { name: 'Imorgon', type: 'sports', garageId: 'unit2', websiteId: 'legendary', update: 'Diamond Casino Heist', image: 'images/vehicle/imorgon.jpg', basePrice: 2165000, upgradePrice: 400000 },
@@ -484,8 +299,6 @@
                 { name: 'Lynx', type: 'sports', garageId: 'unit2', websiteId: 'legendary', update: 'Cunning Stunts', image: 'images/vehicle/lynx.jpg', basePrice: 1735000, upgradePrice: 400000 },
                 { name: 'Locust', type: 'sports', garageId: 'unit2', websiteId: 'legendary', update: 'Diamond Casino', image: 'images/vehicle/locust.jpg', basePrice: 1625000, upgradePrice: 400000 },
                 { name: 'Schlagen GT', type: 'sports', garageId: 'unit2', websiteId: 'legendary', update: 'Arena War', image: 'images/vehicle/schlagen_gt.jpg', basePrice: 1300000, upgradePrice: 400000 },
-
-                // OFFICE 1
                 { name: 'Michelli GT', type: 'classic', garageId: 'office1', websiteId: 'ssas', update: 'SA Super Sport', image: 'images/vehicle/michelli_gt.jpg', basePrice: 525000, upgradePrice: 300000 },
                 { name: 'Stafford', type: 'classic', garageId: 'office1', websiteId: 'legendary', update: 'After Hours', image: 'images/vehicle/stafford.jpg', basePrice: 1280000, upgradePrice: 850000 },
                 { name: 'Swinger', type: 'classic', garageId: 'office1', websiteId: 'legendary', update: 'After Hours', image: 'images/vehicle/swinger.jpg', basePrice: 909000, upgradePrice: 300000 },
@@ -506,8 +319,6 @@
                 { name: 'Neon', type: 'sports', garageId: 'office1', websiteId: 'legendary', update: 'Doomsday', image: 'images/vehicle/neon.jpg', basePrice: 1500000, upgradePrice: 400000 },
                 { name: 'GP1', type: 'super', garageId: 'office1', websiteId: 'legendary', update: 'Cunning Stunts', image: 'images/vehicle/gp1.jpg', basePrice: 1260000, upgradePrice: 400000 },
                 { name: 'Comet SR', type: 'sports', garageId: 'office1', websiteId: 'legendary', update: 'Doomsday', image: 'images/vehicle/comet_sr.jpg', basePrice: 1145000, upgradePrice: 400000 },
-
-                // OFFICE 2
                 { name: 'Manana', type: 'classic', garageId: 'office2', websiteId: 'other', update: 'Default', image: 'images/vehicle/manana.jpg', basePrice: 10000, upgradePrice: 250000 },
                 { name: 'Roosevelt', type: 'classic', garageId: 'office2', websiteId: 'legendary', update: 'Valentine\'s Day', image: 'images/vehicle/roosevelt.jpg', basePrice: 750000, upgradePrice: 300000 },
                 { name: 'Infernus Classic', type: 'classic', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts', image: 'images/vehicle/infernus_classic.jpg', basePrice: 915000, upgradePrice: 300000 },
@@ -527,8 +338,6 @@
                 { name: 'ETR1', type: 'super', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts', image: 'images/vehicle/etr1.jpg', basePrice: 1995000, upgradePrice: 400000 },
                 { name: 'Drift Tampa', type: 'sports', garageId: 'office2', websiteId: 'ssas', update: 'Cunning Stunts', image: 'images/vehicle/drift_tampa.jpg', basePrice: 995000, upgradePrice: 400000 },
                 { name: 'RE-7B', type: 'super', garageId: 'office2', websiteId: 'legendary', update: 'Cunning Stunts', image: 'images/vehicle/re_7b.jpg', basePrice: 2475000, upgradePrice: 400000 },
-
-                // OFFICE 3
                 { name: 'Turismo R', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Default', image: 'images/vehicle/turismo_r.jpg', basePrice: 500000, upgradePrice: 400000 },
                 { name: 'Reaper', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Further Adventures', image: 'images/vehicle/reaper.jpg', basePrice: 1595000, upgradePrice: 400000 },
                 { name: 'T20', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Ill-Gotten Gains', image: 'images/vehicle/t20.jpg', basePrice: 2200000, upgradePrice: 400000 },
@@ -549,19 +358,13 @@
                 { name: 'FMJ', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Further Adventures', image: 'images/vehicle/fmj.jpg', basePrice: 1750000, upgradePrice: 400000 },
                 { name: 'Tempesta', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Import/Export', image: 'images/vehicle/tempesta.jpg', basePrice: 1329000, upgradePrice: 400000 },
                 { name: 'Adder', type: 'super', garageId: 'office3', websiteId: 'legendary', update: 'Default', image: 'images/vehicle/adder.jpg', basePrice: 1000000, upgradePrice: 400000 },
-
-                // FACILITY
                 { name: 'Chernobog', type: 'weaponized', garageId: 'facility', websiteId: 'warstock', update: 'Doomsday Heist', image: 'images/vehicle/chernobog.jpg', basePrice: 3311700, upgradePrice: 100000 },
                 { name: 'TM-02 Khanjali', type: 'weaponized', garageId: 'facility', websiteId: 'warstock', update: 'Doomsday Heist', image: 'images/vehicle/khanjali.jpg', basePrice: 3850350, upgradePrice: 500000 },
                 { name: 'Thruster', type: 'weaponized', garageId: 'facility', websiteId: 'warstock', update: 'Doomsday Heist', image: 'images/vehicle/thruster.jpg', basePrice: 3657500, upgradePrice: 300000 },
-
-                // NIGHTCLUB
                 { name: 'Menacer', type: 'weaponized', garageId: 'nightclub_service', websiteId: 'warstock', update: 'After Hours', image: 'images/vehicle/menacer.jpg', basePrice: 1775000, upgradePrice: 700000 },
                 { name: 'Speedo Custom', type: 'weaponized', garageId: 'nightclub_service', websiteId: 'warstock', update: 'After Hours', image: 'images/vehicle/speedo_custom.jpg', basePrice: 0, upgradePrice: 500000 },
                 { name: 'Mule Custom', type: 'weaponized', garageId: 'nightclub_service', websiteId: 'warstock', update: 'After Hours', image: 'images/vehicle/mule_custom.jpg', basePrice: 95760, upgradePrice: 500000 },
                 { name: 'Pounder Custom', type: 'weaponized', garageId: 'nightclub_service', websiteId: 'warstock', update: 'After Hours', image: 'images/vehicle/pounder_custom.jpg', basePrice: 320530, upgradePrice: 600000 },
-                
-                // NIGHTCLUB B2
                 { name: 'Raiden', type: 'sports', garageId: 'nightclub_b2', websiteId: 'legendary', update: 'Doomsday Heist', image: 'images/vehicle/raiden.jpg', basePrice: 1375000, upgradePrice: 400000 },
                 { name: 'Chino Custom', type: 'muscle', garageId: 'nightclub_b2', websiteId: 'bennys', update: 'Lowriders', image: 'images/vehicle/chino_custom.jpg', basePrice: 225000, upgradePrice: 600000 },
                 { name: 'Pariah', type: 'sports', garageId: 'nightclub_b2', websiteId: 'legendary', update: 'Doomsday Heist', image: 'images/vehicle/pariah.jpg', basePrice: 1420000, upgradePrice: 400000 },
@@ -572,8 +375,6 @@
                 { name: 'Super Diamond', type: 'sedan', garageId: 'nightclub_b2', websiteId: 'legendary', update: 'Default', image: 'images/vehicle/super_diamond.jpg', basePrice: 250000, upgradePrice: 300000 },
                 { name: 'Baller', type: 'suv', garageId: 'nightclub_b2', websiteId: 'other', update: 'Default', image: 'images/vehicle/baller_3.jpg', basePrice: 90000, upgradePrice: 300000 },
                 { name: 'Patriot Stretch', type: 'utility', garageId: 'nightclub_b2', websiteId: 'ssas', update: 'After Hours', image: 'images/vehicle/patriot_stretch.jpg', basePrice: 60000, upgradePrice: 300000 },
-
-                // NIGHTCLUB B3
                 { name: 'Windsor Drop', type: 'coupe', garageId: 'nightclub_b3', websiteId: 'legendary', update: 'Ill-Gotten Gains', image: 'images/vehicle/windsor_drop.jpg', basePrice: 900000, upgradePrice: 300000 },
                 { name: 'Felon', type: 'coupe', garageId: 'nightclub_b3', websiteId: 'other', update: 'Default', image: 'images/vehicle/felon_2.jpg', basePrice: 100000, upgradePrice: 300000 },
                 { name: 'Schwartzer', type: 'sports', garageId: 'nightclub_b3', websiteId: 'other', update: 'Default', image: 'images/vehicle/schwartzer_2.jpg', basePrice: 80000, upgradePrice: 300000 },
@@ -584,8 +385,6 @@
                 { name: 'Adder', type: 'super', garageId: 'nightclub_b3', websiteId: 'legendary', update: 'Default', image: 'images/vehicle/adder_2.jpg', basePrice: 1000000, upgradePrice: 400000 },
                 { name: 'Nero', type: 'super', garageId: 'nightclub_b3', websiteId: 'legendary', update: 'Import/Export', image: 'images/vehicle/nero.jpg', basePrice: 1440000, upgradePrice: 400000 },
                 { name: 'Surfer', type: 'utility', garageId: 'nightclub_b3', websiteId: 'other', update: 'Default', image: 'images/vehicle/surfer.jpg', basePrice: 11000, upgradePrice: 200000 },
-
-                // ARENA
                 { name: 'Future Shock ZR380', type: 'arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War', image: 'images/vehicle/fs_zr380.jpg', basePrice: 2138640, upgradePrice: 2000000 },
                 { name: 'Apocalypse Imperator', type: 'arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War', image: 'images/vehicle/apoc_imperator.jpg', basePrice: 2284940, upgradePrice: 2000000 },
                 { name: 'Nightmare Scarab', type: 'arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War', image: 'images/vehicle/nm_scarab.jpg', basePrice: 3076290, upgradePrice: 1500000 },
@@ -596,8 +395,6 @@
                 { name: 'Nightmare Issi', type: 'arena', garageId: 'arena', websiteId: 'arena', update: 'Arena War', image: 'images/vehicle/nm_issi.jpg', basePrice: 360000, upgradePrice: 2589000 },
                 { name: 'Elegy RH8 (Arena)', type: 'sports', garageId: 'arena', websiteId: 'legendary', update: 'Default', image: 'images/vehicle/elegy_rh8_arena.jpg', basePrice: 0, upgradePrice: 400000 },
                 { name: 'Elegy RH8 (Arena)', type: 'sports', garageId: 'arena', websiteId: 'legendary', update: 'Default', image: 'images/vehicle/elegy_rh8_arena_2.jpg', basePrice: 0, upgradePrice: 400000 },
-
-                // ARENA B2
                 { name: 'FQ 2', type: 'suv', garageId: 'arena_b2', websiteId: 'other', update: 'Default', image: 'images/vehicle/fq2.jpg', basePrice: 50000, upgradePrice: 300000 },
                 { name: 'Dominator', type: 'muscle', garageId: 'arena_b2', websiteId: 'other', update: 'Default', image: 'images/vehicle/dominator.jpg', basePrice: 35000, upgradePrice: 300000 },
                 { name: 'Fusilade', type: 'sports', garageId: 'arena_b2', websiteId: 'other', update: 'Default', image: 'images/vehicle/fusilade.jpg', basePrice: 36000, upgradePrice: 300000 },
@@ -607,8 +404,6 @@
                 { name: 'Buffalo', type: 'sports', garageId: 'arena_b2', websiteId: 'other', update: 'Default', image: 'images/vehicle/buffalo.jpg', basePrice: 35000, upgradePrice: 300000 },
                 { name: 'Patriot Stretch', type: 'utility', garageId: 'arena_b2', websiteId: 'ssas', update: 'After Hours', image: 'images/vehicle/patriot_stretch_2.jpg', basePrice: 60000, upgradePrice: 300000 },
                 { name: 'Future Shock Issi', type: 'arena', garageId: 'arena_b2', websiteId: 'arena', update: 'Arena War', image: 'images/vehicle/fs_issi.jpg', basePrice: 360000, upgradePrice: 2589000 },
-
-                // CASINO
                 { name: 'Clique', type: 'muscle', garageId: 'casino', websiteId: 'legendary', update: 'Festive Surprise 2018', image: 'images/vehicle/clique.jpg', basePrice: 909000, upgradePrice: 350000 },
                 { name: 'Vamos', type: 'muscle', garageId: 'casino', websiteId: 'ssas', update: 'Arena War', image: 'images/vehicle/vamos.jpg', basePrice: 596000, upgradePrice: 350000 },
                 { name: 'Hermes', type: 'muscle', garageId: 'casino', websiteId: 'ssas', update: 'Festive Surprise 2017', image: 'images/vehicle/hermes.jpg', basePrice: 535000, upgradePrice: 350000 },
@@ -618,8 +413,6 @@
                 { name: 'Stallion', type: 'muscle', garageId: 'casino', websiteId: 'ssas', update: 'Default', image: 'images/vehicle/stallion.jpg', basePrice: 38000, upgradePrice: 300000 },
                 { name: 'Dukes', type: 'muscle', garageId: 'casino', websiteId: 'ssas', update: 'Default', image: 'images/vehicle/dukes.jpg', basePrice: 62000, upgradePrice: 300000 },
                 { name: 'Buccaneer', type: 'muscle', garageId: 'casino', websiteId: 'ssas', update: 'Default', image: 'images/vehicle/buccaneer.jpg', basePrice: 29000, upgradePrice: 300000 },
-
-                // ARCADE
                 { name: 'Kuruma (Armored)', type: 'weaponized', garageId: 'arcade', websiteId: 'ssas', update: 'Heists', image: 'images/vehicle/kuruma_armored.jpg', basePrice: 698250, upgradePrice: 350000 },
                 { name: 'Half-track', type: 'weaponized', garageId: 'arcade', websiteId: 'warstock', update: 'Gunrunning', image: 'images/vehicle/half-track_2.jpg', basePrice: 2254350, upgradePrice: 800000 },
                 { name: 'BR8', type: 'open_wheel', garageId: 'arcade', websiteId: 'legendary', update: 'Summer Special', image: 'images/vehicle/br8.jpg', basePrice: 3400000, upgradePrice: 300000 },
@@ -629,11 +422,7 @@
                 { name: 'Paragon R (Armored)', type: 'weaponized', garageId: 'arcade', websiteId: 'legendary', update: 'Diamond Casino', image: 'images/vehicle/paragon_r_armored.jpg', basePrice: 905000, upgradePrice: 400000 },
                 { name: 'Vigilante', type: 'weaponized', garageId: 'arcade', websiteId: 'warstock', update: 'Smuggler\'s Run', image: 'images/vehicle/vigilante.jpg', basePrice: 3750000, upgradePrice: 750000 },
                 { name: 'Future Shock Issi', type: 'arena', garageId: 'arcade', websiteId: 'arena', update: 'Arena War', image: 'images/vehicle/fs_issi_2.jpg', basePrice: 360000, upgradePrice: 2589000 },
-
-                // TERRORBYTE
                 { name: 'Oppressor Mk II', type: 'motorcycle', garageId: 'terrorbyte', websiteId: 'warstock', update: 'After Hours', image: 'images/vehicle/oppressor_mk2.jpg', basePrice: 8000000, upgradePrice: 1500000 },
-                
-                // SPECIAL
                 { name: 'Phantom Wedge', type: 'special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export', image: 'images/vehicle/phantom_wedge.jpg', basePrice: 2553600, upgradePrice: 0 },
                 { name: 'Ruiner 2000', type: 'special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export', image: 'images/vehicle/ruiner_2000.jpg', basePrice: 5745600, upgradePrice: 0 },
                 { name: 'Technical Aqua', type: 'special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export', image: 'images/vehicle/technical_aqua.jpg', basePrice: 1489600, upgradePrice: 0 },
@@ -642,8 +431,6 @@
                 { name: 'Rocket Voltic', type: 'special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export', image: 'images/vehicle/rocket_voltic.jpg', basePrice: 3830400, upgradePrice: 0 },
                 { name: 'Ramp Buggy', type: 'special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export', image: 'images/vehicle/ramp_buggy.jpg', basePrice: 3192000, upgradePrice: 0 },
                 { name: 'Blazer Aqua', type: 'special', garageId: 'special_vehicle', websiteId: 'warstock', update: 'Import/Export', image: 'images/vehicle/blazer_aqua.jpg', basePrice: 1755600, upgradePrice: 0 },
-
-                // AIRCRAFT
                 { name: 'Tula', type: 'aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run', image: 'images/vehicle/tula.jpg', basePrice: 5173700, upgradePrice: 1000000 },
                 { name: 'Havok', type: 'helicopter', garageId: 'aircraft', websiteId: 'elitastravel', update: 'Smuggler\'s Run', image: 'images/vehicle/havok.jpg', basePrice: 2300900, upgradePrice: 500000 },
                 { name: 'Mogul', type: 'aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run', image: 'images/vehicle/mogul.jpg', basePrice: 3125500, upgradePrice: 800000 },
@@ -664,8 +451,6 @@
                 { name: 'Ultralight', type: 'aircraft', garageId: 'aircraft', websiteId: 'elitastravel', update: 'Smuggler\'s Run', image: 'images/vehicle/ultralight.jpg', basePrice: 665000, upgradePrice: 500000 },
                 { name: 'P-996 LAZER', type: 'aircraft', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run', image: 'images/vehicle/lazer.jpg', basePrice: 6500000, upgradePrice: 300000 },
                 { name: 'FH-1 Hunter', type: 'helicopter', garageId: 'aircraft', websiteId: 'warstock', update: 'Smuggler\'s Run', image: 'images/vehicle/hunter.jpg', basePrice: 4123000, upgradePrice: 1000000 },
-
-                // SERVICES & SEA & RC & PEGASUS
                 { name: 'Galaxy Super Yacht', type: 'sea_vehicle', garageId: 'services', websiteId: 'docktease', update: 'Galaxy', image: 'images/vehicle/yacht.jpg', basePrice: 8000000, upgradePrice: 2000000 },
                 { name: 'MOC (Mobile Ops Center)', type: 'service', garageId: 'services', websiteId: 'warstock', update: 'Gunrunning', image: 'images/vehicle/moc.jpg', basePrice: 2790000, upgradePrice: 1500000 },
                 { name: 'Avenger', type: 'service', garageId: 'services', websiteId: 'warstock', update: 'Doomsday', image: 'images/vehicle/avenger.jpg', basePrice: 4787500, upgradePrice: 2000000 },
@@ -687,11 +472,11 @@
                 { name: 'Luxor', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default', image: 'images/vehicle/luxor.jpg', basePrice: 1625000, upgradePrice: 0 },
                 { name: 'Luxor Deluxe', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Ill-Gotten Gains', image: 'images/vehicle/luxor_deluxe.jpg', basePrice: 10000000, upgradePrice: 0 },
                 { name: 'Titan', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default', image: 'images/vehicle/titan.jpg', basePrice: 2000000, upgradePrice: 0 },
-                { name: 'Besra (Pegasus)', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default', image: 'images/vehicle/besra_pegasus.jpg', basePrice: 1150000, upgradePrice: 0 },
-                { name: 'Miljet (Pegasus)', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default', image: 'images/vehicle/miljet_pegasus.jpg', basePrice: 1700000, upgradePrice: 0 },
+                { name: 'Besra', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default', image: 'images/vehicle/besra_pegasus.jpg', basePrice: 1150000, upgradePrice: 0 },
+                { name: 'Miljet', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default', image: 'images/vehicle/miljet_pegasus.jpg', basePrice: 1700000, upgradePrice: 0 },
                 { name: 'Dodo', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitastravel', update: 'Default', image: 'images/vehicle/dodo.jpg', basePrice: 500000, upgradePrice: 0 },
-                { name: 'Hydra (Pegasus)', type: 'aircraft', garageId: 'pegasus', websiteId: 'warstock', update: 'Heists', image: 'images/vehicle/hydra_pegasus.jpg', basePrice: 4000000, upgradePrice: 0 },
-                { name: 'P-996 LAZER (Pegasus)', type: 'aircraft', garageId: 'pegasus', websiteId: 'warstock', update: 'Smuggler\'s Run', image: 'images/vehicle/lazer_pegasus.jpg', basePrice: 6500000, upgradePrice: 0 },
+                { name: 'Hydra', type: 'aircraft', garageId: 'pegasus', websiteId: 'warstock', update: 'Heists', image: 'images/vehicle/hydra_pegasus.jpg', basePrice: 4000000, upgradePrice: 0 },
+                { name: 'P-996 LAZER', type: 'aircraft', garageId: 'pegasus', websiteId: 'warstock', update: 'Smuggler\'s Run', image: 'images/vehicle/lazer_pegasus.jpg', basePrice: 6500000, upgradePrice: 0 },
                 { name: 'Marquis', type: 'sea_vehicle', garageId: 'pegasus', websiteId: 'docktease', update: 'Default', image: 'images/vehicle/marquis.jpg', basePrice: 413990, upgradePrice: 0 },
                 { name: 'Seashark', type: 'sea_vehicle', garageId: 'pegasus', websiteId: 'docktease', update: 'Default', image: 'images/vehicle/seashark.jpg', basePrice: 16899, upgradePrice: 0 },
                 { name: 'Suntrap', type: 'sea_vehicle', garageId: 'pegasus', websiteId: 'docktease', update: 'Default', image: 'images/vehicle/suntrap.jpg', basePrice: 25160, upgradePrice: 0 },
@@ -709,400 +494,254 @@
             ]
         };
 
-        // --- GLOBAL STATE ---
-        let currentFilterType = 'garage'; // 'garage', 'type', or 'website'
-        let currentFilterId = 'all'; // 'all', 'penthouse', 'super', etc.
-
-        // --- FORMATTERS ---
-        const formatCurrency = (value) => {
-            return new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-                maximumFractionDigits: 0
-            }).format(value);
-        };
-
-        // --- DOM ELEMENTS ---
-        const $ = (selector) => document.querySelector(selector);
-        const $$ = (selector) => document.querySelectorAll(selector);
-
-        // --- APP LOGIC ---
-
-        /**
-         * Main function that initializes the app on page load
-         */
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log("Garage App Initialized...");
-            // Load Lucide icons
-            lucide.createIcons();
-
-            // Update footer year
-            $('#current-year').textContent = new Date().getFullYear();
-
-            // Set up filter buttons
-            setupFilterButtons();
+        function renderStats() {
+            const listCol1 = document.getElementById('asset-summary-list-1');
+            const listCol2 = document.getElementById('asset-summary-list-2');
+            const propList = document.getElementById('property-details-content');
             
-            // Perform initial filtering (Garages)
-            updateFilterButtonsUI();
-            filterAndDisplayVehicles();
-
-            // Populate stats boxes
-            updateStatsBoxes();
-
-            // Mobile menu toggle
-            $('#mobile-menu-btn').addEventListener('click', () => {
-                $('#mobile-menu').classList.toggle('hidden');
-            });
-        });
-
-        /**
-         * NEW: Updates the new asset summary list based on user's screenshot
-         */
-        function updateStatsBoxes() {
-            const { vehicles, garages } = mockData;
-            const listCol1 = $('#asset-summary-list-1');
-            const listCol2 = $('#asset-summary-list-2');
-            const propertyDetailsList = $('#property-details-list');
             listCol1.innerHTML = '';
             listCol2.innerHTML = '';
-            propertyDetailsList.innerHTML = ''; // Clear property list
-
-            // Helper function to filter and sum categories
-            const calculateCategory = (filterFn) => {
-                const filtered = vehicles.filter(filterFn);
-                const count = filtered.length;
-                const value = filtered.reduce((sum, v) => sum + (v.basePrice || 0) + (v.upgradePrice || 0), 0);
-                return { count, value };
-            };
+            propList.innerHTML = '';
             
-            // Define all categories to display
-            const categories = [
-                { name: 'Super Cars', fn: v => v.type === 'super' },
-                { name: 'Sports Cars', fn: v => v.type === 'sports' },
-                { name: 'Classic Cars', fn: v => v.type === 'classic' },
-                { name: 'Muscle Cars', fn: v => v.type === 'muscle' },
-                { name: 'Weaponized', fn: v => v.type === 'weaponized' },
-                { name: 'Arena War', fn: v => v.type === 'arena' },
-                { name: 'Special Vehicles', fn: v => v.type === 'special' },
-                { name: 'Off-Road', fn: v => v.type === 'offroad' },
-                { name: 'Motorcycles', fn: v => v.type === 'motorcycle' },
-                { name: 'Aircraft', fn: v => v.type === 'aircraft' },
-                { name: 'Helicopters', fn: v => v.type === 'helicopter' },
-                { name: 'Sea Vehicles', fn: v => v.type === 'sea_vehicle' },
-                { name: 'Open Wheel', fn: v => v.type === 'open_wheel' },
-                { name: 'Other', fn: v => ['sedan', 'suv', 'coupe', 'utility', 'service', 'rc'].includes(v.type) },
+            // Categories
+            const cats = [
+                { id: 'super', label: 'Super Cars' }, { id: 'sports', label: 'Sports Cars' },
+                { id: 'classic', label: 'Classic Cars' }, { id: 'muscle', label: 'Muscle Cars' },
+                { id: 'weaponized', label: 'Weaponized' }, { id: 'arena', label: 'Arena War' },
+                { id: 'special', label: 'Special Vehicles' }, { id: 'offroad', label: 'Off-Road' },
+                { id: 'motorcycle', label: 'Motorcycles' }, { id: 'aircraft', label: 'Air Vehicles' },
+                { id: 'helicopter', label: 'Helicopters' }, { id: 'sea_vehicle', label: 'Sea Vehicles' },
+                { id: 'open_wheel', label: 'Open Wheel' }, { id: 'other', label: 'Other' }
             ];
 
-            // Calculate categories
-            const calculatedCategories = categories.map(cat => ({
-                name: cat.name,
-                ...calculateCategory(cat.fn)
-            })).filter(c => c.count > 0) 
-              .sort((a, b) => b.value - a.value); // Sort by value descending
+            let grandTotal = 0;
+            let propTotal = 0;
 
-            // Find max value for progress bars
-            const maxValue = Math.max(...calculatedCategories.map(c => c.value));
+            // Calculate Property Totals
+            const properties = mockData.garages.filter(g => g.basePrice > 0 && !g.parentId);
+            properties.forEach(g => propTotal += (g.basePrice + g.upgradePrice));
+
+            properties.sort((a,b) => (b.basePrice+b.upgradePrice) - (a.basePrice+a.upgradePrice))
+                .forEach((p, i) => {
+                    propList.innerHTML += `
+                    <div class="flex justify-between border-b border-gray-800 pb-2">
+                        <span class="text-zinc-500 font-bold mr-2">${i+1}.</span>
+                        <span class="text-zinc-300 truncate flex-1">${p.name}</span>
+                        <span class="text-white font-mono">${formatCurrency(p.basePrice + p.upgradePrice)}</span>
+                    </div>`;
+            });
             
-            // Create HTML
-            const half = Math.ceil(calculatedCategories.length / 2);
+            document.getElementById('total-properties-count').innerText = `${properties.length} Properties`;
+            document.getElementById('total-properties-value').innerText = formatCurrency(propTotal);
 
-            const createCategoryHTML = (category, maxVal) => {
-                const barWidth = maxVal > 0 ? (category.value / maxVal) * 100 : 0;
+            // Calculate Vehicle Stats
+            const catStats = {};
+            mockData.vehicles.forEach(v => {
+                const cost = v.basePrice + v.upgradePrice;
+                grandTotal += cost;
                 
-                return `
-                    <div class="flex flex-col space-y-1">
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm font-semibold text-zinc-300 uppercase">${category.name}</span>
-                            <span class="text-sm font-bold text-white">${category.count} Vehicles</span>
-                        </div>
-                        <div class="asset-progress-bar">
-                            <div class="asset-progress-fill" style="width: ${barWidth}%;"></div>
-                        </div>
-                        <div class="text-right text-sm font-semibold text-green-400">
-                            ${formatCurrency(category.value)}
-                        </div>
-                    </div>
-                `;
-            };
+                let typeKey = v.type;
+                if (['sedan', 'suv', 'coupe', 'utility', 'service', 'rc'].includes(v.type)) typeKey = 'other';
+                
+                if (!catStats[typeKey]) catStats[typeKey] = { val: 0, count: 0 };
+                catStats[typeKey].val += cost;
+                catStats[typeKey].count += 1;
+            });
 
-            // Populate columns
-            calculatedCategories.forEach((cat, index) => {
-                const html = createCategoryHTML(cat, maxValue);
-                if (index < half) {
-                    listCol1.innerHTML += html;
-                } else {
-                    listCol2.innerHTML += html;
+            const maxVal = Math.max(...Object.values(catStats).map(s => s.val), 0);
+
+            // Sort and render categories
+            cats.sort((a, b) => (catStats[b.id]?.val || 0) - (catStats[a.id]?.val || 0));
+            
+            const half = Math.ceil(cats.length / 2);
+            cats.forEach((cat, index) => {
+                const stat = catStats[cat.id] || { val: 0, count: 0 };
+                if (stat.count > 0) {
+                    const width = maxVal > 0 ? (stat.val / maxVal) * 100 : 0;
+                    const html = `
+                        <div class="flex flex-col space-y-1 mb-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs font-bold text-zinc-400 uppercase tracking-wide">${cat.label}</span>
+                                <span class="text-xs font-bold text-white">${stat.count} Vehicles</span>
+                            </div>
+                            <div class="asset-progress-bar">
+                                <div class="asset-progress-fill" style="width: ${width}%;"></div>
+                            </div>
+                            <div class="text-right text-xs font-bold text-gta-green font-mono tracking-tight">
+                                ${formatCurrency(stat.val)}
+                            </div>
+                        </div>`;
+                    if (index < half) listCol1.innerHTML += html;
+                    else listCol2.innerHTML += html;
                 }
             });
 
-            // Properties
-            const properties = garages.filter(g => g.basePrice > 0 && !g.parentId); // Only parent properties with price
-            const propertyValue = properties.reduce((sum, g) => sum + (g.basePrice || 0) + (g.upgradePrice || 0), 0);
-            $('#total-properties-count').textContent = properties.length + ' Properties';
-            $('#total-properties-value').textContent = formatCurrency(propertyValue);
-
-            // Populate Expandable Property List
-            const sortedProperties = properties
-                .map(p => ({ name: p.name, value: (p.basePrice || 0) + (p.upgradePrice || 0) }))
-                .sort((a, b) => b.value - a.value);
-            
-            sortedProperties.forEach((prop, index) => {
-                propertyDetailsList.innerHTML += `
-                    <div class="flex justify-between items-center text-sm">
-                        <span class="text-zinc-300">${index + 1}. ${prop.name}</span>
-                        <span class="font-semibold text-zinc-100">${formatCurrency(prop.value)}</span>
-                    </div>
-                `;
-            });
-            
-            // Total Asset Value
-            const allVehicleValue = vehicles.reduce((sum, v) => sum + (v.basePrice || 0) + (v.upgradePrice || 0), 0);
-            $('#total-value').textContent = formatCurrency(propertyValue + allVehicleValue);
+            document.getElementById('grand-total-display').innerText = formatCurrency(grandTotal + propTotal);
+            document.getElementById('total-vehicles-count').innerText = `${mockData.vehicles.length} Owned`;
+            document.getElementById('total-vehicles-value').innerText = formatCurrency(grandTotal);
         }
 
-        /**
-         * Sets up the main sorting buttons
-         */
-        function setupFilterButtons() {
-            const dynamicTitle = $('#dynamic-gallery-title');
-
-            $('#sort-by-garage').addEventListener('click', () => {
-                currentFilterType = 'garage';
-                currentFilterId = 'all';
-                dynamicTitle.textContent = 'Garages';
-                updateFilterButtonsUI();
-                filterAndDisplayVehicles();
-            });
-
-            $('#sort-by-type').addEventListener('click', () => {
-                currentFilterType = 'type';
-                currentFilterId = 'all';
-                dynamicTitle.textContent = 'Types';
-                updateFilterButtonsUI();
-                filterAndDisplayVehicles();
-            });
-
-            $('#sort-by-website').addEventListener('click', () => {
-                currentFilterType = 'website';
-                currentFilterId = 'all';
-                dynamicTitle.textContent = 'Websites';
-                updateFilterButtonsUI();
-                filterAndDisplayVehicles();
-            });
-        }
-
-        /**
-         * Creates and updates the sub-filter buttons
-         */
-        function updateFilterButtonsUI() {
-            const container = $('#filter-buttons-container');
-            container.innerHTML = ''; // Clear
-
-            // Set active main button
-            $('#sort-by-garage').classList.toggle('active', currentFilterType === 'garage');
-            $('#sort-by-type').classList.toggle('active', currentFilterType === 'type');
-            $('#sort-by-website').classList.toggle('active', currentFilterType === 'website');
-
-            // Get list
-            const filterMap = {
-                garage: mockData.garages,
-                type: mockData.types,
-                website: mockData.websites
-            };
+        function renderGrid() {
+            const grid = document.getElementById('vehicle-grid');
+            const empty = document.getElementById('empty-state');
+            const filteredCount = document.getElementById('filtered-count');
+            const filteredValue = document.getElementById('filtered-value');
+            const propertyCostDisplay = document.getElementById('property-cost-display');
+            const propertyCostValue = document.getElementById('property-cost-value');
             
-            let filterList = filterMap[currentFilterType];
-
-            // If garage, only show parent garages
-            if (currentFilterType === 'garage') {
-                filterList = filterList.filter(g => !g.parentId);
-            }
-
-            // "All" button
-            const allButton = document.createElement('button');
-            allButton.textContent = 'All';
-            allButton.className = 'btn-filter';
-            allButton.classList.toggle('active', currentFilterId === 'all');
-            allButton.addEventListener('click', () => {
-                currentFilterId = 'all';
-                filterAndDisplayVehicles();
-            });
-            container.appendChild(allButton);
-
-            // Dynamic filter buttons with separators
-            filterList.forEach(filter => {
-                const separator = document.createElement('span');
-                separator.className = 'filter-separator';
-                separator.textContent = '|';
-                container.appendChild(separator);
-
-                const button = document.createElement('button');
-                button.textContent = filter.name;
-                button.className = 'btn-filter';
-                button.classList.toggle('active', currentFilterId === filter.id);
-                button.addEventListener('click', () => {
-                    currentFilterId = filter.id;
-                    filterAndDisplayVehicles();
-                });
-                container.appendChild(button);
-            });
-        }
-
-        /**
-         * Filters vehicles and displays them
-         */
-        function filterAndDisplayVehicles() {
-            const { vehicles, garages, types, websites } = mockData;
-            const propertyCostDisplay = $('#property-cost-display');
-            const propertyCostValue = $('#property-cost-value');
-            
+            grid.innerHTML = '';
             let propertyCost = 0;
-            
-            // Background Logic
-            const bodyEl = document.body;
-            const defaultBg = "url('https://placehold.co/1920x1080/18181b/18181b?text=+')";
-            propertyCostDisplay.classList.add('hidden');
 
-            if (currentFilterType === 'garage' && currentFilterId !== 'all') {
-                const newBgUrl = `url('images/background/${currentFilterId}.jpg')`;
-                bodyEl.style.backgroundImage = newBgUrl;
+            // Background & Property Value Logic
+            propertyCostDisplay.classList.add('hidden');
+            if (currentSort === 'garage' && currentFilter !== 'all') {
+                document.body.style.backgroundImage = `linear-gradient(to bottom, rgba(0,0,0,0.8), #000), url('images/background/${currentFilter}.jpg')`;
                 
-                // Find garage cost
-                const garage = garages.find(g => g.id === currentFilterId);
+                const garage = mockData.garages.find(g => g.id === currentFilter);
                 if (garage && (garage.basePrice > 0 || garage.upgradePrice > 0)) {
                     propertyCost = (garage.basePrice || 0) + (garage.upgradePrice || 0);
-                    propertyCostValue.textContent = formatCurrency(propertyCost);
+                    propertyCostValue.innerText = formatCurrency(propertyCost);
                     propertyCostDisplay.classList.remove('hidden');
                 }
-                
             } else {
-                bodyEl.style.backgroundImage = defaultBg;
-            }
-            
-            // Update active buttons
-            const filterMap = {
-                garage: garages,
-                type: types,
-                website: websites
-            };
-            
-            let currentList = filterMap[currentFilterType];
-            if (currentFilterType === 'garage') {
-                currentList = currentList.filter(g => !g.parentId);
+                document.body.style.backgroundImage = `linear-gradient(to bottom, rgba(0,0,0,0.85), #000), url('https://placehold.co/1920x1080/111/222?text=LS+Background')`;
             }
 
-            $$('#filter-buttons-container button.btn-filter').forEach(btn => {
-                const isActive = (btn.textContent === 'All' && currentFilterId === 'all') || 
-                                 (btn.textContent !== 'All' && currentList.find(f => f.name === btn.textContent)?.id === currentFilterId);
-                btn.classList.toggle('active', isActive);
-            });
-
-            // Filter vehicles
-            let filteredVehicles = [];
-            if (currentFilterId === 'all') {
-                filteredVehicles = vehicles;
+            // Filtering
+            let filtered = [];
+            if (currentFilter === 'all') {
+                filtered = mockData.vehicles;
             } else {
-                if (currentFilterType === 'garage') {
-                    // Match parentId or direct garageId
-                    filteredVehicles = vehicles.filter(v => v.garageId === currentFilterId || garages.find(g => g.id === v.garageId)?.parentId === currentFilterId);
-                } else if (currentFilterType === 'type') {
-                    filteredVehicles = vehicles.filter(v => v.type === currentFilterId);
-                } else if (currentFilterType === 'website') {
-                    filteredVehicles = vehicles.filter(v => v.websiteId === currentFilterId);
+                if (currentSort === 'garage') {
+                    filtered = mockData.vehicles.filter(v => 
+                        v.garageId === currentFilter || 
+                        mockData.garages.find(g => g.id === v.garageId)?.parentId === currentFilter
+                    );
+                } else if (currentSort === 'type') {
+                    filtered = mockData.vehicles.filter(v => v.type === currentFilter);
+                } else if (currentSort === 'website') {
+                    filtered = mockData.vehicles.filter(v => v.websiteId === currentFilter);
                 }
             }
 
-            // Update title
-            updateGalleryTitle();
-            
-            // Display cards
-            displayVehicleCards(filteredVehicles, propertyCost);
-        }
+            // Sort by Price
+            filtered.sort((a, b) => (b.basePrice + b.upgradePrice) - (a.basePrice + a.upgradePrice));
 
-        /**
-         * Updates title
-         */
-        function updateGalleryTitle() {
-            let title = 'All Assets';
-            if (currentFilterId !== 'all') {
-                const filterMap = {
-                    garage: mockData.garages,
-                    type: mockData.types,
-                    website: mockData.websites
-                };
-                
-                let list = filterMap[currentFilterType];
-                 // Helper to find name even in full list if filtered
-                 if (currentFilterType === 'garage') {
-                    list = mockData.garages;
-                 }
+            // Update UI
+            filteredCount.innerText = filtered.length;
+            const totalVal = filtered.reduce((acc, v) => acc + v.basePrice + v.upgradePrice, 0) + propertyCost;
+            filteredValue.innerText = formatCurrency(totalVal);
 
-                const filterName = list.find(f => f.id === currentFilterId)?.name;
-                title = filterName || 'All Assets';
-            }
-            $('#gallery-title').textContent = title;
-        }
-
-        /**
-         * Display cards
-         */
-        function displayVehicleCards(vehiclesToShow, propertyCost = 0) {
-            const grid = $('#vehicle-grid');
-            const noResults = $('#no-results');
-            grid.innerHTML = '';
-
-            if (vehiclesToShow.length === 0 && propertyCost === 0) {
-                noResults.classList.remove('hidden');
+            if (filtered.length === 0) {
+                empty.classList.remove('hidden');
             } else {
-                noResults.classList.add('hidden');
-            }
-
-            let filteredTotalValue = propertyCost;
-
-            // Sort vehicles by total value (descending)
-            const sortedVehicles = [...vehiclesToShow].sort((a, b) => {
-                const totalA = (a.basePrice || 0) + (a.upgradePrice || 0);
-                const totalB = (b.basePrice || 0) + (b.upgradePrice || 0);
-                return totalB - totalA;
-            });
-
-            sortedVehicles.forEach(vehicle => {
-                const totalValue = (vehicle.basePrice || 0) + (vehicle.upgradePrice || 0);
-                filteredTotalValue += totalValue;
-
-                const typeName = mockData.types.find(t => t.id === vehicle.type)?.name || vehicle.type.toUpperCase();
-                const placeholderImage = `https://placehold.co/600x400/3f3f46/71717a?text=${encodeURIComponent(vehicle.name)}`;
-                const websiteName = mockData.websites.find(w => w.id === vehicle.websiteId)?.name || 'Unknown';
-
-                const card = document.createElement('div');
-                card.className = 'glass-effect rounded-lg overflow-hidden shadow-xl border border-zinc-700/50 transition-all hover:shadow-amber-500/20 hover:border-amber-500/50';
-                
-                card.innerHTML = `
-                    <img src="${vehicle.image}" 
-                         alt="${vehicle.name}" 
-                         class="w-full h-48 object-cover"
-                         onerror="this.onerror=null;this.src='${placeholderImage}';">
+                empty.classList.add('hidden');
+                filtered.forEach((v, i) => {
+                    const total = v.basePrice + v.upgradePrice;
+                    const card = document.createElement('div');
+                    card.className = 'vehicle-card fade-in';
+                    card.style.animationDelay = `${i * 0.03}s`;
                     
-                    <div class="p-4">
-                        <div class="flex justify-between items-start">
-                            <h3 class="text-xl font-bold text-white truncate">${vehicle.name}</h3>
-                            <span class="text-xs font-medium bg-zinc-700 text-zinc-200 px-2 py-1 rounded">${typeName}</span>
-                        </div>
-                        <p class="text-sm text-zinc-400 mb-2 uppercase">${vehicle.update || 'Unknown'}</p>
-                        
-                        <div class="flex justify-between items-center mt-3 pt-3 border-t border-zinc-700">
-                             <span class="text-xs font-medium text-amber-400 truncate" title="${websiteName}">
-                                ${websiteName}
-                             </span>
-                            <span class="text-lg font-semibold text-green-400">${formatCurrency(totalValue)}</span>
-                        </div>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
+                    const typeObj = mockData.types.find(t => t.id === v.type);
+                    const typeName = typeObj ? typeObj.name : v.type;
+                    const webObj = mockData.websites.find(w => w.id === v.websiteId);
+                    const websiteName = webObj ? webObj.name : 'Unknown';
 
-            $('#filtered-count').textContent = sortedVehicles.length;
-            $('#filtered-value').textContent = formatCurrency(filteredTotalValue);
+                    card.innerHTML = `
+                        <div class="relative">
+                             <img src="${v.image}" class="vehicle-image" onerror="this.src='https://placehold.co/600x400/111/333?text=${encodeURIComponent(v.name)}'">
+                             <span class="update-tag">★ ${v.update}</span>
+                        </div>
+                        <div class="p-3 bg-zinc-900">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h3 class="text-white font-bold text-lg leading-tight uppercase font-display truncate w-48" title="${v.name}">${v.name}</h3>
+                                    <span class="text-gray-500 text-xs uppercase font-bold tracking-wider block">${typeName}</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-end border-t border-gray-800 pt-2 mt-2">
+                                <div class="text-gta-yellow text-xs uppercase font-bold truncate w-24" title="${websiteName}">${websiteName}</div>
+                                <div class="text-gta-green font-mono font-bold text-lg tracking-tight">${formatCurrency(total)}</div>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
         }
+
+        function renderSubFilters() {
+            const container = document.getElementById('sub-filter-container');
+            container.innerHTML = '';
+            
+            // ALL Button
+            const allBtn = document.createElement('button');
+            allBtn.className = `btn-filter ${currentFilter === 'all' ? 'active' : ''}`;
+            allBtn.innerText = 'All';
+            allBtn.onclick = () => { currentFilter = 'all'; updateUI(); };
+            container.appendChild(allBtn);
+            
+            // Separator
+            const sep = document.createElement('span');
+            sep.className = 'filter-separator';
+            sep.innerText = '|';
+            container.appendChild(sep);
+
+            // Items
+            let items = [];
+            if (currentSort === 'garage') items = mockData.garages.filter(g => !g.parentId);
+            else if (currentSort === 'type') items = mockData.types;
+            else items = mockData.websites;
+
+            items.forEach((item, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `btn-filter ${currentFilter === item.id ? 'active' : ''}`;
+                btn.innerText = item.name;
+                btn.onclick = () => { currentFilter = item.id; updateUI(); };
+                container.appendChild(btn);
+
+                if (idx < items.length - 1) {
+                    const s = document.createElement('span');
+                    s.className = 'filter-separator';
+                    s.innerText = '|';
+                    container.appendChild(s);
+                }
+            });
+        }
+
+        function updateUI() {
+            // Update Sort Tabs
+            document.getElementById('sort-garage').className = `btn-sort ${currentSort === 'garage' ? 'active' : ''}`;
+            document.getElementById('sort-type').className = `btn-sort ${currentSort === 'type' ? 'active' : ''}`;
+            document.getElementById('sort-website').className = `btn-sort ${currentSort === 'website' ? 'active' : ''}`;
+
+            // Update Title
+            const title = document.getElementById('dynamic-gallery-title');
+            if (currentSort === 'garage') title.innerText = 'GARAGES';
+            else if (currentSort === 'type') title.innerText = 'VEHICLE TYPES';
+            else title.innerText = 'DEALERSHIPS';
+
+            // Toggle Prop List
+            const propList = document.getElementById('property-list-container');
+            if (currentSort === 'garage') propList.classList.remove('hidden');
+            else propList.classList.add('hidden');
+
+            renderSubFilters();
+            renderGrid();
+        }
+
+        function changeSort(type) {
+            currentSort = type;
+            currentFilter = 'all';
+            updateUI();
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) lucide.createIcons();
+            renderStats();
+            updateUI();
+        });
 
     </script>
 </body>
