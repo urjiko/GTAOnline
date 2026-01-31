@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -44,40 +44,45 @@
         .custom-scroll::-webkit-scrollbar-thumb { background: #fbbf24; border-radius: 4px; }
         .custom-scroll::-webkit-scrollbar-thumb:hover { background: #d97706; }
         
-        /* Rockstar Logo - HELVETICA BOLD ITALIC Style */
+        /* Rockstar Logo - Classic Oswald Style (Restored) */
         .r-logo-container {
             background-color: #fbbf24;
             border-radius: 10px;
-            width: 64px; height: 64px;
+            width: 56px; height: 56px;
             position: relative;
             overflow: hidden;
             box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
         .r-logo-r {
-            /* Sans-Serif Font - Helvetica/Arial Bold Italic */
-            font-family: Helvetica, Arial, sans-serif;
-            font-weight: 900; 
-            font-size: 60px; 
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700; 
+            font-size: 48px; 
             line-height: 1;
-            color: #000; /* Siyah */
-            font-style: italic;
+            color: #fff; /* Beyaz */
             position: absolute; 
-            top: -4px; 
-            left: 0px;
-            letter-spacing: -3px;
+            top: 2px; 
+            left: 8px;
+            /* Siyah Kontur */
+            text-shadow: 
+                -2px -2px 0 #000,  
+                 2px -2px 0 #000,
+                -2px  2px 0 #000,
+                 2px  2px 0 #000;
             z-index: 1;
         }
         .r-logo-star {
             position: absolute; 
-            bottom: -2px; 
-            right: 0px; 
-            font-size: 20px; 
+            bottom: 2px; 
+            right: 2px; 
+            font-size: 18px; 
             font-weight: 900; 
-            font-style: italic;
             color: #fff; /* Beyaz */
             /* Siyah Kontur */
-            -webkit-text-stroke: 2px black;
-            paint-order: stroke fill;
+            text-shadow: 
+                -1.5px -1.5px 0 #000,  
+                 1.5px -1.5px 0 #000,
+                -1.5px  1.5px 0 #000,
+                 1.5px  1.5px 0 #000;
             z-index: 2;
         }
 
@@ -136,7 +141,7 @@
     <!-- HEADER -->
     <nav class="bg-black border-b border-gray-800 h-24 flex items-center justify-between px-6 sticky top-0 z-50 shadow-2xl">
         <div class="flex items-center gap-4">
-            <!-- Updated Logo -->
+            <!-- Logo Restored -->
             <div class="r-logo-container">
                 <span class="r-logo-r">R</span>
                 <span class="r-logo-star">★</span>
@@ -303,7 +308,7 @@
                 { id: 'eclipse_blvd', shortName: 'Eclipse Blvd', name: 'Eclipse Blvd Garage', val: 2740000 },
                 // Singles
                 { id: 'vinewood_club', shortName: 'Vinewood', name: 'The Vinewood Club Garage (Artık)', val: 0 },
-                { id: 'richman', shortName: 'Richman', name: 'Mansions, Richman Villa', val: 18000000 }, // Updated to 18M
+                { id: 'richman', shortName: 'Richman', name: 'Mansions, Richman Villa', val: 18000000 }, 
                 { id: 'murrieta', shortName: 'Murrieta', name: 'Murrieta Heights Vehicle Warehouse', val: 2850000 },
                 { id: 'hangar', shortName: 'Hangar', name: 'Fort Zancudo Hangar A2', val: 3250000 },
                 { id: 'salvage', shortName: 'Salvage', name: 'Strawberry Salvage Yard', val: 2500000 }, 
@@ -340,6 +345,7 @@
                 { id: 'docktease', name: 'DockTease' }, { id: 'other', name: 'Other' }
             ],
             vehicles: [
+                // FULL DATA LIST - AUTOMATICALLY GENERATED
                 { name: 'Dubsta 6x6', make: 'Benefactor', type: 'offroad', garageId: 'penthouse', websiteId: 'warstock', val: 549000 },
                 { name: 'Schlagen GT', make: 'Benefactor', type: 'sports', garageId: 'penthouse', websiteId: 'legendary', val: 1700000 },
                 { name: 'Schafter', make: 'Benefactor', type: 'sedan', garageId: 'penthouse', websiteId: 'other', val: 365000 },
@@ -353,6 +359,7 @@
                 { name: 'Inductor', make: 'Coil', type: 'bicycle', garageId: 'penthouse', websiteId: 'other', val: 50000 },
                 { name: 'Junk Inductor', make: 'Coil', type: 'bicycle', garageId: 'penthouse', websiteId: 'other', val: 50000 },
                 { name: 'Whippet', make: 'Coil', type: 'bicycle', garageId: 'penthouse', websiteId: 'other', val: 10000 },
+                // ... (Previous vehicles)
                 { name: 'APC', make: 'HVY', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 3892250 },
                 { name: 'Caracara', make: 'Vapid', type: 'offroad', garageId: 'exceptionalists', websiteId: 'warstock', val: 2375000 },
                 { name: 'Nightshark', make: 'HVY', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 1645000 },
@@ -584,9 +591,9 @@
                 { name: 'Jugular', make: 'Ocelot', type: 'sports', garageId: 'vinewood_club', websiteId: 'legendary', val: 1625000 },
                 { name: '811 (Dup)', make: 'Pfister', type: 'super', garageId: 'vinewood_club', websiteId: 'legendary', val: 1535000 },
                 { name: 'Slamtruck', make: 'Vapid', type: 'utility', garageId: 'vinewood_club', websiteId: 'ssas', val: 1510000 },
-                { name: 'Itali GTB', make: 'Progen', type: 'super', garageId: 'vinewood_club', websiteId: 'bennys', val: 1589000 },
-                { name: 'Entity MT', make: 'Overflod', type: 'super', garageId: 'vinewood_club', websiteId: 'legendary', val: 3255000 },
-                { name: 'Roosevelt', make: 'Albany', type: 'classic', garageId: 'vinewood_club', websiteId: 'legendary', val: 1100000 },
+                { name: 'Itali GTB (Dup)', make: 'Progen', type: 'super', garageId: 'vinewood_club', websiteId: 'bennys', val: 1589000 },
+                { name: 'Entity MT (Dup)', make: 'Overflod', type: 'super', garageId: 'vinewood_club', websiteId: 'legendary', val: 3255000 },
+                { name: 'Roosevelt (Dup)', make: 'Albany', type: 'classic', garageId: 'vinewood_club', websiteId: 'legendary', val: 1100000 },
                 { name: 'Oppressor Mk II', make: 'Pegassi', type: 'motorcycle', garageId: 'terrorbyte', websiteId: 'warstock', val: 9500000 },
                 { name: 'Toreador', make: 'Pegassi', type: 'weaponized', garageId: 'kosatka', websiteId: 'warstock', val: 4850000 },
                 { name: 'Avisa', make: 'Kraken', type: 'sea_vehicle', garageId: 'kosatka', websiteId: 'warstock', val: 1545000 },
@@ -813,8 +820,11 @@
                     var tName = tObj ? tObj.name : v.type;
                     
                     // SMART IMAGE PATH GENERATOR
+                    // If no explicit img path, generate one: images/vehicles/NameNoSpaces.jpg
+                    // If explicit path exists, use it.
                     var imgPath = v.img;
                     if (!imgPath) {
+                        // Remove spaces, apostrophes, hyphens, dots
                         var cleanName = v.name.replace(/[^a-zA-Z0-9]/g, "");
                         imgPath = 'images/vehicles/' + cleanName + '.jpg';
                     }
@@ -826,9 +836,10 @@
                     var card = document.createElement('div');
                     card.className = 'v-card animate-in flex flex-col h-full';
                     card.style.animationDelay = (i * 0.01) + 's';
+                    // Added fallback to .JPG (uppercase) in onerror
                     card.innerHTML = `
                         <div class="v-img-box">
-                            <img src="${imgPath}" class="v-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/111/333?text=No+Image';">
+                            <img src="${imgPath}" class="v-img" onerror="if (this.src.endsWith('.jpg')) { this.src = this.src.replace('.jpg', '.JPG'); } else if (this.src.endsWith('.JPG')) { this.src = 'https://placehold.co/600x400/111/333?text=No+Image'; }">
                         </div>
                         <div class="p-4 flex flex-col flex-grow justify-between">
                             <div class="mb-2">
