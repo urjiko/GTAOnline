@@ -44,7 +44,7 @@
         .custom-scroll::-webkit-scrollbar-thumb { background: #fbbf24; border-radius: 4px; }
         .custom-scroll::-webkit-scrollbar-thumb:hover { background: #d97706; }
         
-        /* Rockstar Logo */
+        /* Rockstar Logo - Final Polish (Serif, Italic, Black R, White Star) */
         .r-logo-container {
             background-color: #fbbf24;
             border-radius: 10px;
@@ -54,27 +54,27 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
         .r-logo-r {
-            font-family: 'TeX Gyre Heros', Helvetica, Arial, sans-serif;
-            font-weight: 700; 
-            font-size: 42px; 
+            font-family: 'Times New Roman', Times, serif; /* Serif Font */
+            font-weight: 900; 
+            font-size: 56px; 
             line-height: 1;
-            color: #000; 
+            color: #000; /* Siyah */
             font-style: italic;
             position: absolute; 
-            top: 10px; 
-            left: 12px; 
-            -webkit-text-stroke: 1px black;
-            transform: scaleY(0.9); 
+            top: -2px; 
+            left: 2px;
+            transform: scaleY(1.1); 
             z-index: 1;
         }
         .r-logo-star {
             position: absolute; 
-            bottom: 6px; 
-            right: 14px; 
-            font-size: 16px; 
-            font-weight: 900; 
+            bottom: -2px; 
+            right: 0px; 
+            font-size: 22px; 
+            font-weight: 900;
             font-style: italic;
-            color: #fff; 
+            color: #fff; /* Beyaz */
+            /* Siyah Kontur */
             -webkit-text-stroke: 2px black;
             paint-order: stroke fill;
             z-index: 2;
@@ -110,8 +110,6 @@
         .v-img-box { position: relative; width: 100%; padding-top: 56.25%; background: #000; border-bottom: 2px solid #222; }
         .v-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
         
-        .v-tag { display: none; } 
-
         .stat-bar-track { background: #333; height: 8px; width: 100%; margin-top: 4px; border-radius: 1px; overflow: hidden; }
         .stat-bar-fill { height: 100%; transition: width 0.8s ease-out; }
         
@@ -135,6 +133,7 @@
     <!-- HEADER -->
     <nav class="bg-black border-b border-gray-800 h-24 flex items-center justify-between px-6 sticky top-0 z-50 shadow-2xl">
         <div class="flex items-center gap-4">
+            <!-- Logo -->
             <div class="r-logo-container">
                 <span class="r-logo-r">R</span>
                 <span class="r-logo-star">★</span>
@@ -162,11 +161,12 @@
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Stats columns -->
                 <div id="stats-col-1" class="space-y-3"></div>
                 <div id="stats-col-2" class="space-y-3"></div>
                 
                 <div class="flex flex-col gap-4 h-full">
-                    <!-- Fixed Properties List: Height set to 480px -->
+                    <!-- Fixed Properties List: Height 480px -->
                     <div class="bg-zinc-900 border border-zinc-800 flex flex-col" style="height: 480px;">
                         <div class="p-3 bg-black border-b border-zinc-800 flex justify-between items-center flex-shrink-0">
                             <span class="r-header text-lg text-white">PROPERTIES</span>
@@ -304,6 +304,7 @@
                 { id: 'hangar', shortName: 'Hangar', name: 'Fort Zancudo Hangar A2', val: 0 },
                 { id: 'service', shortName: 'Services', name: 'Service Vehicles', val: 0 },
                 { id: 'pegasus', shortName: 'Pegasus', name: 'Pegasus Vehicles', val: 0 },
+                // Children
                 { id: 'office1', parent: 'office' }, { id: 'office2', parent: 'office' }, { id: 'office3', parent: 'office' },
                 { id: 'nightclub_service', parent: 'nightclub' }, { id: 'nightclub_b2', parent: 'nightclub' }, { id: 'nightclub_b3', parent: 'nightclub' },
                 { id: 'arena_b2', parent: 'arena' },
@@ -319,8 +320,7 @@
                 { id: 'open_wheel', name: 'Formula', color: '#27ae60' }, { id: 'arena', name: 'Arena', color: '#ff00ff' },
                 { id: 'sea_vehicle', name: 'Sea', color: '#2980b9' }, { id: 'special', name: 'Special', color: '#1abc9c' },
                 { id: 'utility', name: 'Utility', color: '#ecf0f1' }, { id: 'service', name: 'Service', color: '#ecf0f1' },
-                { id: 'bicycle', name: 'Bike', color: '#fff' }, { id: 'rc', name: 'RC', color: '#fff' },
-                 { id: 'military', name: 'Military', color: '#4b5563' }, { id: 'plane', name: 'Plane', color: '#60a5fa' }, { id: 'boat', name: 'Boat', color: '#0ea5e9' }
+                { id: 'bicycle', name: 'Bike', color: '#fff' }, { id: 'rc', name: 'RC', color: '#fff' }
             ],
             websites: [
                 { id: 'legendary', name: 'Legendary' }, { id: 'warstock', name: 'Warstock' },
@@ -536,15 +536,15 @@
                 { name: 'Baller ST', make: 'Gallivanter', type: 'suv', garageId: 'agency', websiteId: 'legendary', val: 1740000 },
                 { name: 'Ignus', make: 'Pegassi', type: 'super', garageId: 'agency', websiteId: 'legendary', val: 3215000 },
                 { name: 'Weaponized Ignus', make: 'Pegassi', type: 'weaponized', garageId: 'agency', websiteId: 'warstock', val: 3745000 },
-                { name: 'Zentorno (Dup)', make: 'Pegassi', type: 'super', garageId: 'agency', websiteId: 'legendary', val: 1075000 },
-                { name: 'Vacca (Dup)', make: 'Pegassi', type: 'super', garageId: 'agency', websiteId: 'legendary', val: 590000 },
-                { name: 'Tezeract (Dup)', make: 'Pegassi', type: 'super', garageId: 'agency', websiteId: 'legendary', val: 3225000 },
+                { name: 'Zentorno', make: 'Pegassi', type: 'super', garageId: 'agency', websiteId: 'legendary', val: 1075000 },
+                { name: 'Vacca', make: 'Pegassi', type: 'super', garageId: 'agency', websiteId: 'legendary', val: 590000 },
+                { name: 'Tezeract', make: 'Pegassi', type: 'super', garageId: 'agency', websiteId: 'legendary', val: 3225000 },
                 { name: 'Torero', make: 'Pegassi', type: 'classic', garageId: 'agency', websiteId: 'legendary', val: 1348000 },
-                { name: 'Infernus (Dup)', make: 'Pegassi', type: 'super', garageId: 'agency', websiteId: 'legendary', val: 790000 },
-                { name: 'Reaper (Dup)', make: 'Pegassi', type: 'super', garageId: 'agency', websiteId: 'legendary', val: 1995000 },
-                { name: 'Tempesta (Dup)', make: 'Pegassi', type: 'super', garageId: 'agency', websiteId: 'legendary', val: 1729000 },
+                { name: 'Infernus', make: 'Pegassi', type: 'super', garageId: 'agency', websiteId: 'legendary', val: 790000 },
+                { name: 'Reaper', make: 'Pegassi', type: 'super', garageId: 'agency', websiteId: 'legendary', val: 1995000 },
+                { name: 'Tempesta', make: 'Pegassi', type: 'super', garageId: 'agency', websiteId: 'legendary', val: 1729000 },
                 { name: 'Torero XO', make: 'Pegassi', type: 'super', garageId: 'agency', websiteId: 'legendary', val: 3340000 },
-                { name: 'Toros (Dup)', make: 'Pegassi', type: 'suv', garageId: 'agency', websiteId: 'legendary', val: 848000 },
+                { name: 'Toros', make: 'Pegassi', type: 'suv', garageId: 'agency', websiteId: 'legendary', val: 848000 },
                 { name: 'Infernus Classic (Dup)', make: 'Pegassi', type: 'classic', garageId: 'agency', websiteId: 'legendary', val: 1265000 },
                 { name: 'Specter Custom', make: 'Dewbauchee', type: 'sports', garageId: 'eclipse_cars', websiteId: 'bennys', val: 1052000 },
                 { name: 'Surfer Custom', make: 'BF', type: 'utility', garageId: 'eclipse_cars', websiteId: 'ssas', val: 890000 },
@@ -568,7 +568,7 @@
                 { name: 'Baller ST-D', make: 'Gallivanter', type: 'suv', garageId: 'eclipse_giveaway', websiteId: 'legendary', val: 2115000 },
                 { name: 'Carbon RS', make: 'Nagasaki', type: 'motorcycle', garageId: 'eclipse_carbon', websiteId: 'legendary', val: 290000 },
                 { name: 'Impaler LX', make: 'Declasse', type: 'muscle', garageId: 'vinewood_club', websiteId: 'ssas', val: 1865000 },
-                { name: 'Clique (Dup)', make: 'Vapid', type: 'muscle', garageId: 'vinewood_club', websiteId: 'legendary', val: 1259000 },
+                { name: 'Clique', make: 'Vapid', type: 'muscle', garageId: 'vinewood_club', websiteId: 'legendary', val: 1259000 },
                 { name: 'Ruiner', make: 'Imponte', type: 'muscle', garageId: 'vinewood_club', websiteId: 'other', val: 310000 },
                 { name: 'Cavalcade XL', make: 'Albany', type: 'suv', garageId: 'vinewood_club', websiteId: 'ssas', val: 2065000 },
                 { name: 'Jugular', make: 'Ocelot', type: 'sports', garageId: 'vinewood_club', websiteId: 'legendary', val: 1625000 },
@@ -803,9 +803,9 @@
                     var tName = tObj ? tObj.name : v.type;
                     
                     // SMART IMAGE PATH GENERATOR
+                    // If no explicit img path, generate one
                     var imgPath = v.img;
                     if (!imgPath) {
-                        // Remove spaces, apostrophes, hyphens, dots
                         var cleanName = v.name.replace(/[^a-zA-Z0-9]/g, "");
                         imgPath = 'images/vehicles/' + cleanName + '.jpg';
                     }
@@ -919,6 +919,7 @@
             document.getElementById('header-cash').innerText = formatMoney(grand);
         }
 
+        // INIT
         window.onload = function() {
             setTimeout(function() {
                 var loader = document.getElementById('app-loader');
