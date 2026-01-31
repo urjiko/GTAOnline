@@ -44,7 +44,7 @@
         .custom-scroll::-webkit-scrollbar-thumb { background: #fbbf24; border-radius: 4px; }
         .custom-scroll::-webkit-scrollbar-thumb:hover { background: #d97706; }
         
-        /* Rockstar Logo */
+        /* Rockstar Logo - Final Polish */
         .r-logo-container {
             background-color: #fbbf24;
             border-radius: 10px;
@@ -54,28 +54,28 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
         .r-logo-r {
-            font-family: 'TeX Gyre Heros', Helvetica, Arial, sans-serif;
-            font-weight: 700; 
-            font-size: 42px; 
+            font-family: 'Times New Roman', serif; /* Serif Font */
+            font-weight: 900; 
+            font-size: 58px; 
             line-height: 1;
-            color: #000; 
+            color: #000; /* Siyah R */
             font-style: italic;
             position: absolute; 
-            top: 10px; 
-            left: 12px; 
-            -webkit-text-stroke: 1px black;
-            transform: scaleY(0.9); 
+            top: -2px; 
+            left: 2px;
+            transform: scaleY(1.1); 
             z-index: 1;
         }
         .r-logo-star {
             position: absolute; 
-            bottom: 6px; 
-            right: 14px; 
-            font-size: 16px; 
+            bottom: -2px; 
+            right: 0px; 
+            font-size: 22px; 
             font-weight: 900; 
-            font-style: italic;
-            color: #fff; 
-            -webkit-text-stroke: 2px black;
+            font-style: italic; /* İtalik Yıldız */
+            color: #fff; /* Beyaz Yıldız */
+            /* Siyah Kontur */
+            -webkit-text-stroke: 1.5px black;
             paint-order: stroke fill;
             z-index: 2;
         }
@@ -110,8 +110,6 @@
         .v-img-box { position: relative; width: 100%; padding-top: 56.25%; background: #000; border-bottom: 2px solid #222; }
         .v-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
         
-        .v-tag { display: none; } 
-
         .stat-bar-track { background: #333; height: 8px; width: 100%; margin-top: 4px; border-radius: 1px; overflow: hidden; }
         .stat-bar-fill { height: 100%; transition: width 0.8s ease-out; }
         
@@ -121,12 +119,10 @@
         .animate-in { animation: fadeInUp 0.4s ease-out forwards; }
         
         #app-loader { position: fixed; top:0; left:0; right:0; bottom:0; background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; }
-        #debug-console { display:none; position: fixed; bottom: 0; left: 0; right: 0; background: #7f1d1d; color: white; font-family: monospace; font-size: 12px; padding: 10px; z-index: 10000; max-height: 150px; overflow-y: auto; border-top: 2px solid red; }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
 
-    <div id="debug-console"></div>
     <div id="app-loader">
         <div class="text-gta-yellow font-display text-4xl animate-pulse mb-2">LOADING...</div>
         <div class="text-gray-500 font-mono text-xs">Force loading in 2s...</div>
@@ -135,6 +131,7 @@
     <!-- HEADER -->
     <nav class="bg-black border-b border-gray-800 h-24 flex items-center justify-between px-6 sticky top-0 z-50 shadow-2xl">
         <div class="flex items-center gap-4">
+            <!-- Logo -->
             <div class="r-logo-container">
                 <span class="r-logo-r">R</span>
                 <span class="r-logo-star">★</span>
@@ -233,14 +230,6 @@
     </footer>
 
     <script>
-        // --- ERROR HANDLING ---
-        window.onerror = function(msg, url, line) {
-            var el = document.getElementById('debug-console');
-            el.style.display = 'block';
-            el.innerHTML += '<div>ERROR: ' + msg + ' (Line: ' + line + ')</div>';
-            document.getElementById('app-loader').style.display = 'none';
-        };
-
         // --- HELPER ---
         function formatMoney(num) {
             return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(num);
@@ -305,8 +294,7 @@
                 { id: 'hangar', shortName: 'Hangar', name: 'Fort Zancudo Hangar A2', val: 0 },
                 { id: 'service', shortName: 'Services', name: 'Service Vehicles', val: 0 },
                 { id: 'pegasus', shortName: 'Pegasus', name: 'Pegasus Vehicles', val: 0 },
-
-                // Children mapping
+                // Children
                 { id: 'office1', parent: 'office' }, { id: 'office2', parent: 'office' }, { id: 'office3', parent: 'office' },
                 { id: 'nightclub_service', parent: 'nightclub' }, { id: 'nightclub_b2', parent: 'nightclub' }, { id: 'nightclub_b3', parent: 'nightclub' },
                 { id: 'arena_b2', parent: 'arena' },
@@ -346,7 +334,6 @@
                 { name: 'Inductor', make: 'Coil', type: 'bicycle', garageId: 'penthouse', websiteId: 'other', val: 50000, img: 'images/vehicles/Inductor.jpg' },
                 { name: 'Junk Inductor', make: 'Coil', type: 'bicycle', garageId: 'penthouse', websiteId: 'other', val: 50000, img: 'images/vehicles/JunkInductor.jpg' },
                 { name: 'Whippet', make: 'Coil', type: 'bicycle', garageId: 'penthouse', websiteId: 'other', val: 10000, img: 'images/vehicles/Whippet.jpg' },
-
                 // Exceptionalists
                 { name: 'APC', make: 'HVY', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 3892250, img: 'images/vehicles/APC.jpg' },
                 { name: 'Caracara', make: 'Vapid', type: 'offroad', garageId: 'exceptionalists', websiteId: 'warstock', val: 2375000, img: 'images/vehicles/Caracara.jpg' },
@@ -357,9 +344,7 @@
                 { name: 'Menacer', make: 'HVY', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 2475000, img: 'images/vehicles/Menacer.jpg' },
                 { name: 'Mesa', make: 'Canis', type: 'offroad', garageId: 'exceptionalists', websiteId: 'warstock', val: 387000, img: 'images/vehicles/Mesa.jpg' },
                 { name: 'Weaponized Tampa', make: 'Declasse', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 3308050, img: 'images/vehicles/WeaponizedTampa.jpg' },
-                { name: 'Mule Custom', make: 'Maibatsu', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 0, img: 'images/vehicles/MuleCustom.jpg' },
-
-                // Supply St
+                // Supply
                 { name: 'Moonbeam Custom', make: 'Declasse', type: 'muscle', garageId: 'supply', websiteId: 'bennys', val: 832500, img: 'images/vehicles/MoonbeamCustom.jpg' },
                 { name: 'Rat-Loader', make: 'Bravado', type: 'muscle', garageId: 'supply', websiteId: 'other', val: 356000, img: 'images/vehicles/RatLoader.jpg' },
                 { name: 'Lurcher', make: 'Albany', type: 'muscle', garageId: 'supply', websiteId: 'ssas', val: 950000, img: 'images/vehicles/Lurcher.jpg' },
@@ -370,8 +355,7 @@
                 { name: 'Fränken Stange', make: 'Albany', type: 'classic', garageId: 'supply', websiteId: 'ssas', val: 850000, img: 'images/vehicles/FrankenStange.jpg' },
                 { name: 'Sentinel Classic', make: 'Ubermacht', type: 'classic', garageId: 'supply', websiteId: 'ssas', val: 1050000, img: 'images/vehicles/SentinelClassic.jpg' },
                 { name: 'Asbo', make: 'Maxwell', type: 'sports', garageId: 'supply', websiteId: 'ssas', val: 758000, img: 'images/vehicles/Asbo.jpg' },
-
-                // 3 Alta St
+                // Apartment
                 { name: 'Cypher', make: 'Ubermacht', type: 'sports', garageId: 'apartment', websiteId: 'legendary', val: 2000000, img: 'images/vehicles/Cypher.jpg' },
                 { name: 'Oracle XS', make: 'Ubermacht', type: 'coupe', garageId: 'apartment', websiteId: 'other', val: 380000, img: 'images/vehicles/OracleXS.jpg' },
                 { name: 'Zion Classic', make: 'Ubermacht', type: 'classic', garageId: 'apartment', websiteId: 'ssas', val: 1212000, img: 'images/vehicles/ZionClassic.jpg' },
@@ -382,7 +366,6 @@
                 { name: 'Sentinel XS', make: 'Ubermacht', type: 'coupe', garageId: 'apartment', websiteId: 'other', val: 360000, img: 'images/vehicles/SentinelXS.jpg' },
                 { name: 'Sentinel GTS', make: 'Ubermacht', type: 'coupe', garageId: 'apartment', websiteId: 'other', val: 360000, img: 'images/vehicles/SentinelGTS.jpg' },
                 { name: 'Rhinehart', make: 'Ubermacht', type: 'sedan', garageId: 'apartment', websiteId: 'ssas', val: 1998000, img: 'images/vehicles/Rhinehart.jpg' },
-
                 // Wild Oats
                 { name: 'Tailgater S', make: 'Obey', type: 'sedan', garageId: 'wild', websiteId: 'legendary', val: 2495000, img: 'images/vehicles/TailgaterS.jpg' },
                 { name: 'I-Wagen', make: 'Obey', type: 'suv', garageId: 'wild', websiteId: 'ssas', val: 2570000, img: 'images/vehicles/IWagen.jpg' },
@@ -393,7 +376,6 @@
                 { name: 'Tailgater', make: 'Obey', type: 'sedan', garageId: 'wild', websiteId: 'other', val: 305000, img: 'images/vehicles/Tailgater.jpg' },
                 { name: '9F Cabrio', make: 'Obey', type: 'sports', garageId: 'wild', websiteId: 'legendary', val: 430000, img: 'images/vehicles/9FCabrio.jpg' },
                 { name: '8F Drafter', make: 'Obey', type: 'sports', garageId: 'wild', websiteId: 'legendary', val: 1918000, img: 'images/vehicles/8FDrafter.jpg' },
-
                 // Clubhouse
                 { name: 'Avarus', make: 'LCC', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', val: 418000, img: 'images/vehicles/Avarus.jpg' },
                 { name: 'Vortex', make: 'Pegassi', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', val: 656000, img: 'images/vehicles/Vortex.jpg' },
@@ -405,7 +387,6 @@
                 { name: 'Diabolus Custom', make: 'Principe', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'bennys', val: 630000, img: 'images/vehicles/DiabolusCustom.jpg' },
                 { name: 'Nightblade', make: 'Western', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', val: 400000, img: 'images/vehicles/Nightblade.jpg' },
                 { name: 'Sanctus', make: 'LCC', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', val: 2295000, img: 'images/vehicles/Sanctus.jpg' },
-
                 // Unit 2
                 { name: 'Surfer', make: 'BF', type: 'utility', garageId: 'unit2', websiteId: 'other', val: 211000, img: 'images/vehicles/Surfer.jpg' },
                 { name: 'Growler', make: 'Pfister', type: 'sports', garageId: 'unit2', websiteId: 'legendary', val: 2077000, img: 'images/vehicles/Growler.jpg' },
@@ -417,12 +398,10 @@
                 { name: 'Lynx', make: 'Ocelot', type: 'sports', garageId: 'unit2', websiteId: 'legendary', val: 2135000, img: 'images/vehicles/Lynx.jpg' },
                 { name: 'Locust', make: 'Ocelot', type: 'sports', garageId: 'unit2', websiteId: 'legendary', val: 2025000, img: 'images/vehicles/Locust.jpg' },
                 { name: 'Schlagen GT', make: 'Benefactor', type: 'sports', garageId: 'unit2', websiteId: 'legendary', val: 1700000, img: 'images/vehicles/SchlagenGT.jpg' },
-
                 // Richman Villa
                 { name: 'Tempesta', make: 'Pegassi', type: 'super', garageId: 'richman', websiteId: 'legendary', val: 1329000, img: 'images/vehicles/Tempesta.jpg' },
                 { name: 'Stafford', make: 'Enus', type: 'classic', garageId: 'richman', websiteId: 'legendary', val: 1272000, img: 'images/vehicles/Stafford.jpg' },
-
-                // Murrieta Heights
+                // Murrieta
                 { name: 'Ruiner 2000', make: 'Imponte', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 5745000, img: 'images/vehicles/Ruiner2000.jpg' },
                 { name: 'Rocket Voltic', make: 'Coil', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 3830000, img: 'images/vehicles/RocketVoltic.jpg' },
                 { name: 'Ramp Buggy', make: 'BF', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 3192000, img: 'images/vehicles/RampBuggy.jpg' },
@@ -431,7 +410,6 @@
                 { name: 'Technical Aqua', make: 'Karin', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 1489000, img: 'images/vehicles/TechnicalAqua.jpg' },
                 { name: 'Wastelander', make: 'MTL', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 658000, img: 'images/vehicles/Wastelander.jpg' },
                 { name: 'Armored Boxville', make: 'Brute', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 2926000, img: 'images/vehicles/ArmoredBoxville.jpg' },
-
                 // Hangar
                 { name: 'Savage', make: 'FH-1', type: 'helicopter', garageId: 'hangar', websiteId: 'warstock', val: 2593000, img: 'images/vehicles/Savage.jpg' },
                 { name: 'Volatol', make: 'Mammoth', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 3724000, img: 'images/vehicles/Volatol.jpg' },
@@ -453,7 +431,6 @@
                 { name: 'RM-10 Bombushka', make: 'Mammoth', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 5918000, img: 'images/vehicles/RM10Bombushka.jpg' },
                 { name: 'Alpha-Z1', make: 'Buckingham', type: 'aircraft', garageId: 'hangar', websiteId: 'elitas', val: 2121000, img: 'images/vehicles/AlphaZ1.jpg' },
                 { name: 'B-11 Strikeforce', make: 'Mammoth', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 3800000, img: 'images/vehicles/B11Strikeforce.jpg' },
-
                 // Service
                 { name: 'Kosatka', make: 'Rune', type: 'sea_vehicle', garageId: 'service', websiteId: 'warstock', val: 2200000, img: 'images/vehicles/Kosatka.jpg' },
                 { name: 'Avisa', make: 'Kraken', type: 'sea_vehicle', garageId: 'service', websiteId: 'warstock', val: 1545000, img: 'images/vehicles/Avisa.jpg' },
@@ -467,7 +444,6 @@
                 { name: 'Maibatsu Manchez Scout C', make: 'Maibatsu', type: 'motorcycle', garageId: 'service', websiteId: 'warstock', val: 225000, img: 'images/vehicles/ManchezScoutC.jpg' },
                 { name: 'MTL Brickade 6x6', make: 'MTL', type: 'service', garageId: 'service', websiteId: 'warstock', val: 1450000, img: 'images/vehicles/Brickade6x6.jpg' },
                 { name: 'Galaxy Super Yacht', make: 'DockTease', type: 'sea_vehicle', garageId: 'service', websiteId: 'docktease', val: 6000000, img: 'images/vehicles/GalaxySuperYacht.jpg' },
-
                 // Pegasus
                 { name: 'Insurgent Pick-Up', make: 'HVY', type: 'weaponized', garageId: 'pegasus', websiteId: 'warstock', val: 1350000, img: 'images/vehicles/InsurgentPickUp.jpg' },
                 { name: 'Turreted Limo', make: 'Benefactor', type: 'weaponized', garageId: 'pegasus', websiteId: 'warstock', val: 1650000, img: 'images/vehicles/TurretedLimo.jpg' },
@@ -497,8 +473,7 @@
                 { name: 'Dump', make: 'HVY', type: 'utility', garageId: 'pegasus', websiteId: 'warstock', val: 1000000, img: 'images/vehicles/Dump.jpg' },
                 { name: 'Blimp', make: 'Atomic', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitas', val: 1190350, img: 'images/vehicles/Blimp.jpg' },
                 { name: 'Festival Bus', make: 'Brute', type: 'utility', garageId: 'pegasus', websiteId: 'ssas', val: 1385000, img: 'images/vehicles/FestivalBus.jpg' },
-
-                // 8. Office Garages (Office 1, 2, 3) - Flattened list of ALL vehicles in office
+                // Office 1
                 { name: 'Michelli GT', make: 'Lampadati', type: 'classic', garageId: 'office1', websiteId: 'ssas', val: 1575000, img: 'images/vehicles/MichelliGT.jpg' },
                 { name: 'Stafford', make: 'Enus', type: 'classic', garageId: 'office1', websiteId: 'legendary', val: 1622000, img: 'images/vehicles/Stafford.jpg' },
                 { name: 'Swinger', make: 'Ocelot', type: 'classic', garageId: 'office1', websiteId: 'legendary', val: 1209000, img: 'images/vehicles/Swinger.jpg' },
@@ -526,13 +501,12 @@
                 { name: 'Infernus Classic', make: 'Pegassi', type: 'classic', garageId: 'office2', websiteId: 'legendary', val: 1215000, img: 'images/vehicles/InfernusClassic.jpg' },
                 { name: 'Turismo Classic', make: 'Grotti', type: 'classic', garageId: 'office2', websiteId: 'legendary', val: 1005000, img: 'images/vehicles/TurismoClassic.jpg' },
                 { name: 'Z-Type', make: 'Trundffade', type: 'classic', garageId: 'office2', websiteId: 'legendary', val: 1250000, img: 'images/vehicles/ZType.jpg' },
-                { name: 'Elegy RH8', make: 'Annis', type: 'sports', garageId: 'office2', websiteId: 'legendary', val: 400000, img: 'images/vehicles/ElegyRH8.jpg' },
                 { name: 'Nightshade', make: 'Imponte', type: 'muscle', garageId: 'office2', websiteId: 'legendary', val: 885000, img: 'images/vehicles/Nightshade.jpg' },
                 { name: 'Alpha', make: 'Albany', type: 'sports', garageId: 'office2', websiteId: 'legendary', val: 450000, img: 'images/vehicles/Alpha.jpg' },
                 { name: 'V-STR', make: 'Albany', type: 'sports', garageId: 'office2', websiteId: 'legendary', val: 1685000, img: 'images/vehicles/VSTR.jpg' },
                 { name: 'Buffalo', make: 'Bravado', type: 'sports', garageId: 'office2', websiteId: 'ssas', val: 285000, img: 'images/vehicles/Buffalo.jpg' },
                 { name: 'Osiris', make: 'Pegassi', type: 'super', garageId: 'office2', websiteId: 'legendary', val: 2350000, img: 'images/vehicles/Osiris.jpg' },
-                { name: 'Krieger', make: 'Benefactor', type: 'super', garageId: 'office2', websiteId: 'legendary', val: 3275000, img: 'images/vehicles/Krieger.jpg' },
+                { name: 'Krieger (Dup)', make: 'Benefactor', type: 'super', garageId: 'office2', websiteId: 'legendary', val: 3275000, img: 'images/vehicles/Krieger.jpg' },
                 { name: 'Tyrus', make: 'Progen', type: 'super', garageId: 'office2', websiteId: 'legendary', val: 2950000, img: 'images/vehicles/Tyrus.jpg' },
                 { name: 'Jester Racecar', make: 'Dinka', type: 'sports', garageId: 'office2', websiteId: 'legendary', val: 700000, img: 'images/vehicles/JesterRacecar.jpg' },
                 { name: 'S80RR', make: 'Annis', type: 'super', garageId: 'office2', websiteId: 'legendary', val: 2975000, img: 'images/vehicles/S80RR.jpg' },
@@ -547,7 +521,7 @@
                 { name: 'XA-21', make: 'Ocelot', type: 'super', garageId: 'office3', websiteId: 'legendary', val: 2775000, img: 'images/vehicles/XA21.jpg' },
                 { name: 'Cheetah', make: 'Grotti', type: 'super', garageId: 'office3', websiteId: 'legendary', val: 1050000, img: 'images/vehicles/Cheetah.jpg' },
                 { name: '811', make: 'Pfister', type: 'super', garageId: 'office3', websiteId: 'legendary', val: 1535000, img: 'images/vehicles/811.jpg' },
-                { name: 'Schwartzer', make: 'Benefactor', type: 'sports', garageId: 'office3', websiteId: 'other', val: 380000, img: 'images/vehicles/Schwartzer.jpg' },
+                { name: 'Schwartzer (Dup)', make: 'Benefactor', type: 'sports', garageId: 'office3', websiteId: 'other', val: 380000, img: 'images/vehicles/Schwartzer.jpg' },
                 { name: 'Taipan', make: 'Cheval', type: 'super', garageId: 'office3', websiteId: 'legendary', val: 2380000, img: 'images/vehicles/Taipan.jpg' },
                 { name: 'Seven-70', make: 'Dewbauchee', type: 'sports', garageId: 'office3', websiteId: 'legendary', val: 1045000, img: 'images/vehicles/Seven70.jpg' },
                 { name: 'Neon', make: 'Pfister', type: 'sports', garageId: 'office3', websiteId: 'legendary', val: 1900000, img: 'images/vehicles/Neon.jpg' },
@@ -558,43 +532,43 @@
                 { name: 'Itali GTB Custom', make: 'Progen', type: 'super', garageId: 'office3', websiteId: 'bennys', val: 1684000, img: 'images/vehicles/ItaliGTBCustom.jpg' },
                 { name: 'Itali RSX', make: 'Grotti', type: 'sports', garageId: 'office3', websiteId: 'legendary', val: 3915000, img: 'images/vehicles/ItaliRSX.jpg' },
                 { name: 'Cyclone', make: 'Coil', type: 'super', garageId: 'office3', websiteId: 'legendary', val: 2290000, img: 'images/vehicles/Cyclone.jpg' },
-                { name: 'Itali GTB Custom', make: 'Progen', type: 'super', garageId: 'office3', websiteId: 'bennys', val: 1684000, img: 'images/vehicles/ItaliGTBCustom.jpg' },
+                { name: 'Itali GTB Custom (Dup)', make: 'Progen', type: 'super', garageId: 'office3', websiteId: 'bennys', val: 1684000, img: 'images/vehicles/ItaliGTBCustom.jpg' },
                 { name: 'Visione', make: 'Grotti', type: 'super', garageId: 'office3', websiteId: 'legendary', val: 2650000, img: 'images/vehicles/Visione.jpg' },
                 { name: 'Specter Custom', make: 'Dewbauchee', type: 'sports', garageId: 'office3', websiteId: 'bennys', val: 851000, img: 'images/vehicles/SpecterCustom.jpg' },
                 // Facility
                 { name: 'Nightmare Slamvan', make: 'Vapid', type: 'arena', garageId: 'facility', websiteId: 'arena', val: 3300000, img: 'images/vehicles/NightmareSlamvan.jpg' },
-                { name: 'Elegy Retro Custom', make: 'Annis', type: 'sports', garageId: 'facility', websiteId: 'bennys', val: 1304000, img: 'images/vehicles/ElegyRetroCustom.jpg' },
+                { name: 'Elegy Retro Custom (Dup)', make: 'Annis', type: 'sports', garageId: 'facility', websiteId: 'bennys', val: 1304000, img: 'images/vehicles/ElegyRetroCustom.jpg' },
                 { name: 'Nightmare Brutus', make: 'Declasse', type: 'arena', garageId: 'facility', websiteId: 'arena', val: 4666000, img: 'images/vehicles/NightmareBrutus.jpg' },
                 { name: 'Nightmare Scarab', make: 'HVY', type: 'arena', garageId: 'facility', websiteId: 'arena', val: 4576000, img: 'images/vehicles/NightmareScarab.jpg' },
                 { name: 'Chernobog', make: 'HVY', type: 'weaponized', garageId: 'facility', websiteId: 'warstock', val: 3411700, img: 'images/vehicles/Chernobog.jpg' },
                 { name: 'TM-02 Khanjali', make: 'HVY', type: 'weaponized', garageId: 'facility', websiteId: 'warstock', val: 4350350, img: 'images/vehicles/TM02Khanjali.jpg' },
                 { name: 'Thruster', make: 'Mammoth', type: 'weaponized', garageId: 'facility', websiteId: 'warstock', val: 3957500, img: 'images/vehicles/Thruster.jpg' },
-                // Nightclub & Children
+                // Nightclub
                 { name: 'Speedo Custom', make: 'Vapid', type: 'weaponized', garageId: 'nightclub_service', websiteId: 'warstock', val: 500000, img: 'images/vehicles/SpeedoCustom.jpg' },
                 { name: 'Mule Custom', make: 'Maibatsu', type: 'weaponized', garageId: 'nightclub_service', websiteId: 'warstock', val: 595000, img: 'images/vehicles/MuleCustom.jpg' },
                 { name: 'Pounder Custom', make: 'MTL', type: 'weaponized', garageId: 'nightclub_service', websiteId: 'warstock', val: 920000, img: 'images/vehicles/PounderCustom.jpg' },
                 { name: 'Dubsta 6x6', make: 'Benefactor', type: 'offroad', garageId: 'nightclub_service', websiteId: 'warstock', val: 549000, img: 'images/vehicles/Dubsta6x6.jpg' },
-                { name: 'Felon', make: 'Lampadati', type: 'coupe', garageId: 'nightclub_b2', websiteId: 'other', val: 295000, img: 'images/vehicles/Felon.jpg' },
-                { name: 'V-STR', make: 'Albany', type: 'sports', garageId: 'nightclub_b2', websiteId: 'legendary', val: 1685000, img: 'images/vehicles/VSTR.jpg' },
-                { name: 'Paragon R Armored', make: 'Enus', type: 'weaponized', garageId: 'nightclub_b2', websiteId: 'legendary', val: 1305000, img: 'images/vehicles/ParagonRArmored.jpg' },
-                { name: 'Windsor', make: 'Enus', type: 'coupe', garageId: 'nightclub_b2', websiteId: 'legendary', val: 1145000, img: 'images/vehicles/Windsor.jpg' },
-                { name: 'Deity', make: 'Enus', type: 'sedan', garageId: 'nightclub_b2', websiteId: 'legendary', val: 2645000, img: 'images/vehicles/Deity.jpg' },
-                { name: 'Thrax', make: 'Trundffade', type: 'super', garageId: 'nightclub_b2', websiteId: 'legendary', val: 2725000, img: 'images/vehicles/Thrax.jpg' },
-                { name: 'Nero Custom', make: 'Trundffade', type: 'super', garageId: 'nightclub_b2', websiteId: 'bennys', val: 2445000, img: 'images/vehicles/NeroCustom.jpg' },
-                { name: 'Adder', make: 'Trundffade', type: 'super', garageId: 'nightclub_b2', websiteId: 'legendary', val: 1400000, img: 'images/vehicles/Adder.jpg' },
-                { name: 'Nero', make: 'Trundffade', type: 'super', garageId: 'nightclub_b2', websiteId: 'legendary', val: 1840000, img: 'images/vehicles/Nero.jpg' },
-                { name: 'Revolter', make: 'Ubermacht', type: 'sports', garageId: 'nightclub_b2', websiteId: 'legendary', val: 2110000, img: 'images/vehicles/Revolter.jpg' },
-                { name: 'Raiden', make: 'Coil', type: 'sports', garageId: 'nightclub_b3', websiteId: 'legendary', val: 1775000, img: 'images/vehicles/Raiden.jpg' },
-                { name: 'Chino Custom', make: 'Vapid', type: 'muscle', garageId: 'nightclub_b3', websiteId: 'bennys', val: 825000, img: 'images/vehicles/ChinoCustom.jpg' },
-                { name: 'Deveste Eight', make: 'Principe', type: 'super', garageId: 'nightclub_b3', websiteId: 'legendary', val: 2295000, img: 'images/vehicles/DevesteEight.jpg' },
-                { name: 'Champion', make: 'Dewbauchee', type: 'super', garageId: 'nightclub_b3', websiteId: 'legendary', val: 3795000, img: 'images/vehicles/Champion.jpg' },
-                { name: 'Scramjet', make: 'Declasse', type: 'weaponized', garageId: 'nightclub_b3', websiteId: 'warstock', val: 4500000, img: 'images/vehicles/Scramjet.jpg' },
-                { name: 'Baller', make: 'Gallivanter', type: 'suv', garageId: 'nightclub_b3', websiteId: 'other', val: 290000, img: 'images/vehicles/Baller.jpg' },
-                { name: 'FMJ', make: 'Vapid', type: 'super', garageId: 'nightclub_b3', websiteId: 'legendary', val: 2150000, img: 'images/vehicles/FMJ.jpg' },
-                { name: 'Super Diamond', make: 'Enus', type: 'sedan', garageId: 'nightclub_b3', websiteId: 'legendary', val: 450000, img: 'images/vehicles/SuperDiamond.jpg' },
-                { name: 'Baller', make: 'Gallivanter', type: 'suv', garageId: 'nightclub_b3', websiteId: 'other', val: 290000, img: 'images/vehicles/Baller.jpg' },
-                { name: 'Patriot Stretch', make: 'Mammoth', type: 'suv', garageId: 'nightclub_b3', websiteId: 'ssas', val: 911000, img: 'images/vehicles/PatriotStretch.jpg' },
-                // Arena & Children
+                { name: 'Felon', type: 'coupe', garageId: 'nightclub_b2', websiteId: 'other', val: 295000, img: 'images/vehicles/Felon.jpg' },
+                { name: 'V-STR (Dup)', type: 'sports', garageId: 'nightclub_b2', websiteId: 'legendary', val: 1685000, img: 'images/vehicles/VSTR.jpg' },
+                { name: 'Paragon R Armored', type: 'weaponized', garageId: 'nightclub_b2', websiteId: 'legendary', val: 1305000, img: 'images/vehicles/ParagonRArmored.jpg' },
+                { name: 'Windsor', type: 'coupe', garageId: 'nightclub_b2', websiteId: 'legendary', val: 1145000, img: 'images/vehicles/Windsor.jpg' },
+                { name: 'Deity', type: 'sedan', garageId: 'nightclub_b2', websiteId: 'legendary', val: 2645000, img: 'images/vehicles/Deity.jpg' },
+                { name: 'Thrax', type: 'super', garageId: 'nightclub_b2', websiteId: 'legendary', val: 2725000, img: 'images/vehicles/Thrax.jpg' },
+                { name: 'Nero Custom (Dup)', type: 'super', garageId: 'nightclub_b2', websiteId: 'bennys', val: 2445000, img: 'images/vehicles/NeroCustom.jpg' },
+                { name: 'Adder (Dup)', type: 'super', garageId: 'nightclub_b2', websiteId: 'legendary', val: 1400000, img: 'images/vehicles/Adder.jpg' },
+                { name: 'Nero', type: 'super', garageId: 'nightclub_b2', websiteId: 'legendary', val: 1840000, img: 'images/vehicles/Nero.jpg' },
+                { name: 'Revolter (Dup)', type: 'sports', garageId: 'nightclub_b2', websiteId: 'legendary', val: 2110000, img: 'images/vehicles/Revolter.jpg' },
+                { name: 'Raiden', type: 'sports', garageId: 'nightclub_b3', websiteId: 'legendary', val: 1775000, img: 'images/vehicles/Raiden.jpg' },
+                { name: 'Chino Custom', type: 'muscle', garageId: 'nightclub_b3', websiteId: 'bennys', val: 825000, img: 'images/vehicles/ChinoCustom.jpg' },
+                { name: 'Deveste Eight', type: 'super', garageId: 'nightclub_b3', websiteId: 'legendary', val: 2295000, img: 'images/vehicles/DevesteEight.jpg' },
+                { name: 'Champion', type: 'super', garageId: 'nightclub_b3', websiteId: 'legendary', val: 3795000, img: 'images/vehicles/Champion.jpg' },
+                { name: 'Scramjet', type: 'weaponized', garageId: 'nightclub_b3', websiteId: 'warstock', val: 4500000, img: 'images/vehicles/Scramjet.jpg' },
+                { name: 'Baller', type: 'suv', garageId: 'nightclub_b3', websiteId: 'other', val: 290000, img: 'images/vehicles/Baller.jpg' },
+                { name: 'FMJ', type: 'super', garageId: 'nightclub_b3', websiteId: 'legendary', val: 2150000, img: 'images/vehicles/FMJ.jpg' },
+                { name: 'Super Diamond', type: 'sedan', garageId: 'nightclub_b3', websiteId: 'legendary', val: 450000, img: 'images/vehicles/SuperDiamond.jpg' },
+                { name: 'Baller (Dup)', type: 'suv', garageId: 'nightclub_b3', websiteId: 'other', val: 290000, img: 'images/vehicles/Baller.jpg' },
+                { name: 'Patriot Stretch', type: 'suv', garageId: 'nightclub_b3', websiteId: 'ssas', val: 911000, img: 'images/vehicles/PatriotStretch.jpg' },
+                // Arena
                 { name: 'Apoc Cerberus', make: 'MTL', type: 'arena', garageId: 'arena', websiteId: 'arena', val: 5370300, img: 'images/vehicles/ApocCerberus.jpg' },
                 { name: 'FS Brutus', make: 'Declasse', type: 'arena', garageId: 'arena', websiteId: 'arena', val: 4666000, img: 'images/vehicles/FSBrutus.jpg' },
                 { name: 'NM Sasquatch', make: 'Bravado', type: 'arena', garageId: 'arena', websiteId: 'arena', val: 3030000, img: 'images/vehicles/NMSasquatch.jpg' },
@@ -631,7 +605,7 @@
                 // Auto Shop
                 { name: 'Dukes', make: 'Imponte', type: 'muscle', garageId: 'autoshop', websiteId: 'ssas', val: 362000, img: 'images/vehicles/Dukes.jpg' },
                 { name: 'Sultan RS', make: 'Karin', type: 'super', garageId: 'autoshop', websiteId: 'bennys', val: 1295000, img: 'images/vehicles/SultanRS.jpg' },
-                { name: 'Elegy Retro', make: 'Annis', type: 'sports', garageId: 'autoshop', websiteId: 'bennys', val: 1304000, img: 'images/vehicles/ElegyRetro.jpg' },
+                { name: 'Elegy Retro (Dup)', make: 'Annis', type: 'sports', garageId: 'autoshop', websiteId: 'bennys', val: 1304000, img: 'images/vehicles/ElegyRetro.jpg' },
                 { name: 'Gauntlet Hellfire', make: 'Bravado', type: 'muscle', garageId: 'autoshop', websiteId: 'ssas', val: 1145000, img: 'images/vehicles/GauntletHellfire.jpg' },
                 { name: 'Sultan RS Classic', make: 'Karin', type: 'sports', garageId: 'autoshop', websiteId: 'ssas', val: 2189000, img: 'images/vehicles/SultanRSClassic.jpg' },
                 { name: 'Issi', make: 'Weeny', type: 'sports', garageId: 'autoshop', websiteId: 'ssas', val: 318000, img: 'images/vehicles/Issi.jpg' },
@@ -652,7 +626,7 @@
                 { name: 'Torero XO', make: 'Pegassi', type: 'super', garageId: 'agency', websiteId: 'legendary', val: 3340000, img: 'images/vehicles/ToreroXO.jpg' },
                 { name: 'Toros', make: 'Pegassi', type: 'suv', garageId: 'agency', websiteId: 'legendary', val: 848000, img: 'images/vehicles/Toros.jpg' },
                 { name: 'Infernus Classic', make: 'Pegassi', type: 'classic', garageId: 'agency', websiteId: 'legendary', val: 1265000, img: 'images/vehicles/InfernusClassic.jpg' },
-                // Eclipse & Children
+                // Eclipse
                 { name: 'Specter Custom', make: 'Dewbauchee', type: 'sports', garageId: 'eclipse_cars', websiteId: 'bennys', val: 1052000, img: 'images/vehicles/SpecterCustom.jpg' },
                 { name: 'Surfer Custom', make: 'BF', type: 'utility', garageId: 'eclipse_cars', websiteId: 'ssas', val: 890000, img: 'images/vehicles/SurferCustom.jpg' },
                 { name: 'Brioso 300', make: 'Grotti', type: 'classic', garageId: 'eclipse_cars', websiteId: 'ssas', val: 910000, img: 'images/vehicles/Brioso300.jpg' },
@@ -724,17 +698,19 @@
             if(title) title.scrollIntoView({ behavior: 'smooth' });
         };
 
+        // --- GLOBAL STATE ---
+        var appState = { sort: 'garage', filter: 'all' };
+
         function updateUI() {
-            // Update Tabs
-            ['garage', 'type', 'website'].forEach(function(t) {
+            ['garage', 'type', 'brand', 'website'].forEach(function(t) {
                 var btn = document.getElementById('btn-' + t);
                 if(btn) btn.className = 'btn-main ' + (window.appState.sort === t ? 'active' : '');
             });
 
-            // Update Title
             var title = document.getElementById('gallery-title');
             if (window.appState.sort === 'garage') title.innerText = 'GARAGES';
             else if (window.appState.sort === 'type') title.innerText = 'VEHICLE CLASSES';
+            else if (window.appState.sort === 'brand') title.innerText = 'MANUFACTURERS';
             else title.innerText = 'DEALERSHIPS';
 
             renderSubFilters();
@@ -750,11 +726,13 @@
                 items = window.gtaData.garages.filter(function(g) { return !g.parent; });
             } else if (window.appState.sort === 'type') {
                 items = window.gtaData.types;
-            } else {
+            } else if (window.appState.sort === 'website') {
                 items = window.gtaData.websites;
+            } else if (window.appState.sort === 'brand') {
+                var uniqueMakes = [...new Set(window.gtaData.vehicles.map(v => v.make))].sort();
+                items = uniqueMakes.map(m => ({ id: m, name: m }));
             }
 
-            // All Button
             var allBtn = document.createElement('button');
             allBtn.className = 'btn-filter ' + (window.appState.filter === 'all' ? 'active' : '');
             allBtn.innerText = 'ALL';
@@ -770,6 +748,7 @@
                 btn.className = 'btn-filter ' + (window.appState.filter === item.id ? 'active' : '');
                 btn.innerText = item.shortName || item.name;
                 
+                // Correct Closure
                 btn.onclick = (function(id) { 
                     return function() { window.appClickFilter(id); } 
                 })(item.id);
@@ -797,7 +776,6 @@
             var filtered = window.gtaData.vehicles;
             var propCost = 0;
 
-            // Header Logic
             if (window.appState.sort === 'garage' && window.appState.filter !== 'all') {
                 var g = window.gtaData.garages.find(function(x) { return x.id === window.appState.filter; });
                 if (g) {
@@ -810,7 +788,6 @@
                 }
             }
 
-            // Filter Logic
             if (window.appState.filter !== 'all') {
                 var fid = window.appState.filter;
                 if (window.appState.sort === 'garage') {
@@ -821,12 +798,13 @@
                     });
                 } else if (window.appState.sort === 'type') {
                     filtered = filtered.filter(function(v) { return v.type === fid; });
+                } else if (window.appState.sort === 'brand') {
+                    filtered = filtered.filter(function(v) { return v.make === fid; });
                 } else {
                     filtered = filtered.filter(function(v) { return v.websiteId === fid; });
                 }
             }
 
-            // Sort
             filtered.sort(function(a,b) { return b.val - a.val; });
 
             fCount.innerText = filtered.length;
@@ -841,7 +819,7 @@
                     var tObj = window.gtaData.types.find(function(t) { return t.id === v.type; });
                     var tName = tObj ? tObj.name : v.type;
                     var img = v.img || 'https://placehold.co/600x400/111/333?text=GTA';
-                    
+
                     var gName = "";
                     var gObj = window.gtaData.garages.find(function(g) { return g.id === v.garageId; });
                     if(gObj) gName = gObj.shortName || gObj.name;
@@ -883,11 +861,14 @@
 
             c1.innerHTML = ''; c2.innerHTML = ''; pList.innerHTML = '';
 
-            // Properties
             var props = window.gtaData.garages.filter(function(g) { return (g.val > 0 || g.basePrice > 0) && !g.parent; });
             var pTotal = 0;
             props.forEach(function(p) { pTotal += (p.val || (p.basePrice + p.upgradePrice)); });
-            props.sort(function(a,b) { return vb = b.val || 0, va = a.val || 0, vb - va; });
+            // Sort by value but keep list order consistent
+            props.sort(function(a,b) { 
+                var va = a.val || 0; var vb = b.val || 0;
+                return vb - va;
+            });
 
             props.forEach(function(p, i) {
                 var val = p.val || (p.basePrice + p.upgradePrice);
@@ -907,7 +888,6 @@
             document.getElementById('props-count').innerText = props.length + " Owned";
             document.getElementById('props-total-val').innerText = formatMoney(pTotal);
 
-            // Vehicles
             var vTotal = 0;
             var catMap = {};
             window.gtaData.types.forEach(function(t) {
@@ -923,7 +903,6 @@
                 catMap[k].count++;
             });
 
-            // Keep array order (not sorted by value)
             var activeCats = Object.values(catMap).filter(function(c) { return c.count > 0; });
             var maxVal = Math.max(...activeCats.map(c => c.val));
             var half = Math.ceil(activeCats.length / 2);
