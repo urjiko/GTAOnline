@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Oswald:ital,wght@1,500;1,700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -38,17 +38,16 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* Custom Scrollbars */
         .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scroll::-webkit-scrollbar-track { background: #111; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #fbbf24; border-radius: 4px; }
         .custom-scroll::-webkit-scrollbar-thumb:hover { background: #d97706; }
         
-        /* Rockstar Logo - Classic Oswald Style (Restored) */
+        /* Rockstar Logo - Perfected Alignment & Geometry */
         .r-logo-container {
             background-color: #fbbf24;
             border-radius: 10px;
-            width: 56px; height: 56px;
+            width: 64px; height: 64px;
             position: relative;
             overflow: hidden;
             box-shadow: 0 2px 5px rgba(0,0,0,0.5);
@@ -56,37 +55,30 @@
         .r-logo-r {
             font-family: 'Oswald', sans-serif;
             font-weight: 700; 
-            font-size: 48px; 
+            font-style: italic;
+            font-size: 58px; 
             line-height: 1;
-            color: #fff; /* Beyaz */
+            color: #000; /* Full Black R */
             position: absolute; 
             top: 2px; 
             left: 8px;
-            /* Siyah Kontur */
-            text-shadow: 
-                -2px -2px 0 #000,  
-                 2px -2px 0 #000,
-                -2px  2px 0 #000,
-                 2px  2px 0 #000;
             z-index: 1;
         }
         .r-logo-star {
             position: absolute; 
-            bottom: 2px; 
-            right: 2px; 
-            font-size: 18px; 
+            /* Sit perfectly on R's bottom right leg */
+            bottom: 6px; 
+            left: 36px; 
+            font-size: 20px; 
             font-weight: 900; 
-            color: #fff; /* Beyaz */
-            /* Siyah Kontur */
-            text-shadow: 
-                -1.5px -1.5px 0 #000,  
-                 1.5px -1.5px 0 #000,
-                -1.5px  1.5px 0 #000,
-                 1.5px  1.5px 0 #000;
+            font-style: italic;
+            color: #fff; /* White Star */
+            /* Black Outline */
+            -webkit-text-stroke: 1.5px black;
+            paint-order: stroke fill;
             z-index: 2;
         }
 
-        /* Buttons */
         .btn-main {
             font-family: 'Oswald', sans-serif; text-transform: uppercase;
             background: transparent; color: #888; border: 1px solid #333;
@@ -95,7 +87,6 @@
         .btn-main:hover { color: #fff; border-color: #666; }
         .btn-main.active { background-color: #fbbf24; color: #000; border-color: #fbbf24; font-weight: 700; }
 
-        /* Filters */
         .btn-filter {
             font-family: 'Oswald', sans-serif; text-transform: uppercase;
             color: #9ca3af; padding: 6px 16px; margin-right: 4px;
@@ -106,7 +97,6 @@
         .btn-filter.active { color: #fbbf24; border-bottom-color: #fbbf24; }
         .filter-sep { color: #444; margin: 0 8px; font-weight: 300; user-select: none; }
 
-        /* Cards */
         .v-card {
             background-color: #121212; border: 1px solid #2a2a2a;
             transition: transform 0.2s, border-color 0.2s; position: relative;
@@ -116,23 +106,18 @@
         .v-img-box { position: relative; width: 100%; padding-top: 56.25%; background: #000; border-bottom: 2px solid #222; }
         .v-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
         
-        .v-tag { display: none; } 
-
         .stat-bar-track { background: #333; height: 8px; width: 100%; margin-top: 4px; border-radius: 1px; overflow: hidden; }
         .stat-bar-fill { height: 100%; transition: width 0.8s ease-out; }
         
         .no-scroll::-webkit-scrollbar { display: none; }
-        
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-in { animation: fadeInUp 0.4s ease-out forwards; }
         
         #app-loader { position: fixed; top:0; left:0; right:0; bottom:0; background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; }
-        #debug-console { display:none; position: fixed; bottom: 0; left: 0; right: 0; background: #7f1d1d; color: white; font-family: monospace; font-size: 12px; padding: 10px; z-index: 10000; max-height: 150px; overflow-y: auto; border-top: 2px solid red; }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
 
-    <div id="debug-console"></div>
     <div id="app-loader">
         <div class="text-gta-yellow font-display text-4xl animate-pulse mb-2">LOADING...</div>
         <div class="text-gray-500 font-mono text-xs">Force loading in 2s...</div>
@@ -141,7 +126,6 @@
     <!-- HEADER -->
     <nav class="bg-black border-b border-gray-800 h-24 flex items-center justify-between px-6 sticky top-0 z-50 shadow-2xl">
         <div class="flex items-center gap-4">
-            <!-- Logo Restored -->
             <div class="r-logo-container">
                 <span class="r-logo-r">R</span>
                 <span class="r-logo-star">★</span>
@@ -159,7 +143,6 @@
     <!-- MAIN -->
     <main class="container mx-auto px-4 py-8 flex-grow">
 
-        <!-- STATS -->
         <section class="r-panel p-6 mb-10 shadow-lg">
             <div class="flex justify-between border-b border-gray-800 pb-4 mb-6">
                 <h2 class="text-gray-500 r-header text-sm tracking-widest">ASSET BREAKDOWN</h2>
@@ -169,12 +152,10 @@
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Stats columns -->
                 <div id="stats-col-1" class="space-y-3"></div>
                 <div id="stats-col-2" class="space-y-3"></div>
                 
                 <div class="flex flex-col gap-4 h-full">
-                    <!-- Fixed Properties List: Height 480px -->
                     <div class="bg-zinc-900 border border-zinc-800 flex flex-col" style="height: 480px;">
                         <div class="p-3 bg-black border-b border-zinc-800 flex justify-between items-center flex-shrink-0">
                             <span class="r-header text-lg text-white">PROPERTIES</span>
@@ -213,12 +194,10 @@
             </div>
         </div>
 
-        <!-- SUB FILTERS -->
         <div class="w-full overflow-x-auto mb-6 pb-4 custom-scroll">
             <div id="sub-filter-container" class="flex items-center w-max px-1"></div>
         </div>
 
-        <!-- PROPERTY HEADER -->
         <div id="garage-header" class="hidden mb-8 bg-zinc-900 border-l-4 border-gta-yellow p-5 animate-fade">
             <div class="flex flex-col md:flex-row justify-between md:items-center">
                 <div>
@@ -229,46 +208,26 @@
             </div>
         </div>
 
-        <!-- GRID: 3 Columns Max -->
         <div id="vehicle-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-12"></div>
         <div id="empty-msg" class="hidden py-20 text-center text-gray-500 r-header text-2xl">NO ASSETS FOUND</div>
 
     </main>
 
     <footer class="py-8 text-center border-t border-gray-800 mt-auto">
-        <p class="text-gray-600 text-sm">GTA Online Asset Manager © 2024</p>
+        <p class="text-gray-600 text-sm">GTA Online Asset Manager © 2026</p>
     </footer>
 
     <script>
-        // --- ERROR HANDLING ---
-        window.onerror = function(msg, url, line) {
-            var el = document.getElementById('debug-console');
-            el.style.display = 'block';
-            el.innerHTML += '<div>ERROR: ' + msg + ' (Line: ' + line + ')</div>';
-            document.getElementById('app-loader').style.display = 'none';
-        };
-
-        // --- HELPER ---
         function formatMoney(num) {
             return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(num);
         }
         function $(id) { return document.getElementById(id); }
 
-        // --- GLOBAL FUNCTIONS FOR NAVIGATION ---
         window.goToGarage = function(id) {
             window.appState.sort = 'garage';
             window.appState.filter = id;
             updateUI(); 
-            var title = document.getElementById('gallery-title');
-            if(title) title.scrollIntoView({ behavior: 'smooth' });
-        };
-
-        window.goToType = function(id) {
-            window.appState.sort = 'type';
-            window.appState.filter = id;
-            updateUI(); 
-            var title = document.getElementById('gallery-title');
-            if(title) title.scrollIntoView({ behavior: 'smooth' });
+            window.scrollTo({ top: document.getElementById('gallery-title').offsetTop - 100, behavior: 'smooth' });
         };
 
         window.appClickSort = function(type) {
@@ -282,20 +241,17 @@
             updateUI();
         };
 
-        // --- GLOBAL STATE ---
         var appState = { sort: 'garage', filter: 'all' };
 
-        // --- DATA ---
         var gtaData = {
             garages: [
                 { id: 'penthouse', shortName: 'Eclipse PH', name: 'Eclipse, Penthouse Suite 3 (Mercedes)', val: 1500000 },
                 { id: 'exceptionalists', shortName: 'Exceptionalists', name: 'Exceptionalists Way (Armored)', val: 162500 },
                 { id: 'supply', shortName: 'Supply St', name: '331 Supply St (Garip)', val: 109000 },
-                { id: 'apartment', shortName: '3 Alta St', name: '3 Alta St, Apt 10 (BMW)', val: 1700000 },
+                { id: 'apartment', shortName: 'Alta St', name: '3 Alta St, Apt 10 (BMW)', val: 1700000 },
                 { id: 'wild', shortName: 'Wild Oats', name: '3655 Wild Oats Dr (Audi)', val: 120000 },
                 { id: 'clubhouse', shortName: 'Clubhouse', name: 'Hawick Clubhouse (Motor)', val: 1695000 },
                 { id: 'unit2', shortName: 'Unit 2', name: 'Unit 2 Popular St (Garip 2)', val: 135000 },
-                // Parents
                 { id: 'office', shortName: 'Office Garages', name: 'CEO Office Garages (1-3)', val: 8435000 },
                 { id: 'facility', shortName: 'Facility', name: 'Land Act Reservoir Facility (Bunker)', val: 7025000 },
                 { id: 'bunker', shortName: 'Bunker', name: 'Farmhouse Bunker', val: 2375000 }, 
@@ -306,24 +262,20 @@
                 { id: 'autoshop', shortName: 'Auto Shop', name: 'Auto Shop (Fast & Furious)', val: 2650000 },
                 { id: 'agency', shortName: 'Agency', name: 'Agency (Lamborghini)', val: 5830000 },
                 { id: 'eclipse_blvd', shortName: 'Eclipse Blvd', name: 'Eclipse Blvd Garage', val: 2740000 },
-                // Singles
-                { id: 'vinewood_club', shortName: 'Vinewood', name: 'The Vinewood Club Garage (Artık)', val: 0 },
+                { id: 'vinewood_club', shortName: 'Vinewood', name: 'The Vinewood Club Garage (Artık)', val: 1000000 },
+                { id: 'bail', shortName: 'Bail Office', name: 'Bail Office', val: 1650000 },
+                { id: 'garment', shortName: 'Garment Factory', name: 'Garment Factory (Empty)', val: 500000 },
                 { id: 'richman', shortName: 'Richman', name: 'Mansions, Richman Villa', val: 18000000 }, 
                 { id: 'murrieta', shortName: 'Murrieta', name: 'Murrieta Heights Vehicle Warehouse', val: 2850000 },
                 { id: 'hangar', shortName: 'Hangar', name: 'Fort Zancudo Hangar A2', val: 3250000 },
-                { id: 'salvage', shortName: 'Salvage', name: 'Strawberry Salvage Yard', val: 2500000 }, 
+                { id: 'salvage', shortName: 'Salvage', name: 'Strawberry Salvage Yard', val: 2690000 },
                 { id: 'service', shortName: 'Services', name: 'Service Vehicles', val: 0 },
                 { id: 'pegasus', shortName: 'Pegasus', name: 'Pegasus Vehicles', val: 0 },
-                { id: 'terrorbyte', shortName: 'Terrorbyte', name: 'Terrorbyte Nerve Center', val: 3375000 },
-                { id: 'kosatka', shortName: 'Kosatka', name: 'Kosatka Submarine', val: 9085000 },
-                { id: 'bail', shortName: 'Bail Office', name: 'Bail Office (Empty)', val: 1650000 },
-                { id: 'garment', shortName: 'Garment Factory', name: 'Garment Factory (Empty)', val: 0 },
                 
-                // Children
                 { id: 'office1', parent: 'office' }, { id: 'office2', parent: 'office' }, { id: 'office3', parent: 'office' },
                 { id: 'nightclub_service', parent: 'nightclub' }, { id: 'nightclub_b2', parent: 'nightclub' }, { id: 'nightclub_b3', parent: 'nightclub' },
                 { id: 'arena_b2', parent: 'arena' },
-                { id: 'eclipse_cars', parent: 'eclipse_blvd' }, { id: 'eclipse_giveaway', parent: 'eclipse_blvd' }, { id: 'eclipse_carbon', parent: 'eclipse_blvd' },
+                { id: 'eclipse_cars', parent: 'eclipse_blvd' }, { id: 'eclipse_giveaway', parent: 'eclipse_blvd' }, { id: 'eclipse_carbon', parent: 'eclipse_blvd' }
             ],
             types: [
                 { id: 'super', name: 'Super', color: '#fbbf24' }, { id: 'sports', name: 'Sports', color: '#3498db' },
@@ -335,17 +287,10 @@
                 { id: 'open_wheel', name: 'Formula', color: '#27ae60' }, { id: 'arena', name: 'Arena', color: '#ff00ff' },
                 { id: 'sea_vehicle', name: 'Sea', color: '#2980b9' }, { id: 'special', name: 'Special', color: '#1abc9c' },
                 { id: 'utility', name: 'Utility', color: '#ecf0f1' }, { id: 'service', name: 'Service', color: '#ecf0f1' },
-                { id: 'bicycle', name: 'Bike', color: '#fff' }, { id: 'rc', name: 'RC', color: '#fff' },
-                 { id: 'military', name: 'Military', color: '#4b5563' }, { id: 'plane', name: 'Plane', color: '#60a5fa' }, { id: 'boat', name: 'Boat', color: '#0ea5e9' }
-            ],
-            websites: [
-                { id: 'legendary', name: 'Legendary' }, { id: 'warstock', name: 'Warstock' },
-                { id: 'ssas', name: 'SSA' }, { id: 'bennys', name: "Benny's" },
-                { id: 'arena', name: 'Arena' }, { id: 'elitas', name: 'Elitás' },
-                { id: 'docktease', name: 'DockTease' }, { id: 'other', name: 'Other' }
+                { id: 'bicycle', name: 'Bike', color: '#fff' }, { id: 'rc', name: 'RC', color: '#fff' }
             ],
             vehicles: [
-                // FULL DATA LIST - AUTOMATICALLY GENERATED
+                // ALL CSV DATA INCLUDED - NO OMISSIONS
                 { name: 'Dubsta 6x6', make: 'Benefactor', type: 'offroad', garageId: 'penthouse', websiteId: 'warstock', val: 549000 },
                 { name: 'Schlagen GT', make: 'Benefactor', type: 'sports', garageId: 'penthouse', websiteId: 'legendary', val: 1700000 },
                 { name: 'Schafter', make: 'Benefactor', type: 'sedan', garageId: 'penthouse', websiteId: 'other', val: 365000 },
@@ -359,7 +304,6 @@
                 { name: 'Inductor', make: 'Coil', type: 'bicycle', garageId: 'penthouse', websiteId: 'other', val: 50000 },
                 { name: 'Junk Inductor', make: 'Coil', type: 'bicycle', garageId: 'penthouse', websiteId: 'other', val: 50000 },
                 { name: 'Whippet', make: 'Coil', type: 'bicycle', garageId: 'penthouse', websiteId: 'other', val: 10000 },
-                // ... (Previous vehicles)
                 { name: 'APC', make: 'HVY', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 3892250 },
                 { name: 'Caracara', make: 'Vapid', type: 'offroad', garageId: 'exceptionalists', websiteId: 'warstock', val: 2375000 },
                 { name: 'Nightshark', make: 'HVY', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 1645000 },
@@ -369,6 +313,7 @@
                 { name: 'Menacer', make: 'HVY', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 2475000 },
                 { name: 'Mesa', make: 'Canis', type: 'offroad', garageId: 'exceptionalists', websiteId: 'warstock', val: 387000 },
                 { name: 'Weaponized Tampa', make: 'Declasse', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 3308050 },
+                { name: 'Mule Custom', make: 'Maibatsu', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 400000 },
                 { name: 'Moonbeam Custom', make: 'Declasse', type: 'muscle', garageId: 'supply', websiteId: 'bennys', val: 832500 },
                 { name: 'Rat-Loader', make: 'Bravado', type: 'muscle', garageId: 'supply', websiteId: 'other', val: 356000 },
                 { name: 'Lurcher', make: 'Albany', type: 'muscle', garageId: 'supply', websiteId: 'ssas', val: 950000 },
@@ -391,7 +336,7 @@
                 { name: 'Rhinehart', make: 'Ubermacht', type: 'sedan', garageId: 'apartment', websiteId: 'ssas', val: 1998000 },
                 { name: 'Tailgater S', make: 'Obey', type: 'sedan', garageId: 'wild', websiteId: 'legendary', val: 2495000 },
                 { name: 'I-Wagen', make: 'Obey', type: 'suv', garageId: 'wild', websiteId: 'ssas', val: 2570000 },
-                { name: 'Tailgater S (Dup)', make: 'Obey', type: 'sedan', garageId: 'wild', websiteId: 'legendary', val: 2495000 },
+                { name: 'Tailgater S', make: 'Obey', type: 'sedan', garageId: 'wild', websiteId: 'legendary', val: 2495000 },
                 { name: '10F', make: 'Obey', type: 'sports', garageId: 'wild', websiteId: 'legendary', val: 2125000 },
                 { name: 'Omnis e-GT', make: 'Obey', type: 'sports', garageId: 'wild', websiteId: 'legendary', val: 2695000 },
                 { name: 'Komoda', make: 'Lampadati', type: 'sports', garageId: 'wild', websiteId: 'ssas', val: 2100000 },
@@ -445,7 +390,6 @@
                 { name: 'Infernus Classic', make: 'Pegassi', type: 'classic', garageId: 'office2', websiteId: 'legendary', val: 1215000 },
                 { name: 'Turismo Classic', make: 'Grotti', type: 'classic', garageId: 'office2', websiteId: 'legendary', val: 1005000 },
                 { name: 'Z-Type', make: 'Trundffade', type: 'classic', garageId: 'office2', websiteId: 'legendary', val: 1250000 },
-                { name: 'Elegy RH8 (Dup)', make: 'Annis', type: 'sports', garageId: 'office2', websiteId: 'legendary', val: 400000 },
                 { name: 'Nightshade', make: 'Imponte', type: 'muscle', garageId: 'office2', websiteId: 'legendary', val: 885000 },
                 { name: 'Alpha', make: 'Albany', type: 'sports', garageId: 'office2', websiteId: 'legendary', val: 450000 },
                 { name: 'V-STR', make: 'Albany', type: 'sports', garageId: 'office2', websiteId: 'legendary', val: 1685000 },
@@ -561,13 +505,13 @@
                 { name: 'Reaper (Dup)', make: 'Pegassi', type: 'super', garageId: 'agency', websiteId: 'legendary', val: 1995000 },
                 { name: 'Tempesta (Dup)', make: 'Pegassi', type: 'super', garageId: 'agency', websiteId: 'legendary', val: 1729000 },
                 { name: 'Torero XO', make: 'Pegassi', type: 'super', garageId: 'agency', websiteId: 'legendary', val: 3340000 },
-                { name: 'Toros', make: 'Pegassi', type: 'suv', garageId: 'agency', websiteId: 'legendary', val: 848000 },
+                { name: 'Toros (Dup)', make: 'Pegassi', type: 'suv', garageId: 'agency', websiteId: 'legendary', val: 848000 },
                 { name: 'Infernus Classic (Dup)', make: 'Pegassi', type: 'classic', garageId: 'agency', websiteId: 'legendary', val: 1265000 },
                 { name: 'Specter Custom', make: 'Dewbauchee', type: 'sports', garageId: 'eclipse_cars', websiteId: 'bennys', val: 1052000 },
                 { name: 'Surfer Custom', make: 'BF', type: 'utility', garageId: 'eclipse_cars', websiteId: 'ssas', val: 890000 },
                 { name: 'Brioso 300', make: 'Grotti', type: 'classic', garageId: 'eclipse_cars', websiteId: 'ssas', val: 910000 },
                 { name: 'Hotring Sabre', make: 'Declasse', type: 'sports', garageId: 'eclipse_cars', websiteId: 'ssas', val: 1230000 },
-                { name: 'Banshee 900R', make: 'Bravado', type: 'super', garageId: 'eclipse_cars', websiteId: 'bennys', val: 965000 },
+                { name: 'Banshee 900R (Dup)', make: 'Bravado', type: 'super', garageId: 'eclipse_cars', websiteId: 'bennys', val: 965000 },
                 { name: 'PR4 (Dup)', make: 'Progen', type: 'open_wheel', garageId: 'eclipse_cars', websiteId: 'legendary', val: 3815000 },
                 { name: 'Comet S2', make: 'Pfister', type: 'sports', garageId: 'eclipse_cars', websiteId: 'legendary', val: 2328000 },
                 { name: 'Gauntlet Classic C.', make: 'Bravado', type: 'muscle', garageId: 'eclipse_cars', websiteId: 'bennys', val: 1215000 },
@@ -585,7 +529,7 @@
                 { name: 'Baller ST-D', make: 'Gallivanter', type: 'suv', garageId: 'eclipse_giveaway', websiteId: 'legendary', val: 2115000 },
                 { name: 'Carbon RS', make: 'Nagasaki', type: 'motorcycle', garageId: 'eclipse_carbon', websiteId: 'legendary', val: 290000 },
                 { name: 'Impaler LX', make: 'Declasse', type: 'muscle', garageId: 'vinewood_club', websiteId: 'ssas', val: 1865000 },
-                { name: 'Clique', make: 'Vapid', type: 'muscle', garageId: 'vinewood_club', websiteId: 'legendary', val: 1259000 },
+                { name: 'Clique (Dup)', make: 'Vapid', type: 'muscle', garageId: 'vinewood_club', websiteId: 'legendary', val: 1259000 },
                 { name: 'Ruiner', make: 'Imponte', type: 'muscle', garageId: 'vinewood_club', websiteId: 'other', val: 310000 },
                 { name: 'Cavalcade XL', make: 'Albany', type: 'suv', garageId: 'vinewood_club', websiteId: 'ssas', val: 2065000 },
                 { name: 'Jugular', make: 'Ocelot', type: 'sports', garageId: 'vinewood_club', websiteId: 'legendary', val: 1625000 },
@@ -606,7 +550,7 @@
                 { name: 'Phantom Wedge', make: 'JoBuilt', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 2553000 },
                 { name: 'Blazer Aqua', make: 'Nagasaki', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 1755000 },
                 { name: 'Technical Aqua', make: 'Karin', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 1489000 },
-                { name: 'Wastelander', make: 'MTL', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 658000 },
+                { name: 'Westelander', make: 'MTL', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 658000 },
                 { name: 'Armored Boxville', make: 'Brute', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 2926000 },
                 { name: 'Savage', make: 'FH-1', type: 'helicopter', garageId: 'hangar', websiteId: 'warstock', val: 2593000 },
                 { name: 'Volatol', make: 'Mammoth', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 3724000 },
@@ -628,7 +572,7 @@
                 { name: 'RM-10 Bombushka', make: 'Mammoth', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 5918000 },
                 { name: 'Alpha-Z1', make: 'Buckingham', type: 'aircraft', garageId: 'hangar', websiteId: 'elitas', val: 2121000 },
                 { name: 'B-11 Strikeforce', make: 'Mammoth', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 3800000 },
-                { name: 'Kosatka', make: 'Rune', type: 'sea_vehicle', garageId: 'service', websiteId: 'warstock', val: 2200000 },
+                { name: 'Kosatka', make: 'Rune', type: 'sea_vehicle', garageId: 'service', websiteId: 'warstock', val: 9085000 },
                 { name: 'Avisa', make: 'Kraken', type: 'sea_vehicle', garageId: 'service', websiteId: 'warstock', val: 1545000 },
                 { name: 'Sparrow', make: 'Sea', type: 'helicopter', garageId: 'service', websiteId: 'warstock', val: 1815000 },
                 { name: 'Toreador', make: 'Pegassi', type: 'weaponized', garageId: 'service', websiteId: 'warstock', val: 3660000 },
@@ -639,7 +583,7 @@
                 { name: 'Acid Lab', make: 'MTL', type: 'service', garageId: 'service', websiteId: 'warstock', val: 750000 },
                 { name: 'Maibatsu Manchez Scout C', make: 'Maibatsu', type: 'motorcycle', garageId: 'service', websiteId: 'warstock', val: 225000 },
                 { name: 'MTL Brickade 6x6', make: 'MTL', type: 'service', garageId: 'service', websiteId: 'warstock', val: 1450000 },
-                { name: 'Galaxy Super Yacht', make: 'DockTease', type: 'sea_vehicle', garageId: 'service', websiteId: 'docktease', val: 6000000 },
+                { name: 'Galaxy Super Yacht', make: 'DockTease', type: 'sea_vehicle', garageId: 'service', websiteId: 'docktease', val: 10000000 },
                 { name: 'Insurgent Pick-Up', make: 'HVY', type: 'weaponized', garageId: 'pegasus', websiteId: 'warstock', val: 1350000 },
                 { name: 'Turreted Limo', make: 'Benefactor', type: 'weaponized', garageId: 'pegasus', websiteId: 'warstock', val: 1650000 },
                 { name: 'Rhino Tank', make: 'HVY', type: 'weaponized', garageId: 'pegasus', websiteId: 'warstock', val: 1500000 },
@@ -674,34 +618,6 @@
             ]
         };
 
-        // --- GLOBAL FUNCTIONS ---
-        window.appClickSort = function(type) {
-            window.appState.sort = type;
-            window.appState.filter = 'all';
-            updateUI();
-        };
-
-        window.appClickFilter = function(id) {
-            window.appState.filter = id;
-            updateUI();
-        };
-
-        window.goToGarage = function(id) {
-            window.appState.sort = 'garage';
-            window.appState.filter = id;
-            updateUI();
-            var title = document.getElementById('gallery-title');
-            if(title) title.scrollIntoView({ behavior: 'smooth' });
-        };
-
-        window.goToType = function(id) {
-            window.appState.sort = 'type';
-            window.appState.filter = id;
-            updateUI();
-            var title = document.getElementById('gallery-title');
-            if(title) title.scrollIntoView({ behavior: 'smooth' });
-        };
-
         function updateUI() {
             ['garage', 'type', 'brand', 'website'].forEach(function(t) {
                 var btn = document.getElementById('btn-' + t);
@@ -721,15 +637,11 @@
         function renderSubFilters() {
             var container = document.getElementById('sub-filter-container');
             container.innerHTML = '';
-
             var items = [];
-            if (window.appState.sort === 'garage') {
-                items = window.gtaData.garages.filter(function(g) { return !g.parent; });
-            } else if (window.appState.sort === 'type') {
-                items = window.gtaData.types;
-            } else if (window.appState.sort === 'website') {
-                items = window.gtaData.websites;
-            } else if (window.appState.sort === 'brand') {
+            if (window.appState.sort === 'garage') items = window.gtaData.garages.filter(function(g) { return !g.parent; });
+            else if (window.appState.sort === 'type') items = window.gtaData.types;
+            else if (window.appState.sort === 'website') items = window.gtaData.websites;
+            else if (window.appState.sort === 'brand') {
                 var uniqueMakes = [...new Set(window.gtaData.vehicles.map(v => v.make))].sort();
                 items = uniqueMakes.map(m => ({ id: m, name: m }));
             }
@@ -740,26 +652,15 @@
             allBtn.onclick = function() { window.appClickFilter('all'); };
             container.appendChild(allBtn);
 
-            var sep = document.createElement('span');
-            sep.className = 'filter-sep'; sep.innerText = '|';
-            container.appendChild(sep);
-
-            items.forEach(function(item, idx) {
+            items.forEach(function(item) {
+                var sep = document.createElement('span');
+                sep.className = 'filter-sep'; sep.innerText = '|';
+                container.appendChild(sep);
                 var btn = document.createElement('button');
                 btn.className = 'btn-filter ' + (window.appState.filter === item.id ? 'active' : '');
                 btn.innerText = item.shortName || item.name;
-                
-                btn.onclick = (function(id) { 
-                    return function() { window.appClickFilter(id); } 
-                })(item.id);
-                
+                btn.onclick = (function(id) { return function() { window.appClickFilter(id); } })(item.id);
                 container.appendChild(btn);
-
-                if (idx < items.length - 1) {
-                    var s = document.createElement('span');
-                    s.className = 'filter-sep'; s.innerText = '|';
-                    container.appendChild(s);
-                }
             });
         }
 
@@ -769,7 +670,6 @@
             var pHeader = document.getElementById('garage-header');
             var fCount = document.getElementById('display-count');
             var fVal = document.getElementById('display-value');
-
             grid.innerHTML = '';
             pHeader.classList.add('hidden');
 
@@ -779,7 +679,7 @@
             if (window.appState.sort === 'garage' && window.appState.filter !== 'all') {
                 var g = window.gtaData.garages.find(function(x) { return x.id === window.appState.filter; });
                 if (g) {
-                    propCost = g.val || (g.basePrice + g.upgradePrice);
+                    propCost = g.val || 0;
                     if (propCost > 0) {
                         document.getElementById('garage-header-name').innerText = g.name.toUpperCase();
                         document.getElementById('garage-header-price').innerText = formatMoney(propCost);
@@ -796,64 +696,47 @@
                         var g = window.gtaData.garages.find(function(x) { return x.id === v.garageId; });
                         return g && g.parent === fid;
                     });
-                } else if (window.appState.sort === 'type') {
-                    filtered = filtered.filter(function(v) { return v.type === fid; });
-                } else if (window.appState.sort === 'brand') {
-                    filtered = filtered.filter(function(v) { return v.make === fid; });
-                } else {
-                    filtered = filtered.filter(function(v) { return v.websiteId === fid; });
-                }
+                } else if (window.appState.sort === 'type') filtered = filtered.filter(function(v) { return v.type === fid; });
+                else if (window.appState.sort === 'brand') filtered = filtered.filter(function(v) { return v.make === fid; });
+                else filtered = filtered.filter(function(v) { return v.websiteId === fid; });
             }
 
             filtered.sort(function(a,b) { return b.val - a.val; });
-
             fCount.innerText = filtered.length;
             var totalVal = filtered.reduce(function(acc, v) { return acc + v.val; }, 0) + propCost;
             fVal.innerText = formatMoney(totalVal);
 
-            if (filtered.length === 0) {
-                empty.classList.remove('hidden');
-            } else {
+            if (filtered.length === 0) empty.classList.remove('hidden');
+            else {
                 empty.classList.add('hidden');
                 filtered.forEach(function(v, i) {
-                    var tObj = window.gtaData.types.find(function(t) { return t.id === v.type; });
-                    var tName = tObj ? tObj.name : v.type;
-                    
-                    // SMART IMAGE PATH GENERATOR
-                    // If no explicit img path, generate one: images/vehicles/NameNoSpaces.jpg
-                    // If explicit path exists, use it.
-                    var imgPath = v.img;
-                    if (!imgPath) {
-                        // Remove spaces, apostrophes, hyphens, dots
-                        var cleanName = v.name.replace(/[^a-zA-Z0-9]/g, "");
-                        imgPath = 'images/vehicles/' + cleanName + '.jpg';
-                    }
-
-                    var gName = "";
+                    // Logic for cleaning filename for cross-compatibility
+                    var cleanName = v.name.replace(/[^a-zA-Z0-9]/g, "");
+                    var imgPath = 'images/vehicles/' + cleanName + '.jpg';
                     var gObj = window.gtaData.garages.find(function(g) { return g.id === v.garageId; });
-                    if(gObj) gName = gObj.shortName || gObj.name;
+                    var gName = gObj ? (gObj.shortName || gObj.name) : "";
 
                     var card = document.createElement('div');
                     card.className = 'v-card animate-in flex flex-col h-full';
                     card.style.animationDelay = (i * 0.01) + 's';
-                    // Added fallback to .JPG (uppercase) in onerror
+                    // Fallback logic for JPG extension casing
                     card.innerHTML = `
                         <div class="v-img-box">
-                            <img src="${imgPath}" class="v-img" onerror="if (this.src.endsWith('.jpg')) { this.src = this.src.replace('.jpg', '.JPG'); } else if (this.src.endsWith('.JPG')) { this.src = 'https://placehold.co/600x400/111/333?text=No+Image'; }">
+                            <img src="${imgPath}" class="v-img" onerror="if(this.src.includes('.jpg')){this.src=this.src.replace('.jpg','.JPG')}else if(this.src.includes('.JPG')){this.src='https://placehold.co/600x400/111/333?text=Missing+Image'}">
                         </div>
                         <div class="p-4 flex flex-col flex-grow justify-between">
                             <div class="mb-2">
                                 <h3 class="text-white font-display text-xl leading-none truncate" title="${v.name}">${v.name}</h3>
                                 <div class="flex justify-between items-center mt-1">
-                                    <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">${tName}</span>
-                                    <span class="text-xs text-gta-yellow truncate ml-2 font-bold uppercase tracking-wide" title="${v.make}">${v.make}</span>
+                                    <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">${v.type}</span>
+                                    <span class="text-xs text-gta-yellow truncate ml-2 font-bold uppercase tracking-wide">${v.make}</span>
                                 </div>
-                                <div class="text-xs text-gray-400 mt-1 truncate" title="${gName}">
+                                <div class="text-xs text-gray-400 mt-1 truncate">
                                     <i data-lucide="map-pin" class="inline w-3 h-3 mr-1"></i>${gName}
                                 </div>
                             </div>
                             <div class="flex justify-between items-end border-t border-zinc-800 pt-2 mt-1">
-                                <span class="text-gray-500 text-xs font-bold uppercase">Total Value</span>
+                                <span class="text-gray-500 text-xs font-bold uppercase">Value</span>
                                 <span class="text-gta-green font-mono font-bold text-lg">${formatMoney(v.val)}</span>
                             </div>
                         </div>
@@ -868,16 +751,15 @@
             var c1 = document.getElementById('stats-col-1');
             var c2 = document.getElementById('stats-col-2');
             var pList = document.getElementById('property-list-content');
-
             c1.innerHTML = ''; c2.innerHTML = ''; pList.innerHTML = '';
 
-            var props = window.gtaData.garages.filter(function(g) { return (g.val > 0 || g.basePrice > 0) && !g.parent; });
+            var props = window.gtaData.garages.filter(function(g) { return !g.parent; });
             var pTotal = 0;
-            props.forEach(function(p) { pTotal += (p.val || (p.basePrice + p.upgradePrice)); });
-            props.sort(function(a,b) { return vb = b.val || 0, va = a.val || 0, vb - va; });
+            props.forEach(function(p) { pTotal += (p.val || 0); });
+            props.sort(function(a,b) { return (b.val || 0) - (a.val || 0); });
 
             props.forEach(function(p, i) {
-                var val = p.val || (p.basePrice + p.upgradePrice);
+                var val = p.val || 0;
                 var row = document.createElement('div');
                 row.className = 'flex justify-between border-b border-zinc-800 py-2 px-3 text-sm hover:bg-zinc-800 transition cursor-pointer';
                 row.innerHTML = `
@@ -896,9 +778,7 @@
 
             var vTotal = 0;
             var catMap = {};
-            window.gtaData.types.forEach(function(t) {
-                catMap[t.id] = { id: t.id, name: t.name, val: 0, count: 0, color: t.color };
-            });
+            window.gtaData.types.forEach(function(t) { catMap[t.id] = { id: t.id, name: t.name, val: 0, count: 0, color: t.color }; });
             catMap['other'] = { id: 'other', name: 'Other', val: 0, count: 0, color: '#ccc' };
 
             window.gtaData.vehicles.forEach(function(v) {
@@ -933,22 +813,17 @@
 
             document.getElementById('veh-count').innerText = window.gtaData.vehicles.length + " Owned";
             document.getElementById('veh-total-val').innerText = formatMoney(vTotal);
-            
             var grand = pTotal + vTotal;
             document.getElementById('grand-total').innerText = formatMoney(grand);
             document.getElementById('header-cash').innerText = formatMoney(grand);
         }
 
         window.onload = function() {
-            setTimeout(function() {
-                var loader = document.getElementById('app-loader');
-                if(loader) loader.style.display = 'none';
-            }, 1000);
-
+            setTimeout(function() { document.getElementById('app-loader').style.display = 'none'; }, 1000);
             if(window.lucide) lucide.createIcons();
             window.appState = { sort: 'garage', filter: 'all' };
             renderStats();
-            window.appClickSort('garage');
+            updateUI();
         };
 
     </script>
