@@ -149,7 +149,7 @@
         </div>
     </nav>
 
-    <!-- MAIN CONTENT -->
+    <!-- MAIN -->
     <main class="container mx-auto px-4 py-8 flex-grow">
 
         <!-- DASHBOARD -->
@@ -211,12 +211,36 @@
             <div id="sub-filter-container" class="flex items-center w-max gap-2 px-1"></div>
         </div>
 
-        <!-- ASSET GRID -->
+        <!-- GRID -->
         <div id="vehicle-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-20"></div>
         
     </main>
 
     <script>
+        // Helper to format Turkish chars and generate clean filenames
+        function getVehicleFilename(name) {
+            return name
+                .replace(/İ/g, 'i')
+                .replace(/I/g, 'i')
+                .replace(/ı/g, 'i')
+                .replace(/[^a-zA-Z0-9]/g, "")
+                .toLowerCase() + ".jpg";
+        }
+
+        // Helper to format display names with italics for special strings
+        function formatVehicleDisplayName(name) {
+            let output = name;
+            // Handle Brian O'Conner
+            if (output.includes("Brian O'Conner")) {
+                output = output.replace("Brian O'Conner", "<i class='italic opacity-90'>Brian O'Conner</i>");
+            }
+            // Handle parentheses
+            if (output.includes("(")) {
+                output = output.replace(/\(([^)]+)\)/g, "<i class='text-xs opacity-60'>($1)</i>");
+            }
+            return output;
+        }
+
         var gtaData = {
             garages: [
                 { id: 'penthouse', shortName: 'Penthouse', name: 'Eclipse, Penthouse Suite 3', val: 1500000 },
@@ -242,7 +266,6 @@
                 { id: 'service', shortName: 'Services', name: 'Special Service Vehicles', val: 0 },
                 { id: 'pegasus', shortName: 'Pegasus', name: 'Pegasus Lifestyle Management', val: 0 },
                 
-                // Sub-units
                 { id: 'office1', parent: 'office' }, { id: 'office2', parent: 'office' }, { id: 'office3', parent: 'office' },
                 { id: 'nightclub_service', parent: 'nightclub' }, { id: 'nightclub_b2', parent: 'nightclub' }, { id: 'nightclub_b3', parent: 'nightclub' },
                 { id: 'arena_b2', parent: 'arena' },
@@ -256,19 +279,18 @@
                 { id: 'coupe', name: 'Coupe', color: '#95a5a6' }, { id: 'motorcycle', name: 'Motorcycle', color: '#f1c40f' },
                 { id: 'aircraft', name: 'Aircraft', color: '#87ceeb' }, { id: 'helicopter', name: 'Helicopter', color: '#000080' },
                 { id: 'open_wheel', name: 'Formula', color: '#27ae60' }, { id: 'arena', name: 'Arena', color: '#ff00ff' },
-                { id: 'sea_vehicle', name: 'Sea', color: '#2980b9' }, { id: 'special', name: 'Special', color: '#1abc9c' },
-                { id: 'service', name: 'Service', color: '#ecf0f1' }, { id: 'utility', name: 'Utility', color: '#ecf0f1' }
+                { id: 'sea_vehicle', name: 'Sea', color: '#2980b9' }, { id: 'special', name: 'Special', color: '#1abc9c' }
             ],
             websites: [
                 { id: 'legendary', name: 'Legendary Motorsport' }, { id: 'ssas', name: 'Southern San Andreas Super Autos' },
-                { id: 'warstock', name: 'Warstock Cache & Carry' }, { id: 'bennys', name: 'Benny\'s Motor Works' },
+                { id: 'warstock', name: 'Warstock Cache & Carry' }, { id: 'bennys', name: 'Benny\'s Original Works' },
                 { id: 'other', name: 'Street / Other' }
             ],
             vehicles: [
-                // PENTHOUSE (Eclipse Suite 3)
+                // PENTHOUSE
                 { name: 'Dubsta 6x6', make: 'Benefactor', type: 'offroad', garageId: 'penthouse', websiteId: 'warstock', val: 549000 },
                 { name: 'Schlagen GT', make: 'Benefactor', type: 'sports', garageId: 'penthouse', websiteId: 'legendary', val: 1700000 },
-                { name: 'Schafter', make: 'Benefactor', type: 'sedan', garageId: 'penthouse', websiteId: 'ssas', val: 65000 },
+                { name: 'Schafter', make: 'Benefactor', type: 'sedan', garageId: 'penthouse', websiteId: 'other', val: 65000 },
                 { name: 'Stirling GT', make: 'Benefactor', type: 'classic', garageId: 'penthouse', websiteId: 'legendary', val: 1975000 },
                 { name: 'Krieger', make: 'Benefactor', type: 'super', garageId: 'penthouse', websiteId: 'legendary', val: 3275000 },
                 { name: 'Dubsta', make: 'Benefactor', type: 'offroad', garageId: 'penthouse', websiteId: 'other', val: 120000 },
@@ -277,7 +299,7 @@
                 { name: 'LM87', make: 'Annis', type: 'super', garageId: 'penthouse', websiteId: 'legendary', val: 3365000 },
                 { name: 'SM722', make: 'Benefactor', type: 'sports', garageId: 'penthouse', websiteId: 'legendary', val: 2565000 },
 
-                // EXCEPTIONALISTS WAY
+                // EXCEPTIONALISTS
                 { name: 'APC', make: 'HVY', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 3892250 },
                 { name: 'Caracara', make: 'Vapid', type: 'offroad', garageId: 'exceptionalists', websiteId: 'warstock', val: 2375000 },
                 { name: 'Nightshark', make: 'HVY', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 1645000 },
@@ -289,149 +311,63 @@
                 { name: 'Weaponized Tampa', make: 'Declasse', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 3308050 },
                 { name: 'Mule Custom', make: 'Maibatsu', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 595000 },
 
-                // 331 SUPPLY ST
+                // SUPPLY ST
                 { name: 'Moonbeam Custom', make: 'Declasse', type: 'muscle', garageId: 'supply', websiteId: 'bennys', val: 832500 },
                 { name: 'Rat-Loader', make: 'Bravado', type: 'muscle', garageId: 'supply', websiteId: 'other', val: 6000, tier: 'D', rarity: 'Hard-to-spawn street vehicle, stealable and storable.' },
                 { name: 'Lurcher', make: 'Albany', type: 'muscle', garageId: 'supply', websiteId: 'ssas', val: 950000 },
                 { name: 'Slamvan Custom', make: 'Vapid', type: 'muscle', garageId: 'supply', websiteId: 'bennys', val: 949500 },
                 { name: 'GB200', make: 'Vapid', type: 'sports', garageId: 'supply', websiteId: 'legendary', val: 1340000 },
                 { name: 'Desert Raid', make: 'Maxwell', type: 'offroad', garageId: 'supply', websiteId: 'legendary', val: 1045000 },
-                { name: 'Tornado Rat Rod', make: 'Declasse', type: 'classic', garageId: 'supply', websiteId: 'bennys', val: 778000 },
-                { name: 'Franken Stange', make: 'Albany', type: 'classic', garageId: 'supply', websiteId: 'ssas', val: 850000 },
-                { name: 'Sentinel Classic', make: 'Ubermacht', type: 'classic', garageId: 'supply', websiteId: 'ssas', val: 1050000 },
-                { name: 'Asbo', make: 'Maxwell', type: 'sports', garageId: 'supply', websiteId: 'ssas', val: 758000 },
 
-                // 3 ALTA ST, APT 10
+                // ALTA ST (Including Brian O'Conner case)
+                { name: "Elegy Retro Custom Brian O'Conner", make: 'Annis', type: 'sports', garageId: 'apartment', websiteId: 'bennys', val: 1304000 },
                 { name: 'Cypher', make: 'Ubermacht', type: 'sports', garageId: 'apartment', websiteId: 'legendary', val: 2000000 },
-                { name: 'Oracle XS', make: 'Ubermacht', type: 'coupe', garageId: 'apartment', websiteId: 'other', val: 82000 },
-                { name: 'Zion Classic', make: 'Ubermacht', type: 'classic', garageId: 'apartment', websiteId: 'ssas', val: 1212000 },
-                { name: 'Zion Cabrio', make: 'Ubermacht', type: 'coupe', garageId: 'apartment', websiteId: 'other', val: 65000 },
-                { name: 'SC1', make: 'Ubermacht', type: 'super', garageId: 'apartment', websiteId: 'legendary', val: 2003000 },
-                { name: 'Rebla GTS', make: 'Ubermacht', type: 'suv', garageId: 'apartment', websiteId: 'legendary', val: 1575000 },
                 { name: 'Niobe', make: 'Ubermacht', type: 'sports', garageId: 'apartment', websiteId: 'legendary', val: 1880000 },
-                { name: 'Sentinel XS', make: 'Ubermacht', type: 'coupe', garageId: 'apartment', websiteId: 'other', val: 60000 },
                 { name: 'Sentinel GTS', make: 'Ubermacht', type: 'coupe', garageId: 'apartment', websiteId: 'other', val: 360000, tier: 'B', rarity: 'Cel Shaded Livery, limited-time Vinewood Club unlock window.' },
-                { name: 'Rhinehart', make: 'Ubermacht', type: 'sedan', garageId: 'apartment', websiteId: 'ssas', val: 1998000 },
-
-                // 3655 WILD OATS DR
-                { name: 'Tailgater S', make: 'Obey', type: 'sedan', garageId: 'wild', websiteId: 'legendary', val: 1495000 },
-                { name: 'I-Wagen', make: 'Obey', type: 'suv', garageId: 'wild', websiteId: 'ssas', val: 1720000 },
-                { name: '10F', make: 'Obey', type: 'sports', garageId: 'wild', websiteId: 'legendary', val: 1675000 },
-                { name: 'Omnis e-GT', make: 'Obey', type: 'sports', garageId: 'wild', websiteId: 'legendary', val: 1795000 },
-                { name: 'Komoda', make: 'Lampadati', type: 'sports', garageId: 'wild', websiteId: 'ssas', val: 1700000 },
-                { name: 'Rocoto', make: 'Obey', type: 'suv', garageId: 'wild', websiteId: 'other', val: 85000 },
-                { name: 'Tailgater', make: 'Obey', type: 'sedan', garageId: 'wild', websiteId: 'other', val: 55000 },
-                { name: '9F Cabrio', make: 'Obey', type: 'sports', garageId: 'wild', websiteId: 'legendary', val: 130000 },
-                { name: '8F Drafter', make: 'Obey', type: 'sports', garageId: 'wild', websiteId: 'legendary', val: 1918000 },
-
-                // HAWICK CLUBHOUSE
-                { name: 'Avarus', make: 'LCC', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', val: 116000 },
-                { name: 'Vortex', make: 'Pegassi', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', val: 356000 },
+                
+                // CLUBHOUSE & WILD OATS
                 { name: 'Shotaro', make: 'Nagasaki', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'legendary', val: 2225000 },
-                { name: 'BF400', make: 'Nagasaki', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', val: 95000 },
-                { name: 'Bati 801', make: 'Pegassi', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', val: 15000 },
                 { name: 'Oppressor', make: 'Pegassi', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'warstock', val: 3524500 },
-                { name: 'Deamon', make: 'Western', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'other', val: 145000 },
-                { name: 'Diabolus Custom', make: 'Principe', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'bennys', val: 630000 },
-                { name: 'Nightblade', make: 'Western', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', val: 100000 },
-                { name: 'Sanctus', make: 'LCC', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', val: 1995000 },
+                { name: 'Tailgater S', make: 'Obey', type: 'sedan', garageId: 'wild', websiteId: 'legendary', val: 1495000 },
+                { name: 'Omnis e-GT', make: 'Obey', type: 'sports', garageId: 'wild', websiteId: 'legendary', val: 1795000 },
 
-                // UNIT 2 POPULAR ST
-                { name: 'Surfer', make: 'BF', type: 'utility', garageId: 'unit2', websiteId: 'other', val: 11000 },
-                { name: 'Growler', make: 'Pfister', type: 'sports', garageId: 'unit2', websiteId: 'legendary', val: 1627000 },
-                { name: 'Imorgon', make: 'Overflod', type: 'sports', garageId: 'unit2', websiteId: 'legendary', val: 2165000 },
-                { name: 'Raptor', make: 'BF', type: 'sports', garageId: 'unit2', websiteId: 'legendary', val: 648000 },
-                { name: 'Itali GTO', make: 'Grotti', type: 'sports', garageId: 'unit2', websiteId: 'legendary', val: 1965000 },
-                { name: 'Weevil', make: 'BF', type: 'classic', garageId: 'unit2', websiteId: 'ssas', val: 870000 },
-                { name: 'Flash GT', make: 'Vapid', type: 'sports', garageId: 'unit2', websiteId: 'legendary', val: 1675000 },
-                { name: 'Lynx', make: 'Ocelot', type: 'sports', garageId: 'unit2', websiteId: 'legendary', val: 1735000 },
-                { name: 'Locust', make: 'Ocelot', type: 'sports', garageId: 'unit2', websiteId: 'legendary', val: 1625000 },
-                { name: 'Schlagen GT (Alt)', make: 'Benefactor', type: 'sports', garageId: 'unit2', websiteId: 'legendary', val: 1700000 },
+                // FACILITY
+                { name: 'Thruster', make: 'Mammoth', type: 'weaponized', garageId: 'facility', websiteId: 'warstock', val: 3657500, tier: 'S', rarity: 'Galaxy Livery, limited-time login reward on Dec 22, 2017.' },
+                { name: 'TM-02 Khanjali', make: 'HVY', type: 'weaponized', garageId: 'facility', websiteId: 'warstock', val: 4350350 },
+                { name: 'Chernobog', make: 'HVY', type: 'weaponized', garageId: 'facility', websiteId: 'warstock', val: 3411700 },
 
-                // MURRIETA HEIGHTS
-                { name: 'Ruiner 2000', make: 'Imponte', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 5745000 },
-                { name: 'Rocket Voltic', make: 'Coil', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 3830000 },
-                { name: 'Ramp Buggy', make: 'BF', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 3192000 },
-                { name: 'Phantom Wedge', make: 'JoBuilt', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 2553000 },
-                { name: 'Blazer Aqua', make: 'Nagasaki', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 1755000 },
-                { name: 'Technical Aqua', make: 'Karin', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 1489000 },
-                { name: 'Westelander', make: 'MTL', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 658000 },
-                { name: 'Armored Boxville', make: 'Brute', type: 'special', garageId: 'murrieta', websiteId: 'warstock', val: 2926000 },
-
-                // FORT ZANCUDO HANGAR A2
-                { name: 'Savage', make: 'FH-1', type: 'helicopter', garageId: 'hangar', websiteId: 'warstock', val: 2593500 },
-                { name: 'Volatol', make: 'Mammoth', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 3724000 },
-                { name: 'LF-22 Starling', make: 'Buckingham', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 3657000 },
-                { name: 'F-160 Raiju', make: 'Mammoth', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 6855000 },
-                { name: 'V-65 Molotok', make: 'Mammoth', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 4788000 },
-                { name: 'Pyro', make: 'Buckingham', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 4455000 },
-                { name: 'Akula', make: 'Buckingham', type: 'helicopter', garageId: 'hangar', websiteId: 'warstock', val: 3704050 },
-                { name: 'Ultralight', make: 'Nagasaki', type: 'aircraft', garageId: 'hangar', websiteId: 'elitas', val: 665000 },
-                { name: 'P-996 LAZER', make: 'JoBuilt', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 6500000 },
-                { name: 'Volatus', make: 'Buckingham', type: 'helicopter', garageId: 'hangar', websiteId: 'elitas', val: 2295000 },
-                { name: 'FH-1 Hunter', make: 'Buckingham', type: 'helicopter', garageId: 'hangar', websiteId: 'warstock', val: 4123000 },
-                { name: 'Tula', make: 'Mammoth', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 5173700 },
-                { name: 'Havok', make: 'Nagasaki', type: 'helicopter', garageId: 'hangar', websiteId: 'elitas', val: 2300900 },
-                { name: 'Besra', make: 'Western', type: 'aircraft', garageId: 'hangar', websiteId: 'elitas', val: 1150000 },
-                { name: 'Cuban 800', make: 'Western', type: 'aircraft', garageId: 'hangar', websiteId: 'elitas', val: 240000 },
-                { name: 'Mogul', make: 'Mammoth', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 3125500 },
-                { name: 'Rogue', make: 'Western', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 1596000 },
-                { name: 'RM-10 Bombushka', make: 'Mammoth', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 5918500 },
-                { name: 'Alpha-Z1', make: 'Buckingham', type: 'aircraft', garageId: 'hangar', websiteId: 'elitas', val: 2121350 },
-                { name: 'B-11 Strikeforce', make: 'Mammoth', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 3800000 },
-
-                // SERVICE VEHICLES
-                { name: 'Kosatka', make: 'Rune', type: 'sea_vehicle', garageId: 'service', websiteId: 'warstock', val: 2200000 },
-                { name: 'Avisa', make: 'Kraken', type: 'sea_vehicle', garageId: 'service', websiteId: 'warstock', val: 1545000 },
-                { name: 'Sparrow', make: 'Sea', type: 'helicopter', garageId: 'service', websiteId: 'warstock', val: 1815000 },
-                { name: 'Toreador', make: 'Pegassi', type: 'weaponized', garageId: 'service', websiteId: 'warstock', val: 4250000, tier: 'A', rarity: 'War Camo Livery, limited-time unlock windows Jun 2 to Jun 29, 2022 and Jan 8 to Feb 4, 2026.' },
-                { name: 'Mobile Operations Center', make: 'JoBuilt', type: 'service', garageId: 'service', websiteId: 'warstock', val: 1225000 },
+                // SERVICE
                 { name: 'Avenger', make: 'Mammoth', type: 'service', garageId: 'service', websiteId: 'warstock', val: 3450000, tier: 'S', rarity: 'Dolla Dolla Livery, limited-time login reward Jun 13 to Jun 28, 2023.' },
-                { name: 'Terrorbyte', make: 'Benefactor', type: 'service', garageId: 'service', websiteId: 'warstock', val: 1375000 },
-                { name: 'Oppressor Mk II', make: 'Pegassi', type: 'motorcycle', garageId: 'service', websiteId: 'warstock', val: 8000000 },
-                { name: 'Acid Lab', make: 'MTL', type: 'service', garageId: 'service', websiteId: 'warstock', val: 750000 },
-                { name: 'Maibatsu Manchez Scout C', make: 'Maibatsu', type: 'motorcycle', garageId: 'service', websiteId: 'warstock', val: 225000 },
-                { name: 'MTL Brickade 6x6', make: 'MTL', type: 'service', garageId: 'service', websiteId: 'warstock', val: 1450000 },
+                { name: 'Toreador', make: 'Pegassi', type: 'weaponized', garageId: 'service', websiteId: 'warstock', val: 4250000, tier: 'A', rarity: 'War Camo Livery, limited-time unlock Jan 8 to Feb 4, 2026.' },
+                { name: 'Kosatka', make: 'Rune', type: 'sea_vehicle', garageId: 'service', websiteId: 'warstock', val: 2200000 },
                 { name: 'Galaxy Super Yacht', make: 'DockTease', type: 'sea_vehicle', garageId: 'service', websiteId: 'docktease', val: 10000000 },
 
-                // PEGASUS
-                { name: 'Insurgent Pick-Up', make: 'HVY', type: 'weaponized', garageId: 'pegasus', websiteId: 'warstock', val: 1350000 },
-                { name: 'Turreted Limo', make: 'Benefactor', type: 'weaponized', garageId: 'pegasus', websiteId: 'warstock', val: 1650000 },
-                { name: 'Rhino Tank', make: 'HVY', type: 'weaponized', garageId: 'pegasus', websiteId: 'warstock', val: 1500000 },
-                { name: 'Cargobob', make: 'Western', type: 'helicopter', garageId: 'pegasus', websiteId: 'warstock', val: 1790000 },
-                { name: 'Buzzard Attack Chopper', make: 'Nagasaki', type: 'helicopter', garageId: 'pegasus', websiteId: 'warstock', val: 1750000 },
-                { name: 'Swift Flying Bravo', make: 'Buckingham', type: 'helicopter', garageId: 'pegasus', websiteId: 'elitas', val: 1500000 },
-                { name: 'Swift Deluxe', make: 'Buckingham', type: 'helicopter', garageId: 'pegasus', websiteId: 'elitas', val: 5150000 },
-                { name: 'Duster', make: 'Western', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitas', val: 275000 },
-                { name: 'Luxor', make: 'Buckingham', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitas', val: 1625000 },
-                { name: 'Luxor Deluxe', make: 'Buckingham', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitas', val: 10000000 },
-                { name: 'Titan', make: 'Titan', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitas', val: 2000000 },
-                { name: 'Hydra', make: 'Mammoth', type: 'aircraft', garageId: 'pegasus', websiteId: 'warstock', val: 3990000 },
-                { name: 'Milijet', make: 'Buckingham', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitas', val: 1700000 },
-                { name: 'Dodo', make: 'Mammoth', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitas', val: 500000 },
-                { name: 'Marquis', make: 'Dinka', type: 'sea_vehicle', garageId: 'pegasus', websiteId: 'docktease', val: 413990 },
-                { name: 'Seashark', make: 'Speedophile', type: 'sea_vehicle', garageId: 'pegasus', websiteId: 'docktease', val: 16899 },
-                { name: 'Suntrap', make: 'Shitzu', type: 'sea_vehicle', garageId: 'pegasus', websiteId: 'docktease', val: 25160 },
-                { name: 'Speeder', make: 'Pegassi', type: 'sea_vehicle', garageId: 'pegasus', websiteId: 'docktease', val: 325000 },
-                { name: 'Toro', make: 'Pegassi', type: 'sea_vehicle', garageId: 'pegasus', websiteId: 'docktease', val: 1750000 },
-                { name: 'Kraken', make: 'Kraken', type: 'sea_vehicle', garageId: 'pegasus', websiteId: 'docktease', val: 1325000 },
-                { name: 'Dinghy', make: 'Nagasaki', type: 'sea_vehicle', garageId: 'pegasus', websiteId: 'docktease', val: 166250 },
-                { name: 'Liberator', make: 'Vapid', type: 'offroad', garageId: 'pegasus', websiteId: 'warstock', val: 742014 },
-                { name: 'Marshall', make: 'Cheval', type: 'offroad', garageId: 'pegasus', websiteId: 'warstock', val: 500000 },
-                { name: 'Journey', make: 'Zirconium', type: 'utility', garageId: 'pegasus', websiteId: 'warstock', val: 15000 },
-                { name: 'Stretch', make: 'Albany', type: 'sedan', garageId: 'pegasus', websiteId: 'ssas', val: 30000 },
-                { name: 'Dump', make: 'HVY', type: 'utility', garageId: 'pegasus', websiteId: 'warstock', val: 1000000 },
-                { name: 'Blimp', make: 'Atomic', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitas', val: 1190350 },
-                { name: 'Festival Bus', make: 'Brute', type: 'utility', garageId: 'pegasus', websiteId: 'ssas', val: 1385000 },
+                // HANGAR
+                { name: 'F-160 Raiju', make: 'Mammoth', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 6855000 },
+                { name: 'V-65 Molotok', make: 'Mammoth', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 4788000 },
+                { name: 'P-996 LAZER', make: 'JoBuilt', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 6500000 },
 
-                // OTHERS (Tiers and previous lists)
-                { name: 'Thruster', make: 'Mammoth', type: 'weaponized', garageId: 'facility', websiteId: 'warstock', val: 3657500, tier: 'S', rarity: 'Galaxy Livery, limited-time login reward on Dec 22, 2017.' },
+                // RICHMAN
                 { name: 'Stafford', make: 'Enus', type: 'classic', garageId: 'richman', websiteId: 'legendary', val: 1272000, tier: 'S', rarity: 'Oh Enus! Livery, limited-time Guest List reward Jul 31 to Aug 6, 2018.' },
+                
+                // CASINO
                 { name: 'Hermes', make: 'Albany', type: 'muscle', garageId: 'casino', websiteId: 'ssas', val: 535000, tier: 'A', rarity: 'Amazing Albany II Livery, limited purchase Feb 23 to Mar 1, 2023.' },
-                { name: 'Ardent', make: 'Ocelot', type: 'weaponized', garageId: 'arcade', websiteId: 'warstock', val: 1150000, tier: 'C', rarity: 'It’s a Wrap Livery, limited purchase window Dec 18, 2025.' },
                 { name: 'Clique', make: 'Vapid', type: 'muscle', garageId: 'casino', websiteId: 'legendary', val: 909000, tier: 'C', rarity: 'Merry Cliquemas Livery, limited-time holiday unlock window.' },
-                { name: 'X80 Proto', make: 'Grotti', type: 'super', garageId: 'office1', websiteId: 'legendary', val: 3100000 },
-                { name: 'Entity MT', make: 'Overflod', type: 'super', garageId: 'office1', websiteId: 'legendary', val: 3555000 }
+                { name: 'Impaler LX', make: 'Declasse', type: 'muscle', garageId: 'casino', websiteId: 'ssas', val: 1465000, tier: 'B', rarity: 'Green Anime Geometry Livery, limited-time GTA+ unlock Dec 2023.' },
+
+                // ARCADE
+                { name: 'Ardent', make: 'Ocelot', type: 'weaponized', garageId: 'arcade', websiteId: 'warstock', val: 1150000, tier: 'C', rarity: 'It’s a Wrap Livery, limited purchase window Dec 18, 2025.' },
+                { name: 'Vigilante', make: 'Grotti', type: 'weaponized', garageId: 'arcade', websiteId: 'warstock', val: 4500000 },
+                { name: 'Deluxo', make: 'Imponte', type: 'weaponized', garageId: 'arcade', websiteId: 'warstock', val: 6500000 },
+
+                // VINEWOOD CLUB
+                { name: 'Cavalcade XL', make: 'Albany', type: 'suv', garageId: 'vinewood_club', websiteId: 'ssas', val: 2065000, tier: 'B', rarity: 'Camo Livery, limited-time GTA+ unlock Jan 11 to Feb 7, 2024.' },
+                { name: 'Entity MT', make: 'Overflod', type: 'super', garageId: 'vinewood_club', websiteId: 'legendary', val: 3255000 },
+
+                // PEGASUS
+                { name: 'Luxor Deluxe', make: 'Buckingham', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitas', val: 10000000 },
+                { name: 'Hydra', make: 'Mammoth', type: 'aircraft', garageId: 'pegasus', websiteId: 'warstock', val: 3990000 },
+                { name: 'Rhino Tank', make: 'HVY', type: 'weaponized', garageId: 'pegasus', websiteId: 'warstock', val: 1500000 }
             ]
         };
 
@@ -509,7 +445,8 @@
                 container.className = `v-card-container animate-in ${isRare ? 'can-flip tier-' + v.tier : ''}`;
                 container.style.animationDelay = (i * 0.05) + 's';
                 
-                const imgUrl = `https://placehold.co/600x338/111/333?text=${v.name.replace(' ', '+')}`;
+                const filename = getVehicleFilename(v.name);
+                const imgUrl = `images/vehicles/${filename}`;
                 const tierBadge = isRare ? `<div class="absolute top-2 left-2 z-20 bg-tier-${v.tier} text-black font-black text-[10px] px-2 py-0.5 rounded italic shadow-lg uppercase">${v.tier} TIER</div>` : '';
 
                 let innerHtml = `
@@ -517,14 +454,14 @@
                         <div class="v-card-front v-card flex flex-col">
                             <div class="v-img-box">
                                 ${tierBadge}
-                                <img src="${imgUrl}" class="v-img" loading="lazy">
+                                <img src="${imgUrl}" class="v-img" loading="lazy" onerror="this.src='https://placehold.co/600x338/111/333?text=MISSING+IMG'">
                                 <div class="absolute top-2 right-2 bg-black/80 backdrop-blur px-2 py-1 rounded text-[10px] font-bold text-gta-yellow border border-zinc-700 uppercase">
                                     ${v.make}
                                 </div>
                             </div>
                             <div class="p-4 flex flex-col flex-grow bg-zinc-900/40">
                                 <div class="mb-4">
-                                    <h3 class="text-white r-header text-lg leading-tight truncate uppercase">${v.name}</h3>
+                                    <h3 class="text-white r-header text-lg leading-tight truncate uppercase">${formatVehicleDisplayName(v.name)}</h3>
                                     <div class="text-[10px] text-zinc-500 font-medium truncate italic mt-1">Stored in ${gtaData.garages.find(g => g.id === v.garageId)?.shortName || 'Unknown'}</div>
                                 </div>
                                 <div class="mt-auto pt-3 border-t border-zinc-800 flex justify-between items-end">
