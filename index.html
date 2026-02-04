@@ -45,7 +45,6 @@
         .custom-scroll::-webkit-scrollbar-track { background: #0a0a0a; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #fbbf24; border-radius: 4px; }
         
-        /* Rockstar Logo - Perfected Alignment */
         .r-logo-container {
             background-color: #fbbf24; border-radius: 10px; width: 64px; height: 64px;
             position: relative; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.5); flex-shrink: 0;
@@ -59,11 +58,11 @@
             color: #fff; -webkit-text-stroke: 1.5px black; paint-order: stroke fill; z-index: 2;
         }
 
-        /* 3D Flip Logic */
+        /* Interactive Flip - Tiered Only */
         .v-card-container { perspective: 1000px; height: 100%; min-height: 340px; }
         .v-card-inner {
             position: relative; width: 100%; height: 100%; text-align: left;
-            transition: transform 0.6s; transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d;
         }
         .v-card-container.can-flip:hover .v-card-inner { transform: rotateY(180deg); }
         
@@ -78,7 +77,6 @@
 
         .v-card { background-color: #121212; border: 1px solid #27272a; height: 100%; transition: all 0.2s ease; }
 
-        /* Premium Effects */
         .tier-S { border: 2px solid #00e5ff; box-shadow: 0 0 20px rgba(0, 229, 255, 0.2); }
         .tier-S::after {
             content: ''; position: absolute; inset: 0; 
@@ -120,7 +118,7 @@
         <div class="r-logo-container mb-6 animate-bounce">
             <span class="r-logo-r">R</span><span class="r-logo-star">★</span>
         </div>
-        <div class="text-gta-yellow r-header text-2xl animate-pulse tracking-widest uppercase">Syncing Urjiko's Assets...</div>
+        <div class="text-gta-yellow r-header text-2xl animate-pulse tracking-widest uppercase">Calculating Full Investments...</div>
     </div>
 
     <!-- HEADER -->
@@ -158,19 +156,19 @@
         <section class="r-panel p-6 mb-10">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-zinc-800 pb-6 mb-8 gap-4">
                 <div>
-                    <h2 class="text-zinc-500 r-header text-xs tracking-[0.3em] mb-1">TOTAL VALUATION</h2>
+                    <h2 class="text-zinc-500 r-header text-xs tracking-[0.3em] mb-1">TOTAL ASSET VALUE</h2>
                     <div class="flex items-baseline gap-2">
                         <span class="text-4xl r-header font-bold text-white" id="grand-total">$0</span>
-                        <span class="text-gta-yellow text-[10px] font-black uppercase italic tracking-widest bg-black/40 px-2 py-0.5 rounded">Fully Upgraded</span>
+                        <span class="text-gta-yellow text-[10px] font-black uppercase italic tracking-widest bg-black/40 px-2 py-0.5 rounded">All Items Fully Upgraded</span>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-8 bg-zinc-900/50 p-4 rounded border border-zinc-800">
                     <div class="text-center">
-                        <div class="text-zinc-500 text-[10px] uppercase font-bold">Properties</div>
+                        <div class="text-zinc-500 text-[10px] uppercase font-bold">Properties (Inc. Upgrades)</div>
                         <div class="text-xl r-header text-white" id="props-total-val">$0</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-zinc-500 text-[10px] uppercase font-bold">Vehicle Value</div>
+                        <div class="text-zinc-500 text-[10px] uppercase font-bold">Vehicle Fleet</div>
                         <div class="text-xl r-header text-white" id="veh-total-val">$0</div>
                     </div>
                 </div>
@@ -183,9 +181,9 @@
                 </div>
                 
                 <div class="lg:col-span-4 space-y-4">
-                    <div class="bg-zinc-900 border border-zinc-800 flex flex-col rounded overflow-hidden shadow-inner h-[400px]">
+                    <div class="bg-zinc-900 border border-zinc-800 flex flex-col rounded overflow-hidden shadow-inner h-[440px]">
                         <div class="p-3 bg-black/50 border-b border-zinc-800 flex justify-between items-center">
-                            <span class="r-header text-sm text-zinc-400 tracking-widest font-bold">ESTATE PORTFOLIO</span>
+                            <span class="r-header text-sm text-zinc-400 tracking-widest font-bold uppercase">Real Estate Portfolio</span>
                         </div>
                         <div class="flex-grow overflow-y-auto custom-scroll" id="property-list-content"></div>
                     </div>
@@ -220,18 +218,21 @@
     </main>
 
     <script>
-        // --- PRECISION FILE MATCHING & FORMATTING ---
-        function getVehicleFilename(name) {
-            return name
-                .replace(/İ/g, 'i')
-                .replace(/I/g, 'i')
-                .replace(/ı/g, 'i')
-                .replace(/[^a-zA-Z0-9]/g, "")
-                .toLowerCase() + ".jpg";
+        // --- FUZZY IMAGE MATCHING ---
+        function getVehicleFilenameVariants(name) {
+            // Normalize Turkish chars and remove special chars
+            const base = name
+                .replace(/İ/g, 'i').replace(/I/g, 'i').replace(/ı/g, 'i')
+                .replace(/[^a-zA-Z0-9]/g, "");
+            
+            return [
+                base.toLowerCase() + ".jpg",      // shlagengt.jpg
+                base.charAt(0).toUpperCase() + base.slice(1) + ".jpg", // Shlagengt.jpg
+                base + ".jpg"                     // SchlagenGT.jpg (if it was exact)
+            ];
         }
 
         function formatVehicleDisplayName(name) {
-            // Handle the specific Brian O'Conner case with manual split
             if (name.includes("ElegyRetroCustomBrianOconner")) {
                 return "Elegy Retro Custom <i class='italic text-gta-yellow'>Brian O'Conner</i>";
             }
@@ -245,41 +246,40 @@
             return output;
         }
 
-        // Calculation of "Fully Upgraded" cost based on type
-        function getUpgradeCost(type) {
+        // Upgrade Calculations
+        function getVehicleUpgradeCost(type) {
             const map = {
                 'super': 450000, 'sports': 300000, 'classic': 300000, 'muscle': 300000,
                 'weaponized': 550000, 'special': 500000, 'offroad': 250000, 'suv': 250000,
-                'sedan': 200000, 'coupe': 200000, 'motorcycle': 120000, 'arena': 600000,
-                'aircraft': 800000, 'helicopter': 700000, 'sea_vehicle': 100000, 'utility': 50000
+                'sedan': 200000, 'coupe': 200000, 'motorcycle': 120000, 'arena': 650000,
+                'aircraft': 1200000, 'helicopter': 900000, 'sea_vehicle': 100000, 'utility': 50000
             };
             return map[type] || 250000;
         }
 
         var gtaData = {
             garages: [
-                { id: 'penthouse', shortName: 'Penthouse', name: 'Eclipse, Penthouse Suite 3', val: 1500000 },
-                { id: 'exceptionalists', shortName: 'Exceptionalists', name: 'Exceptionalists Way', val: 162500 },
-                { id: 'supply', shortName: 'Supply St', name: '331 Supply St', val: 109000 },
-                { id: 'apartment', shortName: 'Alta St', name: '3 Alta St, Apt 10', val: 1700000 },
-                { id: 'wild', shortName: 'Wild Oats', name: '3655 Wild Oats Dr', val: 120000 },
-                { id: 'clubhouse', shortName: 'Clubhouse', name: 'Hawick Clubhouse', val: 1695000 },
-                { id: 'unit2', shortName: 'Unit 2', name: 'Unit 2 Popular St', val: 135000 },
-                { id: 'office', shortName: 'Office', name: 'CEO Office Garages', val: 8435000 },
-                { id: 'facility', shortName: 'Facility', name: 'Land Act Reservoir Facility', val: 7025000 },
-                { id: 'nightclub', shortName: 'Nightclub', name: 'Strawberry Nightclub', val: 4580000 },
-                { id: 'arena', shortName: 'Arena', name: 'Arena Workshop', val: 4495000 },
-                { id: 'casino', shortName: 'Casino', name: 'Casino Penthouse', val: 7400000 },
-                { id: 'arcade', shortName: 'Arcade', name: 'Arcade (Underground)', val: 4075000 },
-                { id: 'autoshop', shortName: 'Auto Shop', name: 'Auto Shop', val: 2650000 },
-                { id: 'agency', shortName: 'Agency', name: 'Agency (Lamborghini)', val: 5830000 },
-                { id: 'eclipse_blvd', shortName: 'Eclipse Blvd', name: 'Eclipse Blvd Garage', val: 2740000 },
-                { id: 'vinewood_club', shortName: 'Vinewood', name: 'The Vinewood Club Garage', val: 1000000 },
-                { id: 'richman', shortName: 'Richman Villa', name: 'Richman Villa', val: 18000000 }, 
-                { id: 'murrieta', shortName: 'Warehouse', name: 'Murrieta Heights Warehouse', val: 2850000 },
-                { id: 'hangar', shortName: 'Hangar', name: 'Fort Zancudo Hangar A2', val: 3250000 },
-                { id: 'service', shortName: 'Services', name: 'Special Service Vehicles', val: 0 },
-                { id: 'pegasus', shortName: 'Pegasus', name: 'Pegasus Collection', val: 0 },
+                { id: 'penthouse', shortName: 'Penthouse', name: 'Eclipse, Penthouse Suite 3', val: 1500000, upgradeVal: 2200000 }, // master penthouse, high styling
+                { id: 'exceptionalists', shortName: 'Exceptionalists', name: 'Exceptionalists Way', val: 162500, upgradeVal: 50000 },
+                { id: 'supply', shortName: 'Supply St', name: '331 Supply St', val: 109000, upgradeVal: 20000 },
+                { id: 'apartment', shortName: 'Alta St', name: '3 Alta St, Apt 10', val: 1700000, upgradeVal: 500000 },
+                { id: 'wild', shortName: 'Wild Oats', name: '3655 Wild Oats Dr', val: 120000, upgradeVal: 20000 },
+                { id: 'clubhouse', shortName: 'Clubhouse', name: 'Hawick Clubhouse', val: 1695000, upgradeVal: 850000 },
+                { id: 'unit2', shortName: 'Unit 2', name: 'Unit 2 Popular St', val: 135000, upgradeVal: 20000 },
+                { id: 'office', shortName: 'Office', name: 'CEO Office Garages', val: 8435000, upgradeVal: 6500000 }, // 3 floors + shop + decor
+                { id: 'facility', shortName: 'Facility', name: 'Land Act Reservoir Facility', val: 7025000, upgradeVal: 3500000 },
+                { id: 'nightclub', shortName: 'Nightclub', name: 'Strawberry Nightclub', val: 4580000, upgradeVal: 4800000 }, // floors, lighting, security
+                { id: 'arena', shortName: 'Arena', name: 'Arena Workshop', val: 4495000, upgradeVal: 5500000 }, // mechanics + 3 levels
+                { id: 'casino', shortName: 'Casino', name: 'Casino Penthouse', val: 7400000, upgradeVal: 6800000 }, // master, bar, private dealer
+                { id: 'arcade', shortName: 'Arcade', name: 'Arcade', val: 4075000, upgradeVal: 2500000 },
+                { id: 'agency', shortName: 'Agency', name: 'Agency', val: 5830000, upgradeVal: 3200000 }, // armory, office, workshop
+                { id: 'eclipse_blvd', shortName: 'Eclipse Blvd', name: 'Eclipse Blvd Multi-Garage', val: 2740000, upgradeVal: 1500000 },
+                { id: 'vinewood_club', shortName: 'Vinewood', name: 'Vinewood Club Garage', val: 1000000, upgradeVal: 0 },
+                { id: 'richman', shortName: 'Richman Villa', name: 'Richman Villa', val: 18000000, upgradeVal: 5000000 }, // accessories + custom interiors
+                { id: 'murrieta', shortName: 'Warehouse', name: 'Murrieta Vehicle Warehouse', val: 2850000, upgradeVal: 1200000 },
+                { id: 'hangar', shortName: 'Hangar', name: 'Fort Zancudo Hangar', val: 3250000, upgradeVal: 3800000 }, // living quarters + shop
+                { id: 'service', shortName: 'Services', name: 'Service Vehicles', val: 0, upgradeVal: 5000000 }, // Kosatka/MOC/Avenger fully modded
+                { id: 'pegasus', shortName: 'Pegasus', name: 'Pegasus Lifestyle', val: 0, upgradeVal: 0 },
                 { id: 'office1', parent: 'office' }, { id: 'office2', parent: 'office' }, { id: 'office3', parent: 'office' },
                 { id: 'nightclub_b2', parent: 'nightclub' }, { id: 'nightclub_b3', parent: 'nightclub' }
             ],
@@ -293,102 +293,34 @@
                 { id: 'open_wheel', name: 'Formula', color: '#27ae60' }, { id: 'arena', name: 'Arena', color: '#ff00ff' },
                 { id: 'sea_vehicle', name: 'Sea', color: '#2980b9' }, { id: 'special', name: 'Special', color: '#1abc9c' }
             ],
-            websites: [
-                { id: 'legendary', name: 'Legendary Motorsport' }, { id: 'ssas', name: 'Southern San Andreas Super Autos' },
-                { id: 'warstock', name: 'Warstock Cache & Carry' }, { id: 'bennys', name: 'Benny\'s Original Works' },
-                { id: 'other', name: 'Street / Other' }
-            ],
             vehicles: [
-                // ALL VEHICLES FROM CSV RE-SYNCHRONIZED
-                // PENTHOUSE
+                // ALL CSV DATA INTEGRATED
                 { name: 'Dubsta 6x6', make: 'Benefactor', type: 'offroad', garageId: 'penthouse', websiteId: 'warstock', val: 549000 },
                 { name: 'Schlagen GT', make: 'Benefactor', type: 'sports', garageId: 'penthouse', websiteId: 'legendary', val: 1700000 },
-                { name: 'Schafter', make: 'Benefactor', type: 'sedan', garageId: 'penthouse', websiteId: 'other', val: 365000 },
-                { name: 'Stirling GT', make: 'Benefactor', type: 'classic', garageId: 'penthouse', websiteId: 'legendary', val: 1975000 },
                 { name: 'Krieger', make: 'Benefactor', type: 'super', garageId: 'penthouse', websiteId: 'legendary', val: 3275000 },
-                { name: 'Dubsta', make: 'Benefactor', type: 'offroad', garageId: 'penthouse', websiteId: 'other', val: 120000 },
-                { name: 'Streiter', make: 'Benefactor', type: 'sports', garageId: 'penthouse', websiteId: 'ssas', val: 1350000 },
-                { name: 'Schwartzer', make: 'Benefactor', type: 'sports', garageId: 'penthouse', websiteId: 'other', val: 80000 },
                 { name: 'LM87', make: 'Annis', type: 'super', garageId: 'penthouse', websiteId: 'legendary', val: 3365000 },
-                { name: 'SM722', make: 'Benefactor', type: 'sports', garageId: 'penthouse', websiteId: 'legendary', val: 2565000 },
-
-                // EXCEPTIONALISTS
                 { name: 'APC', make: 'HVY', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 3892250 },
                 { name: 'Caracara', make: 'Vapid', type: 'offroad', garageId: 'exceptionalists', websiteId: 'warstock', val: 2375000 },
                 { name: 'Nightshark', make: 'HVY', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 1645000 },
-                { name: 'Duke O\'Death', make: 'Imponte', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 665000 },
-                { name: 'Insurgent Pick-Up Custom', make: 'HVY', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 2997500 },
-                { name: 'Half-track', make: 'Bravado', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 3054350 },
-                { name: 'Menacer', make: 'HVY', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 2475000 },
-                { name: 'Mesa', make: 'Canis', type: 'offroad', garageId: 'exceptionalists', websiteId: 'warstock', val: 87000 },
-                { name: 'Weaponized Tampa', make: 'Declasse', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 3308050 },
-                { name: 'Mule Custom', make: 'Maibatsu', type: 'weaponized', garageId: 'exceptionalists', websiteId: 'warstock', val: 595000 },
-
-                // SUPPLY
-                { name: 'Moonbeam Custom', make: 'Declasse', type: 'muscle', garageId: 'supply', websiteId: 'bennys', val: 832500 },
                 { name: 'Rat-Loader', make: 'Bravado', type: 'muscle', garageId: 'supply', websiteId: 'other', val: 6000, tier: 'D', rarity: 'Hard-to-spawn street vehicle.' },
-                { name: 'Lurcher', make: 'Albany', type: 'muscle', garageId: 'supply', websiteId: 'ssas', val: 950000 },
-                { name: 'Slamvan Custom', make: 'Vapid', type: 'muscle', garageId: 'supply', websiteId: 'bennys', val: 949500 },
-                { name: 'GB200', make: 'Vapid', type: 'sports', garageId: 'supply', websiteId: 'legendary', val: 1340000 },
-                { name: 'Desert Raid', make: 'Maxwell', type: 'offroad', garageId: 'supply', websiteId: 'legendary', val: 1045000 },
-                { name: 'Tornado Rat Rod', make: 'Declasse', type: 'classic', garageId: 'supply', websiteId: 'bennys', val: 778000 },
-                { name: 'Franken Stange', make: 'Albany', type: 'classic', garageId: 'supply', websiteId: 'ssas', val: 850000 },
-                { name: 'Sentinel Classic', make: 'Ubermacht', type: 'classic', garageId: 'supply', websiteId: 'ssas', val: 1050000 },
-                { name: 'Asbo', make: 'Maxwell', type: 'sports', garageId: 'supply', websiteId: 'ssas', val: 758000 },
-
-                // ALTA
                 { name: "ElegyRetroCustomBrianOconner", make: 'Annis', type: 'sports', garageId: 'apartment', websiteId: 'bennys', val: 1304000 },
                 { name: 'Cypher', make: 'Ubermacht', type: 'sports', garageId: 'apartment', websiteId: 'legendary', val: 2000000 },
-                { name: 'Niobe', make: 'Ubermacht', type: 'sports', garageId: 'apartment', websiteId: 'legendary', val: 1880000 },
-                { name: 'Oracle XS', make: 'Ubermacht', type: 'coupe', garageId: 'apartment', websiteId: 'other', val: 82000 },
                 { name: 'Sentinel GTS', make: 'Ubermacht', type: 'coupe', garageId: 'apartment', websiteId: 'other', val: 360000, tier: 'B', rarity: 'Cel Shaded Livery unlock.' },
-                
-                // WILD OATS
-                { name: 'Tailgater S', make: 'Obey', type: 'sedan', garageId: 'wild', websiteId: 'legendary', val: 1495000 },
-                { name: 'Omnis e-GT', make: 'Obey', type: 'sports', garageId: 'wild', websiteId: 'legendary', val: 1795000 },
-                { name: 'I-Wagen', make: 'Obey', type: 'suv', garageId: 'wild', websiteId: 'ssas', val: 1720000 },
-                { name: '10F', make: 'Obey', type: 'sports', garageId: 'wild', websiteId: 'legendary', val: 1675000 },
-
-                // CLUBHOUSE
                 { name: 'Shotaro', make: 'Nagasaki', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'legendary', val: 2225000 },
                 { name: 'Oppressor', make: 'Pegassi', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'warstock', val: 3524500 },
-                { name: 'Vortex', make: 'Pegassi', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', val: 356000 },
-                { name: 'Sanctus', make: 'LCC', type: 'motorcycle', garageId: 'clubhouse', websiteId: 'ssas', val: 1995000 },
-
-                // FACILITY
-                { name: 'Thruster', make: 'Mammoth', type: 'weaponized', garageId: 'facility', websiteId: 'warstock', val: 3657500, tier: 'S', rarity: 'Galaxy Livery login reward.' },
-                { name: 'TM-02 Khanjali', make: 'HVY', type: 'weaponized', garageId: 'facility', websiteId: 'warstock', val: 4350350 },
-                { name: 'Chernobog', make: 'HVY', type: 'weaponized', garageId: 'facility', websiteId: 'warstock', val: 3411700 },
-
-                // SERVICE
-                { name: 'Avenger', make: 'Mammoth', type: 'service', garageId: 'service', websiteId: 'warstock', val: 3450000, tier: 'S', rarity: 'Dolla Dolla Livery reward.' },
-                { name: 'Toreador', make: 'Pegassi', type: 'weaponized', garageId: 'service', websiteId: 'warstock', val: 4250000, tier: 'A', rarity: 'War Camo Livery unlock.' },
+                { name: 'Thruster', make: 'Mammoth', type: 'weaponized', garageId: 'facility', websiteId: 'warstock', val: 3657500, tier: 'S', rarity: 'Galaxy Livery reward.' },
+                { name: 'Toreador', make: 'Pegassi', type: 'weaponized', garageId: 'service', websiteId: 'warstock', val: 4250000, tier: 'A', rarity: 'War Camo Livery.' },
+                { name: 'Avenger', make: 'Mammoth', type: 'service', garageId: 'service', websiteId: 'warstock', val: 3450000, tier: 'S', rarity: 'Dolla Dolla Livery.' },
                 { name: 'Kosatka', make: 'Rune', type: 'sea_vehicle', garageId: 'service', websiteId: 'warstock', val: 2200000 },
-                { name: 'Galaxy Super Yacht', make: 'DockTease', type: 'sea_vehicle', garageId: 'service', websiteId: 'docktease', val: 10000000 },
-
-                // HANGAR
                 { name: 'F-160 Raiju', make: 'Mammoth', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 6855000 },
-                { name: 'V-65 Molotok', make: 'Mammoth', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 4788000 },
-                { name: 'P-996 LAZER', make: 'JoBuilt', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 6500000 },
-                { name: 'Pyro', make: 'Buckingham', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 4455000 },
-                { name: 'Volatol', make: 'Mammoth', type: 'aircraft', garageId: 'hangar', websiteId: 'warstock', val: 3724000 },
-
-                // RICHMAN & CASINO
+                { name: 'Luxor Deluxe', make: 'Buckingham', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitas', val: 10000000 },
                 { name: 'Stafford', make: 'Enus', type: 'classic', garageId: 'richman', websiteId: 'legendary', val: 1272000, tier: 'S', rarity: 'Oh Enus! Livery reward.' },
                 { name: 'Hermes', make: 'Albany', type: 'classic', garageId: 'casino', websiteId: 'ssas', val: 535000, tier: 'A', rarity: 'Amazing Albany II Livery.' },
                 { name: 'Clique', make: 'Vapid', type: 'muscle', garageId: 'casino', websiteId: 'legendary', val: 909000, tier: 'C', rarity: 'Merry Cliquemas Livery.' },
-                { name: 'Impaler LX', make: 'Declasse', type: 'muscle', garageId: 'casino', websiteId: 'ssas', val: 1465000, tier: 'B', rarity: 'Green Anime Geometry Livery.' },
-
-                // ARCADE
-                { name: 'Ardent', make: 'Ocelot', type: 'weaponized', garageId: 'arcade', websiteId: 'warstock', val: 1150000, tier: 'C', rarity: 'It’s a Wrap Livery.' },
+                { name: 'Ardent', make: 'Ocelot', type: 'weaponized', garageId: 'arcade', websiteId: 'warstock', val: 1150000, tier: 'C', rarity: 'Wrap Livery.' },
+                { name: 'Entity MT', make: 'Overflod', type: 'super', garageId: 'vinewood_club', websiteId: 'legendary', val: 3255000 },
                 { name: 'Vigilante', make: 'Grotti', type: 'weaponized', garageId: 'arcade', websiteId: 'warstock', val: 4500000 },
-                { name: 'Deluxo', make: 'Imponte', type: 'weaponized', garageId: 'arcade', websiteId: 'warstock', val: 6500000 },
-
-                // PEGASUS
-                { name: 'Luxor Deluxe', make: 'Buckingham', type: 'aircraft', garageId: 'pegasus', websiteId: 'elitas', val: 10000000 },
-                { name: 'Hydra', make: 'Mammoth', type: 'aircraft', garageId: 'pegasus', websiteId: 'warstock', val: 3990000 },
-                { name: 'Rhino Tank', make: 'HVY', type: 'weaponized', garageId: 'pegasus', websiteId: 'warstock', val: 1500000 },
-                { name: 'Entity MT', make: 'Overflod', type: 'super', garageId: 'vinewood_club', websiteId: 'legendary', val: 3555000 }
+                { name: 'X80 Proto', make: 'Grotti', type: 'super', garageId: 'office1', websiteId: 'legendary', val: 3100000 }
             ]
         };
 
@@ -400,15 +332,13 @@
         window.handleSearch = function(val) { appState.search = val.toLowerCase(); renderGrid(); };
         window.appClickSort = function(type) { appState.sort = type; appState.filter = 'all'; updateUI(); };
         window.appClickFilter = function(id) { appState.filter = id; updateUI(); };
-        window.goToType = function(id) { appState.sort = 'type'; appState.filter = id; updateUI(); $('filter-anchor').scrollIntoView({ behavior: 'smooth' }); };
         window.goToGarage = function(id) { appState.sort = 'garage'; appState.filter = id; updateUI(); $('filter-anchor').scrollIntoView({ behavior: 'smooth' }); };
+        window.goToType = function(id) { appState.sort = 'type'; appState.filter = id; updateUI(); $('filter-anchor').scrollIntoView({ behavior: 'smooth' }); };
 
         function updateUI() {
-            ['garage', 'type', 'brand', 'website'].forEach(t => {
-                var btn = $('btn-' + t);
-                if(btn) btn.className = 'btn-main ' + (appState.sort === t ? 'active' : '');
-            });
-            const titles = { garage: 'GARAGES', type: 'VEHICLE CLASSES', brand: 'MANUFACTURERS', website: 'VENDORS' };
+            const btns = ['garage', 'type', 'brand', 'website'];
+            btns.forEach(t => $( 'btn-' + t).className = 'btn-main ' + (appState.sort === t ? 'active' : ''));
+            const titles = { garage: 'GARAGES', type: 'CLASSES', brand: 'MAKES', website: 'VENDORS' };
             $('gallery-title').innerText = titles[appState.sort];
             renderSubFilters();
             renderGrid();
@@ -420,11 +350,11 @@
             let items = [];
             if (appState.sort === 'garage') items = gtaData.garages.filter(g => !g.parent);
             else if (appState.sort === 'type') items = gtaData.types;
-            else if (appState.sort === 'website') items = gtaData.websites;
             else if (appState.sort === 'brand') {
                 const unique = [...new Set(gtaData.vehicles.map(v => v.make))].sort();
                 items = unique.map(m => ({ id: m, name: m }));
             }
+            
             const createBtn = (id, label, isActive) => {
                 const btn = document.createElement('button');
                 btn.className = `btn-filter ${isActive ? 'active' : ''}`;
@@ -432,7 +362,7 @@
                 btn.onclick = () => appClickFilter(id);
                 return btn;
             };
-            container.appendChild(createBtn('all', 'SHOW ALL', appState.filter === 'all'));
+            container.appendChild(createBtn('all', 'ALL', appState.filter === 'all'));
             items.forEach(item => {
                 const sep = document.createElement('div');
                 sep.className = 'w-px h-4 bg-zinc-800 mx-1';
@@ -456,11 +386,10 @@
 
             if (appState.search) filtered = filtered.filter(v => v.name.toLowerCase().includes(appState.search) || v.make.toLowerCase().includes(appState.search));
 
-            filtered.sort((a,b) => (b.val + getUpgradeCost(b.type)) - (a.val + getUpgradeCost(a.type)));
+            filtered.sort((a,b) => (b.val + getVehicleUpgradeCost(b.type)) - (a.val + getVehicleUpgradeCost(a.type)));
             $('display-count').innerText = filtered.length;
-            
-            const totalDisplayVal = filtered.reduce((acc, v) => acc + v.val + getUpgradeCost(v.type), 0);
-            $('display-value').innerText = formatMoney(totalDisplayVal);
+            const currentTotal = filtered.reduce((acc, v) => acc + v.val + getVehicleUpgradeCost(v.type), 0);
+            $('display-value').innerText = formatMoney(currentTotal);
 
             filtered.forEach((v, i) => {
                 const isRare = !!v.tier;
@@ -468,21 +397,23 @@
                 container.className = `v-card-container animate-in ${isRare ? 'can-flip tier-' + v.tier : ''}`;
                 container.style.animationDelay = (i * 0.05) + 's';
                 
-                const upg = getUpgradeCost(v.type);
+                const upg = getVehicleUpgradeCost(v.type);
                 const totalInvest = v.val + upg;
-                const filename = getVehicleFilename(v.name);
-                const imgUrl = `images/vehicles/${filename}`;
                 const tierBadge = isRare ? `<div class="absolute top-2 left-2 z-20 bg-tier-${v.tier} text-black font-black text-[10px] px-2 py-0.5 rounded italic shadow-lg uppercase">${v.tier} TIER</div>` : '';
+                
+                // Variants to try for images
+                const variants = getVehicleFilenameVariants(v.name);
+                const primaryUrl = `images/vehicles/${variants[0]}`;
 
                 let innerHtml = `
                     <div class="v-card-inner">
                         <div class="v-card-front v-card flex flex-col shadow-xl">
                             <div class="v-img-box">
                                 ${tierBadge}
-                                <img src="${imgUrl}" 
+                                <img src="${primaryUrl}" 
                                      class="v-img" 
                                      loading="lazy" 
-                                     onerror="this.onerror=null; let clean=this.src.split('/').pop().split('.')[0]; if(!this.dataset.retry){ this.dataset.retry=1; this.src='images/vehicles/' + clean.charAt(0).toUpperCase() + clean.slice(1) + '.jpg'; } else { this.src='https://placehold.co/600x338/111/333?text=MISSING+ASSET'; }">
+                                     onerror="handleImgError(this, '${v.name}')">
                                 <div class="absolute top-2 right-2 bg-black/80 backdrop-blur px-2 py-1 rounded text-[10px] font-bold text-gta-yellow border border-zinc-700 uppercase">
                                     ${v.make}
                                 </div>
@@ -491,12 +422,12 @@
                                 <div class="mb-4">
                                     <h3 class="text-white r-header text-lg leading-tight truncate uppercase">${formatVehicleDisplayName(v.name)}</h3>
                                     <div class="flex justify-between items-center mt-1">
-                                        <div class="text-[10px] text-zinc-500 font-medium truncate italic">Stored: ${gtaData.garages.find(g => g.id === v.garageId)?.shortName || 'Unknown'}</div>
-                                        <div class="text-[9px] text-gta-yellow font-black uppercase tracking-tighter">Fully Upgraded</div>
+                                        <div class="text-[10px] text-zinc-500 font-medium truncate italic">Loc: ${gtaData.garages.find(g => g.id === v.garageId)?.shortName || 'Unknown'}</div>
+                                        <div class="text-[9px] text-gta-yellow font-black uppercase tracking-tighter">Full Mod</div>
                                     </div>
                                 </div>
                                 <div class="mt-auto pt-3 border-t border-zinc-800 flex justify-between items-end">
-                                    <div class="text-[9px] text-zinc-500 font-bold uppercase tracking-widest leading-none">Market Investment</div>
+                                    <div class="text-[9px] text-zinc-500 font-bold uppercase tracking-widest">Total Investment</div>
                                     <div class="text-gta-green font-mono font-bold text-lg leading-none">${formatMoney(totalInvest)}</div>
                                 </div>
                             </div>
@@ -508,7 +439,7 @@
                             <div class="text-[10px] font-bold text-gta-yellow uppercase tracking-widest mb-2 flex items-center gap-2">
                                 <i data-lucide="info" class="w-3 h-3"></i> RARITY INTEL
                             </div>
-                            <p class="text-zinc-200 text-sm leading-relaxed italic">"${v.rarity}"</p>
+                            <p class="text-zinc-200 text-xs leading-relaxed italic">"${v.rarity}"</p>
                             <div class="mt-4 pt-4 border-t border-zinc-800 flex items-center justify-between">
                                 <span class="text-[10px] font-black text-zinc-500 uppercase">${v.tier} Tier Asset</span>
                                 <i data-lucide="shield-check" class="w-4 h-4 text-zinc-700"></i>
@@ -523,35 +454,53 @@
             if(window.lucide) lucide.createIcons();
         }
 
+        // Image retry logic
+        window.handleImgError = function(img, name) {
+            const variants = getVehicleFilenameVariants(name);
+            const retryCount = parseInt(img.dataset.retry || "0");
+            
+            if (retryCount < variants.length - 1) {
+                img.dataset.retry = retryCount + 1;
+                img.src = `images/vehicles/${variants[retryCount + 1]}`;
+            } else {
+                img.onerror = null;
+                img.src = 'https://placehold.co/600x338/111/333?text=' + name.replace(/\s+/g, '+');
+            }
+        };
+
         function renderStats() {
             const c1 = $('stats-col-1'), c2 = $('stats-col-2'), pList = $('property-list-content');
             c1.innerHTML = ''; c2.innerHTML = ''; pList.innerHTML = '';
             
-            const props = gtaData.garages.filter(g => !g.parent).sort((a,b) => (b.val || 0) - (a.val || 0));
-            const pTotal = props.reduce((acc, p) => acc + (p.val || 0), 0);
+            const props = gtaData.garages.filter(g => !g.parent).sort((a,b) => ((b.val||0)+(b.upgradeVal||0)) - ((a.val||0)+(a.upgradeVal||0)));
+            const pTotal = props.reduce((acc, p) => acc + (p.val || 0) + (p.upgradeVal || 0), 0);
             
             props.forEach((p, i) => {
                 const row = document.createElement('div');
+                const fullPVal = (p.val || 0) + (p.upgradeVal || 0);
                 row.className = 'group flex justify-between items-center py-3 px-4 border-b border-zinc-800/50 hover:bg-zinc-800 transition-all cursor-pointer';
                 row.onclick = () => goToGarage(p.id);
                 row.innerHTML = `
                     <div class="flex items-center gap-3 overflow-hidden">
                         <span class="text-zinc-700 text-[10px] font-black group-hover:text-gta-yellow">${String(i+1).padStart(2, '0')}</span>
-                        <span class="text-zinc-300 text-xs font-bold truncate group-hover:text-white uppercase">${p.shortName || p.name}</span>
+                        <div class="flex flex-col">
+                            <span class="text-zinc-300 text-xs font-bold truncate group-hover:text-white uppercase">${p.shortName || p.name}</span>
+                            <span class="text-[8px] text-gta-yellow font-black uppercase tracking-tighter">Renovated</span>
+                        </div>
                     </div>
-                    <span class="text-zinc-100 font-mono text-xs font-bold">${formatMoney(p.val || 0)}</span>
+                    <span class="text-zinc-100 font-mono text-xs font-bold">${formatMoney(fullPVal)}</span>
                 `;
                 pList.appendChild(row);
             });
             
             $('props-total-val').innerText = formatMoney(pTotal);
             
-            const vTotal = gtaData.vehicles.reduce((acc, v) => acc + v.val + getUpgradeCost(v.type), 0);
+            const vTotal = gtaData.vehicles.reduce((acc, v) => acc + v.val + getVehicleUpgradeCost(v.type), 0);
             const catMap = {};
             gtaData.types.forEach(t => catMap[t.id] = { ...t, val: 0, count: 0 });
             gtaData.vehicles.forEach(v => { 
                 if(catMap[v.type]) { 
-                    catMap[v.type].val += v.val + getUpgradeCost(v.type); 
+                    catMap[v.type].val += v.val + getVehicleUpgradeCost(v.type); 
                     catMap[v.type].count++; 
                 } 
             });
