@@ -53,6 +53,7 @@
             overflow: hidden;
             position: relative;
         }
+        /* Rockstar Orange Border on Hover - Optimized */
         .v-card:hover {
             border-color: #f99e1a;
             box-shadow: 0 0 15px rgba(249, 158, 26, 0.2);
@@ -86,19 +87,20 @@
 </head>
 <body class="flex flex-col min-h-screen">
 
+    <!-- Loader -->
     <div id="app-loader" class="fixed inset-0 bg-black z-[9999] flex flex-col items-center justify-center">
         <div class="r-logo-container mb-6 animate-bounce">
-             <div class="bg-gta-yellow p-3 rounded-lg"><span class="text-black font-black text-4xl italic">R</span></div>
+             <div class="bg-gta-yellow p-3 rounded-lg"><span class="text-black font-black text-4xl italic font-sans">R</span></div>
         </div>
         <div class="text-gta-yellow r-header text-2xl animate-pulse tracking-widest uppercase font-bold text-center px-4">
-            Master Index Synchronization...
+            Total Asset Index Synchronization...
         </div>
     </div>
 
     <!-- HEADER -->
     <nav class="bg-black border-b border-zinc-800 h-24 flex items-center justify-between px-6 sticky top-0 z-50 shadow-2xl">
         <div class="flex items-center gap-6">
-            <div class="bg-gta-yellow p-2 rounded-md"><span class="text-black font-black text-2xl italic">R</span></div>
+            <div class="bg-gta-yellow p-2 rounded-md"><span class="text-black font-black text-2xl italic font-sans">R</span></div>
             <div class="hidden lg:flex flex-col border-l border-zinc-800 pl-6 h-12 justify-center">
                 <span class="text-white r-header text-lg leading-none tracking-widest uppercase font-black">Asset Manager</span>
                 <span class="text-zinc-500 text-[10px] uppercase font-bold tracking-[0.2em]">Private Server 2026</span>
@@ -121,6 +123,7 @@
 
     <!-- MAIN -->
     <main class="container mx-auto px-4 py-8 flex-grow">
+        <!-- Dashboard Statistics -->
         <section class="r-panel p-8 mb-12">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-zinc-800 pb-8 mb-8 gap-6">
                 <div>
@@ -130,9 +133,9 @@
                         <span class="text-gta-yellow text-[10px] font-black uppercase italic tracking-widest bg-zinc-900 px-3 py-1 rounded border border-zinc-800">Master Index Active</span>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-10 bg-zinc-900/40 p-6 rounded-lg border border-zinc-800">
-                    <div class="text-center"><div class="text-zinc-500 text-[10px] uppercase font-bold tracking-widest">Estate</div><div class="text-2xl r-header text-white" id="props-total-val">$0</div></div>
-                    <div class="text-center"><div class="text-zinc-500 text-[10px] uppercase font-bold tracking-widest">Fleet</div><div class="text-2xl r-header text-white" id="veh-total-val">$0</div></div>
+                <div class="grid grid-cols-2 gap-10 bg-zinc-900/40 p-6 rounded-lg border border-zinc-800 shadow-inner">
+                    <div class="text-center"><div class="text-zinc-500 text-[10px] uppercase font-bold tracking-widest">Estate</div><div class="text-2xl r-header text-white font-bold" id="props-total-val">$0</div></div>
+                    <div class="text-center"><div class="text-zinc-500 text-[10px] uppercase font-bold tracking-widest">Fleet</div><div class="text-2xl r-header text-white font-bold" id="veh-total-val">$0</div></div>
                 </div>
             </div>
 
@@ -143,17 +146,18 @@
                 </div>
                 <div class="lg:col-span-4">
                     <div class="bg-zinc-900 border border-zinc-800 flex flex-col rounded-lg overflow-hidden shadow-2xl h-[480px]">
-                        <div class="p-4 bg-black/60 border-b border-zinc-800 flex justify-between items-center"><span class="r-header text-sm text-zinc-400">Property Ledger</span></div>
+                        <div class="p-4 bg-black/60 border-b border-zinc-800 flex justify-between items-center"><span class="r-header text-sm text-zinc-400 font-bold uppercase tracking-widest">Property Ledger</span></div>
                         <div class="flex-grow overflow-y-auto custom-scroll" id="property-list-content"></div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Filters & Dynamic Title -->
         <div id="filter-anchor" class="flex flex-col md:flex-row justify-between items-end mb-8 border-b-2 border-zinc-800 pb-4 gap-6 sticky top-24 bg-black/90 backdrop-blur-md z-40 py-4">
             <div>
                 <h1 class="text-5xl r-header font-bold text-white uppercase" id="gallery-title">GARAGES</h1>
-                <div class="text-gta-yellow text-[10px] font-bold mt-2"><span id="display-count">0</span> ASSETS / <span id="display-value">$0</span></div>
+                <div class="text-gta-yellow text-[10px] font-bold mt-2 uppercase tracking-widest"><span id="display-count">0</span> ASSETS / <span id="display-value">$0</span></div>
             </div>
             <div class="flex flex-wrap gap-1 bg-zinc-900/50 p-1.5 rounded border border-zinc-800">
                 <button class="btn-main active" id="btn-garage" onclick="window.appClickSort('garage')">Garages</button>
@@ -166,11 +170,23 @@
             <div id="sub-filter-container" class="flex items-center w-max gap-3 px-1"></div>
         </div>
 
+        <!-- Grid Container -->
         <div id="vehicle-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 pb-32"></div>
     </main>
 
     <script>
-        // --- CORE LOGIC ---
+        // --- HELPER: FILE NAME NORMALIZER ---
+        // Alfasayısal olmayan her şeyi siler, Türkçe İ, I, ı karakterlerini 'i'ye normalize eder.
+        function getCleanFilename(name) {
+            if(!name) return "placeholder";
+            return name.replace(/İ/g, 'i')
+                       .replace(/I/g, 'i')
+                       .replace(/ı/g, 'i')
+                       .replace(/[^a-zA-Z0-9]/g, '')
+                       .toLowerCase();
+        }
+
+        // --- FORMATTING: HIDDEN SYMBOLS & STYLE ---
         function formatDisplayString(text) {
             if (!text) return "";
             return text.replace(/\[([^\]]+)\]/g, '<span class="italic text-gta-yellow">$1</span>')
@@ -184,11 +200,6 @@
             const matchParen = text.match(/\(([^)]+)\)/);
             if (matchParen) return matchParen[1].toUpperCase();
             return text.toUpperCase();
-        }
-
-        function getVehicleFilenameVariants(name) {
-            const base = name.replace(/[İIı]/g, 'i').replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
-            return [base + ".jpg"];
         }
 
         // --- MASTER DATA (All 14 properties combined) ---
@@ -590,12 +601,23 @@
                 { name: 'Winky [Serge]', garageId: 'eclipse_blvd', make: 'Vapid', type: 'offroad', val: 1100000 }
             ],
             types: [
-                { id: 'super', name: 'Super', color: '#fbbf24' }, { id: 'sports', name: 'Sports', color: '#3498db' },
-                { id: 'classic', name: 'Classic', color: '#e67e22' }, { id: 'muscle', name: 'Muscle', color: '#e74c3c' },
-                { id: 'weaponized', name: 'Weaponized', color: '#9b59b6' }, { id: 'offroad', name: 'Off-Road', color: '#795548' },
-                { id: 'suv', name: 'SUV', color: '#607d8b' }, { id: 'sedan', name: 'Sedan', color: '#bdc3c7' },
-                { id: 'coupe', name: 'Coupe', color: '#95a5a6' }, { id: 'motorcycle', name: 'Motorcycle', color: '#f1c40f' },
-                { id: 'utility', name: 'Utility', color: '#bdc3c7' }, { id: 'special', name: 'Special', color: '#1abc9c' }
+                // --- 3. TYPES DIZISINI GUNCELLEMEK ICIN (Eksik sınıflar eklendi) ---
+                { id: 'super', name: 'Super', color: '#fbbf24' },
+                { id: 'sports', name: 'Sports', color: '#3498db' },
+                { id: 'classic', name: 'Classic', color: '#e67e22' },
+                { id: 'muscle', name: 'Muscle', color: '#e74c3c' },
+                { id: 'weaponized', name: 'Weaponized', color: '#9b59b6' },
+                { id: 'offroad', name: 'Off-Road', color: '#795548' },
+                { id: 'suv', name: 'SUV', color: '#607d8b' },
+                { id: 'sedan', name: 'Sedan', color: '#bdc3c7' },
+                { id: 'coupe', name: 'Coupe', color: '#95a5a6' },
+                { id: 'motorcycle', name: 'Motorcycle', color: '#f1c40f' },
+                { id: 'utility', name: 'Utility', color: '#64748b' },
+                { id: 'special', name: 'Special', color: '#1abc9c' },
+                { id: 'aircraft', name: 'Aircraft', color: '#87ceeb' },
+                { id: 'helicopter', name: 'Helicopter', color: '#60a5fa' },
+                { id: 'sea_vehicle', name: 'Sea', color: '#0ea5e9' }
+               
             ]
         };
 
