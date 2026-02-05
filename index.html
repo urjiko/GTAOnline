@@ -58,38 +58,55 @@
             color: #fff; -webkit-text-stroke: 1.5px black; paint-order: stroke fill; z-index: 2;
         }
 
-        .v-card-container { perspective: 1000px; height: 100%; min-height: 350px; }
-        .v-card-inner {
-            position: relative; width: 100%; height: 100%; text-align: left;
-            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d;
+        /* --- V-CARD BASE --- */
+        .v-card { 
+            background-color: #121212; 
+            border: 1px solid #27272a; 
+            height: 100%; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
         }
-        .v-card-container.can-flip:hover .v-card-inner { transform: rotateY(180deg); }
         
-        .v-card-front, .v-card-back {
-            position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden;
-            border-radius: 4px; overflow: hidden;
-        }
-        .v-card-back {
-            background-color: #0d0d0d; transform: rotateY(180deg);
-            border: 2px solid #fbbf24; display: flex; flex-direction: column; justify-content: center; padding: 24px;
+        /* --- TIER SPECIFIC HOVER EFFECTS --- */
+        /* Normal araçlar için standart Rockstar Turuncusu */
+        .v-card:not([class*="tier-"]):hover {
+            border-color: #f99e1a;
+            box-shadow: 0 0 15px rgba(249, 158, 26, 0.25);
+            transform: translateY(-3px);
         }
 
-        .v-card { background-color: #121212; border: 1px solid #27272a; height: 100%; transition: all 0.2s ease; }
+        /* Rare (Tier) araçlar için Premium parlamalar */
+        .v-card.tier-S:hover { border-color: #00e5ff; box-shadow: 0 0 25px rgba(0, 229, 255, 0.4); transform: translateY(-3px); }
+        .v-card.tier-A:hover { border-color: #fbbf24; box-shadow: 0 0 25px rgba(251, 191, 36, 0.4); transform: translateY(-3px); }
+        .v-card.tier-B:hover { border-color: #a855f7; box-shadow: 0 0 25px rgba(168, 85, 247, 0.4); transform: translateY(-3px); }
+        .v-card.tier-C:hover { border-color: #2ecc71; box-shadow: 0 0 25px rgba(46, 204, 113, 0.4); transform: translateY(-3px); }
+        .v-card.tier-D:hover { border-color: #94a3b8; box-shadow: 0 0 25px rgba(148, 163, 184, 0.4); transform: translateY(-3px); }
 
-        .tier-S { border: 2px solid #00e5ff; box-shadow: 0 0 25px rgba(0, 229, 255, 0.15); }
+        /* S Tier için animasyonlu parlama efekti */
         .tier-S::after {
             content: ''; position: absolute; inset: 0; 
-            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%);
-            background-size: 200% 200%; animation: shine 5s infinite; pointer-events: none;
+            background: linear-gradient(45deg, transparent 40%, rgba(185, 242, 255, 0.1) 50%, transparent 60%);
+            background-size: 200% 200%; animation: shine 6s infinite; pointer-events: none;
         }
         @keyframes shine { 0% { background-position: -200% -200%; } 100% { background-position: 200% 200%; } }
+
+        /* --- DESCRIPTION HOVER SWAP ANIMATION --- */
+        .info-default { transition: all 0.3s ease; opacity: 1; transform: translateY(0); }
+        .info-rarity { 
+            transition: all 0.3s ease; opacity: 0; transform: translateY(10px); 
+            position: absolute; left: 0; right: 0; bottom: 0; padding: 16px; 
+            background-color: rgba(13, 13, 13, 0.95);
+        }
+        .v-card:hover .info-default { opacity: 0; transform: translateY(-10px); }
+        .v-card:hover .info-rarity { opacity: 1; transform: translateY(0); }
 
         .btn-main {
             font-family: 'Oswald', sans-serif; text-transform: uppercase;
             background: transparent; color: #71717a; border: 1px solid #27272a;
             padding: 10px 24px; font-size: 1rem; cursor: pointer; transition: all 0.2s;
         }
-        .btn-main:hover { color: #fff; border-color: #52525b; background: #09090b; }
         .btn-main.active { background-color: #fbbf24; color: #000; border-color: #fbbf24; font-weight: 700; }
 
         .btn-filter {
@@ -97,18 +114,17 @@
             color: #a1a1aa; padding: 6px 14px; border-bottom: 3px solid transparent; 
             transition: all 0.2s; white-space: nowrap; font-size: 0.95rem; cursor: pointer;
         }
-        .btn-filter:hover { color: #fff; background-color: rgba(255,255,255,0.05); }
         .btn-filter.active { color: #fbbf24; border-bottom-color: #fbbf24; }
 
         .stat-bar-track { background: #27272a; height: 8px; width: 100%; margin-top: 4px; border-radius: 99px; overflow: hidden; }
         .stat-bar-fill { height: 100%; transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
 
-        .animate-in { animation: fadeInUp 0.5s ease-out forwards; opacity: 0; }
+        .animate-in { animation: fadeInUp 0.4s ease-out forwards; opacity: 0; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .v-img-box { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; overflow: hidden; border-bottom: 1px solid #222; }
         .v-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
-        .v-card-container:hover .v-img { transform: scale(1.08); }
+        .v-card:hover .v-img { transform: scale(1.08); }
         
         #search-input::placeholder { color: #52525b; }
     </style>
@@ -119,7 +135,7 @@
         <div class="r-logo-container mb-6 animate-bounce">
             <span class="r-logo-r">R</span><span class="r-logo-star">★</span>
         </div>
-        <div class="text-gta-yellow r-header text-2xl animate-pulse tracking-widest uppercase font-bold">Synchronizing Urjiko's Assets...</div>
+        <div class="text-gta-yellow r-header text-2xl animate-pulse tracking-widest uppercase font-bold">Synchronizing Assets...</div>
     </div>
 
     <!-- HEADER -->
@@ -275,7 +291,8 @@
                 { id: 'pegasus', name: 'Pegasus Collection [Pegasus]', val: 0, upgradeVal: 0 },
                 { id: 'bunker', name: 'Farmhouse Bunker [Bunker]', val: 2375000, upgradeVal: 5500000 },
                 { id: 'salvage', name: 'Strawberry Salvage Yard [Salvage]', val: 2690000, upgradeVal: 4500000 },
-                { id: 'eclipse_blvd', name: 'Eclipse Blvd [The Cars]', val: 2740000, upgradeVal: 7500000 }
+                { id: 'eclipse_blvd', name: 'Eclipse Blvd [The Cars]', val: 2740000, upgradeVal: 7500000 },
+                { id: 'arcade', name: 'Bat Cave [Arcade]', val: 1875000, upgradeVal: 4500000 }
                 
             ],
             vehicles: [
@@ -304,13 +321,13 @@
 
                 // Bizarre 1 (10)
                 { name: 'Moonbeam Custom', garageId: 'bizarre', make: 'Declasse', type: 'muscle', val: 832500 },
-                { name: 'Rat-Loader', garageId: 'bizarre', make: 'Bravado', type: 'muscle', val: 6000 },
-                { name: 'Lurcher', garageId: 'bizarre', make: 'Albany', type: 'muscle', val: 950000 },
+                { name: 'Rat-Loader', garageId: 'bizarre', make: 'Bravado', type: 'muscle', val: 6000, tier: 'D', rarityDesc: 'Hard-to-spawn street vehicle, stealable and storable.' },
+                { name: 'Lurcher', garageId: 'bizarre', make: 'Albany', type: 'muscle', val: 950000, tier: 'C', rarityDesc: 'Sold during Halloween event weeks in late Oct to early Nov, has returned multiple years.' },
                 { name: 'Slamvan Custom', garageId: 'bizarre', make: 'Vapid', type: 'muscle', val: 949500 },
                 { name: 'GB200', garageId: 'bizarre', make: 'Vapid', type: 'sports', val: 1340000 },
                 { name: 'Desert Raid', garageId: 'bizarre', make: 'Maxwell', type: 'offroad', val: 1045000 },
-                { name: 'Tornado Rat Rod', garageId: 'bizarre', make: 'Declasse', type: 'classic', val: 30000 },
-                { name: 'Franken Stange', garageId: 'bizarre', make: 'Albany', type: 'classic', val: 850000 },
+                { name: 'Tornado Rat Rod', garageId: 'bizarre', make: 'Declasse', type: 'classic', val: 30000, tier: 'C', rarityDesc: 'Benny’s variant removed from websites Jun 2023' },
+                { name: 'Franken Stange', garageId: 'bizarre', make: 'Albany', type: 'classic', val: 850000, tier: 'C', rarityDesc: 'Sold during Halloween event weeks in late Oct to early Nov, has returned multiple years.' },
                 { name: 'Sentinel Classic', garageId: 'bizarre', make: 'Ubermacht', type: 'classic', val: 1050000 },
                 { name: 'Asbo', garageId: 'bizarre', make: 'Maxwell', type: 'sports', val: 758000 },
 
@@ -335,9 +352,22 @@
                 { name: 'Rebla GTS', garageId: 'bmw', make: 'Ubermacht', type: 'suv', val: 1175000 },
                 { name: 'Niobe', garageId: 'bmw', make: 'Ubermacht', type: 'sports', val: 1880000 },
                 { name: 'Sentinel XS', garageId: 'bmw', make: 'Ubermacht', type: 'coupe', val: 60000 },
-                { name: 'Sentinel GTS', garageId: 'bmw', make: 'Ubermacht', type: 'coupe', val: 360000 },
+                { name: 'Sentinel GTS', garageId: 'bmw', make: 'Ubermacht', type: 'coupe', val: 360000, tier: 'B', rarityDesc: 'Cel Shaded Livery, limited-time Vinewood Club unlock window 2024-2026.' },
                 { name: 'Rhinehart', garageId: 'bmw', make: 'Ubermacht', type: 'sedan', val: 1598000 },
 
+                // Arcade (Bat Cave)
+                { name: 'JB 700W [James Bond]', garageId: 'arcade', make: 'Dewbauchee', type: 'classic', val: 1470000 },
+                { name: 'PR4', garageId: 'arcade', make: 'Progen', type: 'super', val: 3515000 },
+                { name: 'BR8', garageId: 'arcade', make: 'Benefactor', type: 'super', val: 3400000 },
+                { name: 'DR1', garageId: 'arcade', make: 'Declasse', type: 'super', val: 2997000 },
+                { name: 'Kuruma (Armored)', garageId: 'arcade', make: 'Karin', type: 'sports', val: 698250 },
+                { name: 'Ardent', garageId: 'arcade', make: 'Ocelot', type: 'sports', val: 1150000 },
+                { name: 'Zion Cabrio', garageId: 'arcade', make: 'Ubermacht', type: 'coupe', val: 65000 },
+                { name: 'Vigilante', garageId: 'arcade', make: 'Grotti', type: 'weaponized', val: 3750000 },
+                { name: 'Deluxo', garageId: 'arcade', make: 'Imponte', type: 'weaponized', val: 5750000 },
+                { name: 'Nano Drone', garageId: 'arcade', make: 'Drone', type: 'special', val: 1460000 },
+                { name: 'Ardent', garageId: 'bizarre', make: 'Ocelot', type: 'sports', val: 1150000, tier: 'C', rarityDesc: 'It’s a Wrap Livery, limited-time purchase window Dec 2025.' },
+        
                 // Audi (10)
                 { name: 'Tailgater S (Dup)', garageId: 'audi', make: 'Obey', type: 'sedan', val: 1495000 },
                 { name: 'I-Wagen', garageId: 'audi', make: 'Obey', type: 'suv', val: 1720000 },
@@ -445,7 +475,8 @@
                 // Facility (3)
                 { name: 'Chernobog', garageId: 'facility', make: 'HVY', type: 'weaponized', val: 3311700 },
                 { name: 'TM-02 Khanjali', garageId: 'facility', make: 'TM-02', type: 'weaponized', val: 3850350 },
-                { name: 'Thruster', garageId: 'facility', make: 'Mammoth', type: 'weaponized', val: 3657500 },
+                { name: 'Thruster', garageId: 'facility', make: 'Mammoth', type: 'weaponized', val: 3657500, tier: 'S', rarityDesc: 'Galaxy Livery, limited-time login reward on Dec 22, 2017.' },
+                { name: 'Avenger', garageId: 'service', make: 'Mammoth', type: 'special', val: 3450000, tier: 'S', rarityDesc: 'Dolla Dolla Livery, limited-time login reward Jun 13 to Jun 28, 2023.' },
 
                 // Nightclub (31)
                 { name: 'Dubsta 6x6', garageId: 'nightclub', make: 'Benefactor', type: 'offroad', val: 549000 },
@@ -512,20 +543,7 @@
 
                 // Vinewood Club
                 { id: 'v_vw1', name: 'impaler LX (Dup)', garageId: 'vinewood', make: 'Declasse', type: 'muscle', val: 1465000 },
-                { id: 'v_vw2', name: 'Clique [Merry Cliquemast]', garageId: 'vinewood', make: 'Vapid', type: 'muscle', val: 900000 },
-                { id: 'v_vw3', name: 'Ruiner', garageId: 'vinewood', make: 'Imponte', type: 'muscle', val: 10000 },
-                { id: 'v_vw4', name: 'Cavalcade XL (Dup)', garageId: 'vinewood', make: 'Albany', type: 'suv', val: 1665000 },
-                { id: 'v_vw5', name: 'Cavalcade XL', garageId: 'vinewood', make: 'Albany', type: 'suv', val: 1665000 },
-                { id: 'v_vw6', name: 'Jugular', garageId: 'vinewood', make: 'Ocelot', type: 'sports', val: 1225000 },
-                { id: 'v_vw7', name: '811 (Dup)', garageId: 'vinewood', make: 'Pfister', type: 'super', val: 1135000 },
-                { id: 'v_vw8', name: 'Slamtruck', garageId: 'vinewood', make: 'Vapid', type: 'utility', val: 1310000 },
-                { id: 'v_vw9', name: 'Itali GTB', garageId: 'vinewood', make: 'Progen', type: 'super', val: 1189000 },
-                { id: 'v_vw10', name: 'Entity MT (Dup)', garageId: 'vinewood', make: 'Overflod', type: 'super', val: 2355000 },
-                { id: 'v_vw11', name: 'Roosevelt (Dup)', garageId: 'vinewood', make: 'Albany', type: 'classic', val: 750000 },
-
-                // Vinewood Club
-                { id: 'v_vw1', name: 'impaler LX (Dup)', garageId: 'vinewood', make: 'Declasse', type: 'muscle', val: 1465000 },
-                { id: 'v_vw2', name: 'Clique [Merry Cliquemast]', garageId: 'vinewood', make: 'Vapid', type: 'muscle', val: 900000 },
+                { id: 'v_vw2', name: 'Clique [Merry Cliquemast]', garageId: 'vinewood', make: 'Vapid', type: 'muscle', val: 900000, tier: 'S', rarityDesc: 'Merry Cliquemas Livery, limited-time holiday unlock window Dec 2025.' },
                 { id: 'v_vw3', name: 'Ruiner', garageId: 'vinewood', make: 'Imponte', type: 'muscle', val: 10000 },
                 { id: 'v_vw4', name: 'Cavalcade XL (Dup)', garageId: 'vinewood', make: 'Albany', type: 'suv', val: 1665000 },
                 { id: 'v_vw5', name: 'Cavalcade XL', garageId: 'vinewood', make: 'Albany', type: 'suv', val: 1665000 },
@@ -543,7 +561,7 @@
 
                 // Mansions (Richman Villa)
                 { id: 'v_rv1', name: 'Tempesta (Dup)', garageId: 'mansions', make: 'Pegassi', type: 'super', val: 1329000 },
-                { id: 'v_rv2', name: 'Stafford [Oh Enus!]', garageId: 'mansions', make: 'Enus', type: 'classic', val: 1272000 },
+                { id: 'v_rv2', name: 'Stafford [Oh Enus!]', garageId: 'mansions', make: 'Enus', type: 'classic', val: 1272000, tier: 'S', rarityDesc: 'Oh Enus! Livery, limited-time Guest List reward Jul 31 to Aug 6, 2018.' },
 
                 // Murrieta Heights (Vehicle Warehouse)
                 { id: 'v_wh1', name: 'Ruiner 2000', garageId: 'warehouse', make: 'Imponte', type: 'special', val: 4320000 },
@@ -580,7 +598,7 @@
                 // Kosatka
                 { id: 'v_ko1', name: 'Avisa', garageId: 'kosatka', make: 'Kraken', type: 'sea_vehicle', val: 1545000 },
                 { id: 'v_ko2', name: 'Sparrow', garageId: 'kosatka', make: 'SeaSparrow', type: 'helicopter', val: 1815000 },
-                { id: 'v_ko3', name: 'Toreador', garageId: 'kosatka', make: 'Pegassi', type: 'weaponized', val: 4250000 },
+                { id: 'v_ko3', name: 'Toreador', garageId: 'kosatka', make: 'Pegassi', type: 'weaponized', val: 4250000, tier: 'A', rarityDesc: 'War Camo Livery, limited-time unlock windows 2022 & 2026.' },
 
                 // Terrorbyte
                 { id: 'v_te1', name: 'Oppressor Mk II', garageId: 'terrorbyte', make: 'Pegassi', type: 'motorcycle', val: 8000000 },
@@ -634,7 +652,7 @@
                 { name: 'PR4 [Francesco]', garageId: 'eclipse_blvd', make: 'Progen', type: 'super', val: 3515000 },
                 { name: 'Comet S2 [Sally]', garageId: 'eclipse_blvd', make: 'Pfister', type: 'sports', val: 1878000 },
                 { name: 'Gauntlet Classic Custom [The King]', garageId: 'eclipse_blvd', make: 'Bravado', type: 'muscle', val: 1200000 },
-                { name: 'Hermes [Doc Hudson]', garageId: 'eclipse_blvd', make: 'Albany', type: 'muscle', val: 535000 },
+                { name: 'Hermes [Doc Hudson]', garageId: 'eclipse_blvd', make: 'Albany', type: 'muscle', val: 535000, tier: 'A', rarityDesc: 'Amazing Albany II Livery, limited-time purchase Feb 2023 & Oct 2024.' },
                 { name: 'Rat-Loader [Mater]', garageId: 'eclipse_blvd', make: 'Bravado', type: 'muscle', val: 6000 },
                 { name: 'Krieger (Dup)', garageId: 'eclipse_blvd', make: 'Benefactor', type: 'super', val: 2875000 },
                 { name: 'Futo', garageId: 'eclipse_blvd', make: 'Karin', type: 'sports', val: 9000 },
@@ -678,10 +696,8 @@
         function updateUI() {
             const btns = ['garage', 'type', 'brand'];
             btns.forEach(t => { if($( 'btn-' + t)) $( 'btn-' + t).className = 'btn-main ' + (appState.sort === t ? 'active' : ''); });
-            
             const titles = { garage: 'GARAGES', type: 'CLASSES', brand: 'MANUFACTURERS' };
             let titleText = titles[appState.sort];
-
             if (appState.filter !== 'all') {
                 if (appState.sort === 'garage') {
                     const g = gtaData.garages.find(x => x.id === appState.filter);
@@ -690,7 +706,6 @@
                     titleText = appState.filter.toUpperCase();
                 }
             }
-
             $('gallery-title').innerHTML = formatDisplayString(titleText);
             renderSubFilters();
             renderGrid();
@@ -701,13 +716,12 @@
             if(!container) return;
             container.innerHTML = '';
             let items = [];
-            if (appState.sort === 'garage') items = (gtaData.garages || []);
-            else if (appState.sort === 'type') items = (gtaData.types || []);
+            if (appState.sort === 'garage') items = gtaData.garages;
+            else if (appState.sort === 'type') items = gtaData.types;
             else if (appState.sort === 'brand') {
-                const unique = [...new Set((gtaData.vehicles || []).map(v => v.make))].sort();
+                const unique = [...new Set(gtaData.vehicles.map(v => v.make))].sort();
                 items = unique.map(m => ({ id: m, name: m }));
             }
-
             const createBtn = (id, label, isActive) => {
                 const btn = document.createElement('button');
                 btn.className = `btn-filter ${isActive ? 'active' : ''}`;
@@ -715,7 +729,6 @@
                 btn.onclick = () => appClickFilter(id);
                 return btn;
             };
-
             container.appendChild(createBtn('all', 'SHOW ALL', appState.filter === 'all'));
             items.forEach(item => {
                 const sep = document.createElement('div');
@@ -729,16 +742,13 @@
             const grid = $('vehicle-grid');
             if(!grid) return;
             grid.innerHTML = '';
-            
-            let filtered = (gtaData.vehicles || []);
-
+            let filtered = gtaData.vehicles;
             if (appState.filter !== 'all') {
                 const fid = appState.filter;
                 if (appState.sort === 'garage') filtered = filtered.filter(v => v.garageId === fid);
                 else if (appState.sort === 'type') filtered = filtered.filter(v => v.type === fid);
                 else if (appState.sort === 'brand') filtered = filtered.filter(v => v.make === fid);
             }
-
             if (appState.search) filtered = filtered.filter(v => v.name.toLowerCase().includes(appState.search) || v.make.toLowerCase().includes(appState.search));
 
             filtered.forEach((v, i) => {
@@ -747,36 +757,46 @@
                 container.style.animationDelay = (i * 0.005) + 's';
                 
                 const upg = 450000; 
-                const baseFilename = v.name.replace(/[İIı]/g, 'i').replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+                const baseFilename = getCleanFilename(v.name);
+                const tierClass = v.tier ? `tier-${v.tier}` : '';
+                
+                // Tier based persistent badge color
+                const tierColors = { S: '#00e5ff', A: '#fbbf24', B: '#a855f7', C: '#22c55e', D: '#94a3b8' };
+                const badgeColor = v.tier ? tierColors[v.tier] : 'transparent';
 
                 container.innerHTML = `
-                    <div class="v-card flex flex-col shadow-xl">
+                    <div class="v-card ${tierClass} flex flex-col shadow-xl">
+                        ${v.tier ? `<div class="absolute top-3 left-3 z-20 bg-black/80 backdrop-blur-md px-2 py-0.5 rounded border border-zinc-700 text-[10px] font-black" style="color: ${badgeColor}; border-color: ${badgeColor}44">${v.tier} TIER</div>` : ''}
                         <div class="v-img-box">
                             <img src="images/vehicles/${baseFilename}.jpg" class="v-img" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x338/111/333?text='+encodeURIComponent('${v.name.split(' ')[0]}')">
                             <div class="absolute top-2 right-2 bg-black/80 backdrop-blur px-2 py-1 rounded text-[10px] font-bold text-gta-yellow border border-zinc-700 uppercase">
                                 ${v.make}
                             </div>
                         </div>
-                        <div class="p-4 flex flex-col flex-grow bg-zinc-900/40">
-                            <div class="mb-4">
-                                <h3 class="text-white font-display text-[15px] leading-[1.1] tracking-tighter uppercase mb-1">
-                                    ${formatDisplayString(v.name)}
-                                </h3>
-                                <div class="flex justify-between items-center mt-1">
-                                    <div class="text-[10px] text-zinc-500 font-medium truncate italic">Stored: ${gtaData.garages.find(g => g.id === v.garageId)?.name.split('[')[1]?.replace(']', '') || 'Collection'}</div>
-                                    <div class="text-[9px] text-gta-yellow font-black uppercase tracking-tighter">MAX MOD</div>
+                        <div class="p-4 flex flex-col flex-grow bg-zinc-900/40 relative h-[115px]">
+                            <div class="info-default h-full flex flex-col justify-between">
+                                <div class="mb-2">
+                                    <h3 class="text-white font-display text-[15px] leading-[1.1] tracking-tighter uppercase">
+                                        ${formatDisplayString(v.name)}
+                                    </h3>
+                                </div>
+                                <div class="mt-auto pt-2 border-t border-zinc-800 flex justify-between items-end">
+                                    <div class="text-[9px] text-zinc-500 font-bold uppercase tracking-widest leading-none">Investment</div>
+                                    <div class="text-gta-green font-mono font-bold text-[16px] leading-none">${formatMoney((v.val || 0) + upg)}</div>
                                 </div>
                             </div>
-                            <div class="mt-auto pt-3 border-t border-zinc-800 flex justify-between items-end">
-                                <div class="text-[9px] text-zinc-500 font-bold uppercase tracking-widest leading-none">Investment</div>
-                                <div class="text-gta-green font-mono font-bold text-[16px] leading-none">${formatMoney((v.val || 0) + upg)}</div>
+                            
+                            ${v.rarityDesc ? `
+                            <div class="info-rarity h-full flex flex-col justify-center">
+                                <div class="text-[9px] font-black uppercase tracking-widest mb-1" style="color: ${badgeColor}">Rarity Dossier</div>
+                                <p class="text-[11px] text-zinc-300 leading-tight italic">${v.rarityDesc}</p>
                             </div>
+                            ` : ''}
                         </div>
                     </div>
                 `;
                 grid.appendChild(container);
             });
-
             $('display-count').innerText = filtered.length;
             const currentTotal = filtered.reduce((acc, v) => acc + (v.val || 0) + 450000, 0);
             $('display-value').innerText = formatMoney(currentTotal);
@@ -787,38 +807,25 @@
             const c1 = $('stats-col-1'), c2 = $('stats-col-2'), pList = $('property-list-content');
             if(!c1 || !c2 || !pList) return;
             c1.innerHTML = ''; c2.innerHTML = ''; pList.innerHTML = '';
-            
             const props = (gtaData.garages || []).sort((a,b) => ((b.val||0)+(b.upgradeVal||0)) - ((a.val||0)+(a.upgradeVal||0)));
             const pTotal = props.reduce((acc, p) => acc + (p.val || 0) + (p.upgradeVal || 0), 0);
-            
             props.forEach((p, i) => {
-                const row = document.createElement('div');
                 const fullPVal = (p.val || 0) + (p.upgradeVal || 0);
+                const row = document.createElement('div');
                 row.className = 'group flex justify-between items-center py-4 px-5 border-b border-zinc-800/60 hover:bg-zinc-800 transition-all cursor-pointer';
                 row.onclick = () => { appState.filter = p.id; updateUI(); };
-                row.innerHTML = `
-                    <div class="flex items-center gap-3 overflow-hidden">
-                        <span class="text-zinc-700 text-[10px] font-black group-hover:text-gta-yellow transition-colors">${String(i+1).padStart(2, '0')}</span>
-                        <div class="flex flex-col">
-                            <span class="text-zinc-200 text-xs font-bold truncate group-hover:text-white uppercase tracking-tight">${formatDisplayString(p.name)}</span>
-                            <span class="text-[8px] text-gta-yellow font-black uppercase tracking-tighter opacity-80 italic">Elite Upgrade</span>
-                        </div>
-                    </div>
-                    <span class="text-zinc-100 font-mono text-xs font-bold">${formatMoney(fullPVal)}</span>
-                `;
+                row.innerHTML = `<div class="flex items-center gap-3 overflow-hidden"><span class="text-zinc-700 text-[10px] font-black group-hover:text-gta-yellow">${String(i+1).padStart(2, '0')}</span><div class="flex flex-col"><span class="text-zinc-200 text-xs font-bold truncate uppercase">${formatDisplayString(p.name)}</span><span class="text-[8px] text-gta-yellow font-black uppercase italic">Elite Upgrade</span></div></div><span class="text-zinc-100 font-mono text-xs font-bold">${formatMoney(fullPVal)}</span>`;
                 pList.appendChild(row);
             });
-            
             $('props-total-val').innerText = formatMoney(pTotal);
-            const vTotal = (gtaData.vehicles || []).reduce((acc, v) => acc + (v.val || 0) + 450000, 0);
+            const vTotal = gtaData.vehicles.reduce((acc, v) => acc + (v.val || 0) + 450000, 0);
             $('veh-total-val').innerText = formatMoney(vTotal);
             $('grand-total').innerText = formatMoney(pTotal + vTotal);
             $('header-cash').innerText = formatMoney(pTotal + vTotal);
-
-            // Class Stats
+            
             const catMap = {};
             gtaData.types.forEach(t => catMap[t.id] = { ...t, val: 0, count: 0 });
-            gtaData.vehicles.forEach(v => { if(catMap[v.type]) { catMap[v.type].val += v.val + 450000; catMap[v.type].count++; } });
+            gtaData.vehicles.forEach(v => { if(catMap[v.type]) { catMap[v.type].val += (v.val || 0) + 450000; catMap[v.type].count++; } });
             const activeCats = Object.values(catMap).filter(c => c.count > 0).sort((a,b) => b.val - a.val);
             const maxVal = Math.max(...activeCats.map(c => c.val), 1);
             activeCats.forEach((cat, i) => {
